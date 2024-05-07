@@ -9,7 +9,7 @@ import java.util.List;
 
 import model.BookingType;
 
-public class BookingTypeDB implements BookingTypeDao {
+public class BookingTypeDB implements BookingTypeDAO {
 	private static final String FIND_ALL_Q = "select booking_type_id, type, name, description, duration from bookingType";
 	private static final String FIND_BY_BOOKING_TYPE_NO_Q = FIND_ALL_Q + " where booking_type_id = ?";
 	private PreparedStatement findAllPS;

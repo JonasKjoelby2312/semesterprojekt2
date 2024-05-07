@@ -5,13 +5,13 @@ import java.util.List;
 
 import db.BookingPriceDao;
 import db.BookingTypeDB;
-import db.BookingTypeDao;
+import db.BookingTypeDAO;
 import model.Booking;
 import model.BookingPrice;
 import model.BookingType;
 
 public class BookingTypeController {
-	private BookingTypeDao bookingTypeDB;
+	private BookingTypeDAO bookingTypeDB;
 	private BookingPriceDao bookingPriceDB;
 	
 	public BookingTypeController() {
@@ -19,11 +19,11 @@ public class BookingTypeController {
 		bookingPriceDB = new BookingPriceDB();
 	}
 	
-	public List<Booking> findAllBookingTypes() {
+	public List<BookingType> findAllBookingTypes() throws Exception {
 		return bookingTypeDB.findAllBookingTypes();
 	}
 	
-	public BookingType findBookingType(int bookingTypeNo) {
+	public BookingType findBookingType(int bookingTypeNo) throws Exception {
 		return bookingTypeDB.findBookingType(bookingTypeNo);
 	}
 	
