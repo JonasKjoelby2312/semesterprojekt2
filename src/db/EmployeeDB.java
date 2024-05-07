@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Employee;
-import model.Product;
 
 public class EmployeeDB implements EmployeeDAO {
 	
@@ -50,7 +49,7 @@ public class EmployeeDB implements EmployeeDAO {
 			rs = findByIdPS.executeQuery();
 			res = buildObject(rs);
 		} catch(SQLException e) {
-			throw new Exception("Could not find employee by ID", e);
+			throw new Exception("Could not find employee by employee_no", e);
 		}
 		return res;
 	}
