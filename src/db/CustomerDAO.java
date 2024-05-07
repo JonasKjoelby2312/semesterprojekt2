@@ -1,4 +1,4 @@
-package DAO;
+package db;
 
 public class CustomerDAO {
 
