@@ -27,16 +27,17 @@ public class BookingTypeController {
 		return bookingTypeDB.findBookingType(bookingTypeNo);
 	}
 	
-	public List<BookingPrice> findBookingPriceByBookingTypeNo(int bookingTypeNo) {
+	public BookingPrice findBookingPriceByBookingTypeNo(int bookingTypeNo) {
 		ArrayList<BookingPrice> bookingPrices = bookingPriceDB.findBookingPriceByBookingTypeNo(bookingTypeNo);
 		
 		BookingPrice res = null;
 		for(BookingPrice bp : bookingPrices) {
 			if(res == null) {
 				res = bp;
-			} else if(res.getDate()) {
-				
+			} else if(res.getStartDate().compareTo(bp.getStartDate()) < 0) {
+				res = bp;
 			}
 		}
+		return res;
 	}
 }
