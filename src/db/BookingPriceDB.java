@@ -16,6 +16,7 @@ public class BookingPriceDB implements BookingPriceDao {
 
 	public BookingPriceDB() throws Exception {
 		Connection con = DBConnection.getInstance().getConnection();
+		findBookingPricesByBookingTypeNo = con.prepareStatement(FIND_BOOKING_PRICE_BY_BOOKING_TYPE_NO_Q);
 	}
 
 	@Override
