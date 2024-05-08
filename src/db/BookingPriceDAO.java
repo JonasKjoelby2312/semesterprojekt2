@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.BookingPrice;
 
-public interface BookingPriceDao {
+public interface BookingPriceDAO {
 	List<BookingPrice> findBookingPricesByBookingTypeNo(int id) throws Exception;
 	
 }

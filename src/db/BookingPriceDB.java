@@ -9,8 +9,8 @@ import java.util.List;
 
 import model.BookingPrice;
 
-public class BookingPriceDB implements BookingPriceDao {
-	private static final String FIND_BOOKING_PRICE_BY_BOOKING_TYPE_NO_Q = " where booking_price_id = ?";
+public class BookingPriceDB implements BookingPriceDAO {
+	private static final String FIND_BOOKING_PRICE_BY_BOOKING_TYPE_NO_Q = "select booking_price_id, start_date, value, bt_id where booking_price_id = ?";
 
 	private PreparedStatement findBookingPricesByBookingTypeNo;
 

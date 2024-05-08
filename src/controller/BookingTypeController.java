@@ -3,7 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import db.BookingPriceDao;
+import db.BookingPriceDAO;
+import db.BookingPriceDB;
 import db.BookingTypeDB;
 import db.BookingTypeDAO;
 import model.Booking;
@@ -12,9 +13,9 @@ import model.BookingType;
 
 public class BookingTypeController {
 	private BookingTypeDAO bookingTypeDB;
-	private BookingPriceDao bookingPriceDB;
+	private BookingPriceDAO bookingPriceDB;
 	
-	public BookingTypeController() {
+	public BookingTypeController() throws Exception {
 		bookingTypeDB = new BookingTypeDB();
 		bookingPriceDB = new BookingPriceDB();
 	}
@@ -27,8 +28,8 @@ public class BookingTypeController {
 		return bookingTypeDB.findBookingType(bookingTypeNo);
 	}
 	
-	public BookingPrice findBookingPriceByBookingTypeNo(int bookingTypeNo) {
-		ArrayList<BookingPrice> bookingPrices = bookingPriceDB.findBookingPriceByBookingTypeNo(bookingTypeNo);
+	public BookingPrice findBookingPriceByBookingTypeNo(int bookingTypeNo) throws Exception {
+		List<BookingPrice> bookingPrices = bookingPriceDB.findBookingPricesByBookingTypeNo(bookingTypeNo);
 		
 		BookingPrice res = null;
 		for(BookingPrice bp : bookingPrices) {
