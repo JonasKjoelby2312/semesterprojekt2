@@ -41,11 +41,11 @@ public class EmployeeDB implements EmployeeDAO {
 	}
 
 	@Override
-	public Employee findEmployeeByID(int id) throws Exception {
+	public Employee findEmployeeByEmployeeNo(int number) throws Exception {
 		Employee res = null;
 		ResultSet rs;
 		try {
-			findByIdPS.setInt(1, id);
+			findByIdPS.setInt(1, number);
 			rs = findByIdPS.executeQuery();
 			res = buildObject(rs);
 		} catch(SQLException e) {
