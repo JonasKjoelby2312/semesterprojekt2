@@ -1,5 +1,11 @@
 package db;
 
-public interface BookingDAO {
+import java.util.List;
 
+import model.Booking;
+
+public interface BookingDAO {
+	List<Booking> findAllBookings();
+	List<Booking> findAllBookingsByCustomerPhone(String no);
+	boolean insertBooking(Booking b);
 }
