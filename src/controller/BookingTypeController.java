@@ -24,7 +24,7 @@ public class BookingTypeController {
 		return bookingTypeDB.findAllBookingTypes();
 	}
 	
-	public BookingType findBookingType(int bookingTypeNo) throws Exception {
+	public BookingType findBookingTypeByBookingTypeNo(int bookingTypeNo) throws Exception {
 		return bookingTypeDB.findBookingType(bookingTypeNo);
 	}
 	

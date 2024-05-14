@@ -9,9 +9,8 @@ public abstract class Order {
 	private Customer customer;
 	private Invoice invoice;
 
-	public Order(LocalDate date, double total, Customer customer) {
+	public Order(LocalDate date, Customer customer) {
 		this.date = date;
-		this.total = total;
 		this.customer = customer;
 	}
 

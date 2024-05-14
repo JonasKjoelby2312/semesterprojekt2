@@ -96,7 +96,6 @@ public class BookingDB implements BookingDAO{//
 			if(rs.next()) {
 				res = new Booking(
 						rs.getDate("date").toLocalDate(),
-						rs.getDouble("total"),
 						customerDB.findCustomerByID(rs.getInt("c_id")),
 						rs.getTime("start_time").toLocalTime(),
 						employeeDB.findEmployeeByID(rs.getInt("emp_id")),

@@ -71,7 +71,6 @@ public class CustomerDB implements CustomerDAO {
 						rs.getString("name"), 
 						rs.getString("email"),
 						rs.getString("phone_no"));
-					
 		}
 		return c;
 	}

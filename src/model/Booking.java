@@ -8,9 +8,9 @@ public class Booking extends Order {
 	private Employee employee;
 	private BookingType bookingType;
 	
-	public Booking (LocalDate date, double total, Customer customer, 
+	public Booking (LocalDate date, Customer customer, 
 			LocalTime startTime, Employee employee, BookingType bookingType) {
-		super(date, total, customer);
+		super(date, customer);
 		this.startTime = startTime;
 		this.employee = employee;
 		this.bookingType = bookingType;	

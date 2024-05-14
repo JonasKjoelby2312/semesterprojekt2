@@ -9,6 +9,8 @@ import db.BookingDB;
 import model.Booking;
 import model.BookingPrice;
 import model.BookingType;
+import model.Customer;
+import model.Employee;
 
 public class OrderController {
 	private BookingTypeController bookingTypeCtrl;
@@ -41,10 +43,25 @@ public class OrderController {
 	}
 	
 	public boolean createBookingPerson(int bookingTypeNo, int employeeNo, 
-			String customerPhone, LocalDate date, LocalTime startTime) {
+			String customerPhone, LocalDate date, LocalTime startTime) throws Exception {
 		boolean res = false;
-		currBooking = new Booking(int bookingTypeNo, int employeeNo, String customerPhone, LocalDate date, LocalTime startTime);
-		
+		if(LocalDate.now().compareTo(date) <= 0 && LocalTime.now().compareTo(startTime) < 0) {
+			Customer c = customerCtrl.findCustomerByPhone(customerPhone);
+			Employee e = employeeCtrl.findEmployeeByEmployeeNo(employeeNo);
+			BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeNo(bookingTypeNo);
+			currBooking = new Booking(date, c, startTime, e, bt);
+			res = true;
+		}
+		return res;
+	}
+	
+	public boolean compelteBooking() {
+		boolean res = false;
+		if(currBooking != null) {
+			bookingDB.insertBooking(currBooking);
+			currBooking = null;
+			res = true;
+		}
 		return res;
 	}
 }
