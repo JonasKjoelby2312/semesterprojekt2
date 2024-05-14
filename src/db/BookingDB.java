@@ -15,7 +15,7 @@ public class BookingDB implements BookingDAO{//
 	private PreparedStatement findAllQPS;
 	private PreparedStatement findBookingByCustomerPhonePS;
 	
-	private DogDB dogDB;
+	//private DogDB dogDB;
 	private CustomerDB customerDB;
 	private EmployeeDB employeeDB;
 	private BookingTypeDB bookingTypeDB;

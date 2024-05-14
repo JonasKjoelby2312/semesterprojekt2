@@ -12,7 +12,7 @@ import model.Customer;
 public class CustomerDB implements CustomerDAO {
 	
 	private static final String FIND_ALL_Q = "select customer_id, name, email, a_id, phone_no, d_id from customer"; 
-	private static final String FIND_BY_PHONE_Q = FIND_ALL_Q + " where customer_id = ?";
+	private static final String FIND_BY_PHONE_Q = FIND_ALL_Q + " where phone_no = ?";
 	private PreparedStatement findAllPS;
 	private PreparedStatement findByPhonePS;
 	
