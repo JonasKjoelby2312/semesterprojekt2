@@ -11,14 +11,17 @@ import model.BookingType;
 
 public class BookingTypeDB implements BookingTypeDAO {
 	private static final String FIND_ALL_Q = "select booking_type_id, type, name, description, duration from bookingType";
-	private static final String FIND_BY_BOOKING_TYPE_NO_Q = FIND_ALL_Q + " where booking_type_id = ?";
+	private static final String FIND_BY_BOOKING_TYPE_NO_Q = FIND_ALL_Q + " where booking_type_no = ?";
+	private static final String FIND_BOOKING_TYPE_BY_ID_Q = FIND_ALL_Q + " where booking_type_id = ?";
 	private PreparedStatement findAllPS;
 	private PreparedStatement findByBookingTypeNoPS;
+	private PreparedStatement findByBookingTypeIDPS;
 	
 	public BookingTypeDB() throws Exception {
 		Connection con = DBConnection.getInstance().getConnection();
 		findAllPS = con.prepareStatement(FIND_ALL_Q);
 		findByBookingTypeNoPS = con.prepareStatement(FIND_BY_BOOKING_TYPE_NO_Q);
+		findByBookingTypeIDPS = con.prepareStatement(FIND_BOOKING_TYPE_BY_ID_Q);
 	}
 
 	@Override
@@ -67,6 +70,18 @@ public class BookingTypeDB implements BookingTypeDAO {
 					rs.getString("description"),
 					rs.getInt("duration")
 					);
+		}
+		return res;
+	}
+
+	public BookingType findBookingTypeByID(int id) throws Exception {
+		BookingType res = null;
+		findByBookingTypeIDPS.setInt(1, id);
+		try {
+			ResultSet rs = findByBookingTypeIDPS.executeQuery();
+			res = buildObject(rs);
+		} catch (Exception e) {
+			throw new Exception("Could not find booking type");
 		}
 		return res;
 	}

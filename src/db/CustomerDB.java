@@ -13,15 +13,17 @@ public class CustomerDB implements CustomerDAO {
 	
 	private static final String FIND_ALL_Q = "select customer_id, name, email, a_id, phone_no, d_id from customer"; 
 	private static final String FIND_BY_PHONE_Q = FIND_ALL_Q + " where phone_no = ?";
+	private static final String FIND_CUSTOMER_BY_ID_Q = FIND_ALL_Q + " where c_id = ?";
 	private PreparedStatement findAllPS;
 	private PreparedStatement findByPhonePS;
+	private PreparedStatement findCustomerByID;
 	
 	public CustomerDB() throws Exception {
 		Connection con = DBConnection.getInstance().getConnection();
 		try {
 			findAllPS = con.prepareStatement(FIND_ALL_Q);
 			findByPhonePS = con.prepareStatement(FIND_BY_PHONE_Q);
-			
+			findCustomerByID = con.prepareStatement(FIND_CUSTOMER_BY_ID_Q);
 		} catch (SQLException e) {
 			throw new Exception("Prepare query at the moment, i could not - Yoda", e);
 		}
@@ -72,5 +74,17 @@ public class CustomerDB implements CustomerDAO {
 					
 		}
 		return c;
+	}
+
+	public Customer findCustomerByID(int id) throws Exception {
+		Customer res = null;
+		findCustomerByID.setInt(1, id);
+		try {
+			ResultSet rs = findCustomerByID.executeQuery();
+			res = buildObject(rs);
+		} catch (Exception e) {
+			throw new Exception("Could not find customer by ID");
+		}
+		return res;
 	}
 }
