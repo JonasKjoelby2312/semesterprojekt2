@@ -13,8 +13,10 @@ public class EmployeeDB implements EmployeeDAO {
 	
 	private static final String FIND_ALL_Q = "select employee_id, name, company_position, salary, employee_no from employee";
 	private static final String FIND_BY_ID_Q = FIND_ALL_Q + " where employee_no = ?";
+	private static final String FIND_EMPLOYEE_BY_ID_Q = FIND_ALL_Q + " where employee_no = ?";
 	private PreparedStatement findAllPS;
 	private PreparedStatement findByIdPS;
+	private PreparedStatement findEmployeeByIDPS;
 	
 	public EmployeeDB() throws Exception {
 
@@ -22,6 +24,7 @@ public class EmployeeDB implements EmployeeDAO {
 		try {
 			findAllPS = con.prepareStatement(FIND_ALL_Q);
 			findByIdPS = con.prepareStatement(FIND_BY_ID_Q);
+			findEmployeeByIDPS = con.prepareStatement(FIND_EMPLOYEE_BY_ID_Q);
 		} catch (SQLException e) {
 			throw new Exception("Could not prepare qurey", e);
 		}
@@ -73,6 +76,18 @@ public class EmployeeDB implements EmployeeDAO {
 		while (e != null) {
 			res.add(e);
 			e = buildObject(rs);
+		}
+		return res;
+	}
+
+	public Employee findEmployeeByID(int id) throws Exception {
+		Employee res = null;
+		findEmployeeByIDPS.setInt(1, id);
+		try {
+			ResultSet rs = findEmployeeByIDPS.executeQuery();
+			res = buildObject(rs);
+		} catch (Exception e) {
+			throw new Exception("Could not find employee");
 		}
 		return res;
 	}
