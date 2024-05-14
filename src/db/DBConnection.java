@@ -18,23 +18,23 @@ public class DBConnection {
 
 	
 	
-//	  private static final String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; 
-//	  private static final String dbName = "DMA-CSD-S232_10503097"; 
-//	  private static final String serverAddress = "hildur.ucn.dk";
-//	  private static final String serverAddress = "127.0.0.1";
-//	  private static final int serverPort = 1433; 
-//	  private static final String userName = "DMA-CSD-S232_10503097"; 
-//	  private static final String password = "Password1!";
+	  private static final String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver"; 
+	  private static final String dbName = "DMA-CSD-S232_10503110"; 
+	  private static final String serverAddress = "hildur.ucn.dk";
+	  //private static final String serverAddress = "127.0.0.1";
+	  private static final int serverPort = 1433; 
+	  private static final String userName = "DMA-CSD-S232_10503097"; 
+	  private static final String password = "Password1!";
 	 
 	 
 	
-	private static final String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	private static final String dbName = "persistens";
-	//private static final String serverAddress = "localhost";
-	private static final String serverAddress = "127.0.0.1";
-	private static final int serverPort = 1433;
-	private static final String userName = "sa";
-	private static final String password = "dockerStrongPwd123";
+//	private static final String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+//	private static final String dbName = "persistens";
+//	//private static final String serverAddress = "localhost";
+//	private static final String serverAddress = "127.0.0.1";
+//	private static final int serverPort = 1433;
+//	private static final String userName = "sa";
+//	private static final String password = "dockerStrongPwd123";
 
 	private DBConnection() throws Exception { //DataAccessException before
 		// Cheat sheet for the printf() method, the format is also used in the
