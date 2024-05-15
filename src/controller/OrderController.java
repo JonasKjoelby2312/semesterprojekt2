@@ -55,10 +55,11 @@ public class OrderController {
 		return res;
 	}
 	
-	public boolean compelteBooking() {
+	public boolean completeBooking() {
 		boolean res = false;
 		if(currBooking != null) {
 			bookingDB.insertBooking(currBooking);
+			// TODO Invoice
 			currBooking = null;
 			res = true;
 		}
