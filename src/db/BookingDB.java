@@ -66,13 +66,14 @@ public class BookingDB implements BookingDAO{//
 		try {
 			DBConnection.getInstance().startTransaction();
 			
-			insertOrderPS.setDate(1, Date.valueOf(LocalDate.now()));
-			insertOrderPS.setDouble(2, b.getTotal());
+			insertOrderPS.setDate(1, Date.valueOf(b.getDate()));
+			insertOrderPS.setDouble(2, 200d);//b.getTotal()); TODO
 			insertOrderPS.setInt(3, b.getCustomer().getCustomerID());
-			insertOrderPS.setInt(4, 1);
+			insertOrderPS.setInt(4, 1); //invoice TODO
 			
+			System.out.println("befOrdQ");
 			int ID = DBConnection.getInstance().executeInsertWithIdentity(insertOrderPS);
-			
+			System.out.println("afterOrdQ");
 			
 			insertBookingPS.setTime(1, Time.valueOf(b.getStartTime()));
 			insertBookingPS.setInt(2, b.getEmployee().getEmployeeID());
@@ -123,7 +124,7 @@ public class BookingDB implements BookingDAO{//
 						customerDB.findCustomerByID(rs.getInt("c_id")),
 						rs.getTime("start_time").toLocalTime(),
 						employeeDB.findEmployeeByID(rs.getInt("emp_id")),
-						bookingTypeDB.findBookingTypeByID(rs.getInt("booking_type_id")),
+						bookingTypeDB.findBookingTypeByID(rs.getInt("bt_id")),
 						rs.getString("customer_type")
 						);
 			}

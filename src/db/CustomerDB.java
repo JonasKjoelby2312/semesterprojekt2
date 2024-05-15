@@ -13,7 +13,7 @@ public class CustomerDB implements CustomerDAO {
 	
 	private static final String FIND_ALL_Q = "select customer_id, name, email, a_id, phone_no, d_id from customer"; 
 	private static final String FIND_BY_PHONE_Q = FIND_ALL_Q + " where phone_no = ?";
-	private static final String FIND_CUSTOMER_BY_ID_Q = FIND_ALL_Q + " where c_id = ?";
+	private static final String FIND_CUSTOMER_BY_ID_Q = FIND_ALL_Q + " where customer_id = ?";
 	private PreparedStatement findAllPS;
 	private PreparedStatement findByPhonePS;
 	private PreparedStatement findCustomerByID;
@@ -69,7 +69,7 @@ public class CustomerDB implements CustomerDAO {
 				c = new Customer(
 						rs.getInt("customer_id"),
 						rs.getString("name"), 
-						"Bananstræde",
+						"Bananstræde", //TODO
 						rs.getString("email"),
 						rs.getString("phone_no"));
 		}

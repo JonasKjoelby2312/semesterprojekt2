@@ -10,7 +10,7 @@ import java.util.List;
 import model.BookingType;
 
 public class BookingTypeDB implements BookingTypeDAO {
-	private static final String FIND_ALL_Q = "select booking_type_id, booking_type_no, customer_type, name, description, duration from bookingType";
+	private static final String FIND_ALL_Q = "select booking_type_id, customer_type, name, booking_type_description, duration from booking_type";
 	private static final String FIND_BY_BOOKING_TYPE_NO_Q = FIND_ALL_Q + " where booking_type_no = ?";
 	private static final String FIND_BOOKING_TYPE_BY_ID_Q = FIND_ALL_Q + " where booking_type_id = ?";
 	private PreparedStatement findAllPS;
@@ -51,11 +51,11 @@ public class BookingTypeDB implements BookingTypeDAO {
 	}
 
 	@Override
-	public BookingType findBookingType(int bookingTypeNo) throws Exception {
+	public BookingType findBookingType(int bookingTypeID) throws Exception {
 		BookingType res = null;
 		try {
-			findByBookingTypeNoPS.setInt(1, bookingTypeNo);
-			ResultSet rs = findByBookingTypeNoPS.executeQuery();
+			findByBookingTypeIDPS.setInt(1, bookingTypeID);
+			ResultSet rs = findByBookingTypeIDPS.executeQuery();
 			res = buildObject(rs);
 		} catch (SQLException e) {
 			throw new Exception("Could not find bookingType by ID", e);
@@ -68,10 +68,10 @@ public class BookingTypeDB implements BookingTypeDAO {
 		if(rs.next()) {
 			res = new BookingType(
 					rs.getInt("booking_type_id"),
-					rs.getInt("booking_type_no"),
+					1, //rs.getInt("booking_type_no"), //TODO
 					rs.getString("customer_type"),
 					rs.getString("name"),
-					rs.getString("description"),
+					rs.getString("booking_type_description"),
 					rs.getInt("duration"),
 					bookingPriceDB.findBookingPricesByBookingTypeID(rs.getInt("booking_type_id"))
 					);

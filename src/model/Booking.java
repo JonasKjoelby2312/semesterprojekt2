@@ -53,6 +53,10 @@ public class Booking extends Order {
 	public void setCustomerType(String customerType) {
 		this.customerType = customerType;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Booking [startTime=" + startTime + ", employee=" + employee + ", bookingType=" + bookingType
+				+ ", customerType=" + customerType + "]";
+	}
 }
