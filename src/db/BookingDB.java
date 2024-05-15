@@ -17,12 +17,11 @@ import model.Customer;
 import model.Employee;
 
 public class BookingDB implements BookingDAO{//
-	private static final String FIND_ALL_Q = "SELECT * from booking, orde where booking.o_id = orde.order_id";
+	private static final String FIND_ALL_Q = "select booking_id, start_time, emp_id, o_id, bt_id, customer_type, date, total, c_id, i_id from booking right outer join orde on o_id = order_id";
 	private static final String FIND_BOOKING_BY_CUSTOMER_PHONE = FIND_ALL_Q + " where c_id = ?";
 	private static final String INSERT_ORDER_Q = "insert into orde values(?, ?, ?, ?)";
 	private static final String INSERT_BOOKING_Q = "insert into booking values(?, ?, ?, ?, ?)";
 	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
-	// select booking_id, start_time, emp_id, o_id, bt_id, customer_type, date, total, c_id, i_id from booking right outer join orde on o_id = order_id
 	
 	private PreparedStatement findAllQPS;
 	private PreparedStatement findBookingByCustomerPhonePS;
