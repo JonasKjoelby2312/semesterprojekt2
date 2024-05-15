@@ -10,7 +10,7 @@ import java.util.List;
 import model.BookingPrice;
 
 public class BookingPriceDB implements BookingPriceDAO {
-	private static final String FIND_BOOKING_PRICE_BY_BOOKING_TYPE_NO_Q = "select booking_price_id, start_date, value, bt_id where booking_price_id = ?";
+	private static final String FIND_BOOKING_PRICE_BY_BOOKING_TYPE_NO_Q = "select Top 1 booking_price_id, start_date, value, bt_id from booking_price Order by start_date Desc where booking_price_id = ?";
 
 	private PreparedStatement findBookingPricesByBookingTypeNo;
 
@@ -20,11 +20,10 @@ public class BookingPriceDB implements BookingPriceDAO {
 	}
 
 	@Override
-	public List<BookingPrice> findBookingPricesByBookingTypeNo(int bookingTypeNo) throws Exception {
-		List<BookingPrice> res = new ArrayList<>();
-		findBookingPricesByBookingTypeNo.setInt(1, bookingTypeNo);
+	public BookingPrice findBookingPricesByBookingTypeID(int bookingTypeID) throws Exception {
+		findBookingPricesByBookingTypeNo.setInt(1, bookingTypeID);
 		ResultSet rs = findBookingPricesByBookingTypeNo.executeQuery();
-		res = buildObjects(rs);
+		BookingPrice res = buildObject(rs);
 		return res;
 	}
 

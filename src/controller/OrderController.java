@@ -30,32 +30,32 @@ public class OrderController {
 		return bookingTypeCtrl.findAllBookingTypes();
 	}
 
-	public BookingType findBookingTypeByBookingTypeNo(int bookingTypeNo) throws Exception {
-		return bookingTypeCtrl.findBookingTypeByBookingTypeNo(bookingTypeNo);
+	public BookingType findBookingTypeByBookingTypeID(int bookingTypeID) throws Exception {
+		return bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
 	}
 
-	public BookingPrice findBookingPriceByBookingTypeNo(int bookingTypeNo) throws Exception {
-		return bookingTypeCtrl.findBookingPriceByBookingTypeNo(bookingTypeNo);
+	public BookingPrice findBookingPriceByBookingTypeID(int bookingTypeID) throws Exception {
+		return bookingTypeCtrl.findBookingPriceByBookingTypeID(bookingTypeID);
 	}
 
 	public List<Booking> findAvailableTime(LocalDate date, int employeeNo) throws Exception {
 		return bookingDB.findAvailableTime(date, employeeNo);
 	}
 	
-	public boolean createBookingPerson(int bookingTypeNo, int employeeNo, 
+	public boolean createBookingPerson(int bookingTypeID, int employeeNo, 
 			String customerPhone, LocalDate date, LocalTime startTime) throws Exception {
 		boolean res = false;
 		if(LocalDate.now().compareTo(date) <= 0 && LocalTime.now().compareTo(startTime) < 0) {
 			Customer c = customerCtrl.findCustomerByPhone(customerPhone);
 			Employee e = employeeCtrl.findEmployeeByEmployeeNo(employeeNo);
-			BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeNo(bookingTypeNo);
-			currBooking = new Booking(date, c, startTime, e, bt);
+			BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
+			currBooking = new Booking(date, c, startTime, e, bt, "Person");
 			res = true;
 		}
 		return res;
 	}
 	
-	public boolean completeBooking() {
+	public boolean completeBooking() throws Exception {
 		boolean res = false;
 		if(currBooking != null) {
 			bookingDB.insertBooking(currBooking);

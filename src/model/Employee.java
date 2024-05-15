@@ -2,6 +2,7 @@ package model;
 
 public class Employee {
 	
+	private int employeeID;
 	private String name; 
 	private String companyPosition;
 	private double salary;
@@ -9,7 +10,8 @@ public class Employee {
 	
 	
 	
-	public Employee(String name, String companyPosition, double salary, int employeeNo) {
+	public Employee(int employeeID, String name, String companyPosition, double salary, int employeeNo) {
+		this.employeeID =  employeeID;
 		this.name = name;
 		this.companyPosition = companyPosition;
 		this.salary = salary;
@@ -55,6 +57,18 @@ public class Employee {
 
 	public void setEmployeeNo(int employeeNo) {
 		this.employeeNo = employeeNo;
+	}
+
+
+
+	public int getEmployeeID() {
+		return employeeID;
+	}
+
+
+
+	public void setEmployeeID(int employeeID) {
+		this.employeeID = employeeID;
 	}
 	
 	

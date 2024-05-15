@@ -61,6 +61,7 @@ public class EmployeeDB implements EmployeeDAO {
 		Employee res = null;
 		if(rs.next()) {
 			res = new Employee(
+					rs.getInt("employee_id"),
 					rs.getString("name"),
 					rs.getString("company_position"),
 					rs.getInt("salary"),

@@ -24,21 +24,21 @@ public class BookingTypeController {
 		return bookingTypeDB.findAllBookingTypes();
 	}
 	
-	public BookingType findBookingTypeByBookingTypeNo(int bookingTypeNo) throws Exception {
-		return bookingTypeDB.findBookingType(bookingTypeNo);
+	public BookingType findBookingTypeByBookingTypeID(int bookingTypeID) throws Exception {
+		return bookingTypeDB.findBookingType(bookingTypeID);
 	}
 	
-	public BookingPrice findBookingPriceByBookingTypeNo(int bookingTypeNo) throws Exception {
-		List<BookingPrice> bookingPrices = bookingPriceDB.findBookingPricesByBookingTypeNo(bookingTypeNo);
+	public BookingPrice findBookingPriceByBookingTypeID(int bookingTypeID) throws Exception {
+		BookingPrice bookingPrice = bookingPriceDB.findBookingPricesByBookingTypeID(bookingTypeID);
 		
-		BookingPrice res = null;
-		for(BookingPrice bp : bookingPrices) {
-			if(res == null) {
-				res = bp;
-			} else if(res.getStartDate().compareTo(bp.getStartDate()) < 0) {
-				res = bp;
-			}
-		}
-		return res;
+//		BookingPrice res = null;
+//		for(BookingPrice bp : bookingPrices) {
+//			if(res == null) {
+//				res = bp;
+//			} else if(res.getStartDate().compareTo(bp.getStartDate()) < 0) {
+//				res = bp;
+//			}
+//		}
+		return bookingPrice;
 	}
 }

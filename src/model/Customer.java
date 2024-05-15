@@ -1,14 +1,15 @@
 package model;
 
 public class Customer {
+	private int customerID;
 	private String name;
 	private String address;
 	private String phoneNo;
 	private String email;
 	
 	
-	public Customer(String name, String address, String phoneNo, String email) {
-		super();
+	public Customer(int customerID, String name, String address, String phoneNo, String email) {
+		this.customerID = customerID;
 		this.name = name;
 		this.address = address;
 		this.phoneNo = phoneNo;
@@ -37,6 +38,12 @@ public class Customer {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public int getCustomerID() {
+		return customerID;
+	}
+	public void setCustomerID(int customerID) {
+		this.customerID = customerID;
 	}
 
 }

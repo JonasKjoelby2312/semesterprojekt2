@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -16,18 +17,18 @@ import model.Customer;
 import model.Employee;
 
 public class BookingDB implements BookingDAO{//
-	private static final String FIND_ALL_Q = "select booking_id, start_time, emp_id, o_id, bt_id, type from booking right outer join order on o_id = order_id";
+	private static final String FIND_ALL_Q = "SELECT * from booking, orde where booking.o_id = orde.order_id";
 	private static final String FIND_BOOKING_BY_CUSTOMER_PHONE = FIND_ALL_Q + " where c_id = ?";
-	private static final String INSERT_ORDER_Q = "insert into order values(?, ?, ?, ?)";
+	private static final String INSERT_ORDER_Q = "insert into orde values(?, ?, ?, ?)";
 	private static final String INSERT_BOOKING_Q = "insert into booking values(?, ?, ?, ?, ?)";
 	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
-	
+	// select booking_id, start_time, emp_id, o_id, bt_id, customer_type, date, total, c_id, i_id from booking right outer join orde on o_id = order_id
 	
 	private PreparedStatement findAllQPS;
 	private PreparedStatement findBookingByCustomerPhonePS;
-	private PreparedStatement insertOrderQPS;
-	private PreparedStatement insertBookingQPS;
-	private PreparedStatement findBookingByDateAndEmployeeID;
+	private PreparedStatement insertOrderPS;
+	private PreparedStatement insertBookingPS;
+	private PreparedStatement findBookingByDateAndEmployeeIDPS;
 	
 //	private DogDB dogDB;
 	private CustomerDB customerDB;
@@ -43,9 +44,9 @@ public class BookingDB implements BookingDAO{//
 		try {
 			findAllQPS = con.prepareStatement(FIND_ALL_Q);
 			findBookingByCustomerPhonePS = con.prepareStatement(FIND_BOOKING_BY_CUSTOMER_PHONE);
-			insertOrderQPS = con.prepareStatement(INSERT_ORDER_Q);
-			insertBookingQPS = con.prepareStatement(INSERT_BOOKING_Q);
-			findBookingByDateAndEmployeeID = con.prepareStatement(FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID);
+			insertOrderPS = con.prepareStatement(INSERT_ORDER_Q);
+			insertBookingPS = con.prepareStatement(INSERT_BOOKING_Q);
+			findBookingByDateAndEmployeeIDPS = con.prepareStatement(FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID);
 		} catch (SQLException e) {
 			throw new Exception("Could not preparedStatement");
 		}
@@ -61,17 +62,41 @@ public class BookingDB implements BookingDAO{//
 		return null;
 	}
 	@Override
-	public boolean insertBooking(Booking b) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean insertBooking(Booking b) throws Exception {
+		boolean res = false;
+		try {
+			DBConnection.getInstance().startTransaction();
+			
+			insertOrderPS.setDate(1, Date.valueOf(LocalDate.now()));
+			insertOrderPS.setDouble(2, b.getTotal());
+			insertOrderPS.setInt(3, b.getCustomer().getCustomerID());
+			insertOrderPS.setInt(4, 1);
+			
+			int ID = DBConnection.getInstance().executeInsertWithIdentity(insertOrderPS);
+			
+			
+			insertBookingPS.setTime(1, Time.valueOf(b.getStartTime()));
+			insertBookingPS.setInt(2, b.getEmployee().getEmployeeID());
+			insertBookingPS.setInt(3, ID);
+			insertBookingPS.setInt(4, b.getBookingType().getBookingTypeID());
+			insertBookingPS.setString(5, b.getCustomerType());
+			
+			DBConnection.getInstance().commitTransaction();
+		} catch (Exception e) {
+			DBConnection.getInstance().rollbackTransaction();
+			res = false;
+			throw new Exception("Could not save booking");
+		}
+		
+		return res;
 	}
 	
 	public List<Booking> findAvailableTime(LocalDate date, int employeeNo) throws Exception {
 		List<Booking> res = new ArrayList<>();
-		findBookingByDateAndEmployeeID.setInt(1, employeeNo);
-		findBookingByDateAndEmployeeID.setDate(2, Date.valueOf(date));
+		findBookingByDateAndEmployeeIDPS.setInt(1, employeeNo);
+		findBookingByDateAndEmployeeIDPS.setDate(2, Date.valueOf(date));
 		try {
-			ResultSet rs = findBookingByDateAndEmployeeID.executeQuery();
+			ResultSet rs = findBookingByDateAndEmployeeIDPS.executeQuery();
 			res = buildObjects(rs);
 		} catch (Exception e) {
 			throw new Exception("Could not find available time");
@@ -99,7 +124,8 @@ public class BookingDB implements BookingDAO{//
 						customerDB.findCustomerByID(rs.getInt("c_id")),
 						rs.getTime("start_time").toLocalTime(),
 						employeeDB.findEmployeeByID(rs.getInt("emp_id")),
-						bookingTypeDB.findBookingTypeByID(rs.getInt("booking_type_id"))
+						bookingTypeDB.findBookingTypeByID(rs.getInt("booking_type_id")),
+						rs.getString("customer_type")
 						);
 			}
 		} catch (Exception e) {

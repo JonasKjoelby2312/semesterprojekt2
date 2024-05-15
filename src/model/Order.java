@@ -23,8 +23,10 @@ public abstract class Order {
 	}
 
 	public double getTotal() {
-		return total;
+		return calculateTotal();
 	}
+	
+	protected abstract double calculateTotal();
 
 	public void setTotal(double total) {
 		this.total = total;

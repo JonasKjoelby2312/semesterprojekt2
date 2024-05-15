@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDate;
 
 public class Invoice {
+	// Invoice id
 	private int invoiceNo;
 	private LocalDate paymentDate;
 	private double total;

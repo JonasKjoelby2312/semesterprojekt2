@@ -67,8 +67,9 @@ public class CustomerDB implements CustomerDAO {
 		Customer c = null;
 		if (rs.next()) {
 				c = new Customer(
-						rs.getString("customer_id"),
+						rs.getInt("customer_id"),
 						rs.getString("name"), 
+						"Bananstræde",
 						rs.getString("email"),
 						rs.getString("phone_no"));
 		}

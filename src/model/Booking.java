@@ -7,13 +7,15 @@ public class Booking extends Order {
 	private LocalTime startTime;
 	private Employee employee;
 	private BookingType bookingType;
+	private String customerType;
 	
 	public Booking (LocalDate date, Customer customer, 
-			LocalTime startTime, Employee employee, BookingType bookingType) {
+			LocalTime startTime, Employee employee, BookingType bookingType, String customerType) {
 		super(date, customer);
 		this.startTime = startTime;
 		this.employee = employee;
-		this.bookingType = bookingType;	
+		this.bookingType = bookingType;
+		this.customerType = customerType;
 	}
 
 	public LocalTime getStartTime() {
@@ -24,6 +26,9 @@ public class Booking extends Order {
 		this.startTime = startTime;
 	}
 
+	protected double calculateTotal() {
+		return bookingType.getBookingPrice().getValue();
+	}
 
 	public Employee getEmployee() {
 		return employee;
@@ -39,6 +44,14 @@ public class Booking extends Order {
 
 	public void setBookingType(BookingType bookingType) {
 		this.bookingType = bookingType;
+	}
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
 	}
 	
 	
