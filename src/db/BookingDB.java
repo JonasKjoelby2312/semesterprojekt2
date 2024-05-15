@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -43,7 +44,7 @@ public class BookingDB implements BookingDAO{//
 		try {
 			findAllQPS = con.prepareStatement(FIND_ALL_Q);
 			findBookingByCustomerPhonePS = con.prepareStatement(FIND_BOOKING_BY_CUSTOMER_PHONE);
-			insertOrderPS = con.prepareStatement(INSERT_ORDER_Q);
+			insertOrderPS = con.prepareStatement(INSERT_ORDER_Q, Statement.RETURN_GENERATED_KEYS);
 			insertBookingPS = con.prepareStatement(INSERT_BOOKING_Q);
 			findBookingByDateAndEmployeeIDPS = con.prepareStatement(FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID);
 		} catch (SQLException e) {
@@ -67,19 +68,19 @@ public class BookingDB implements BookingDAO{//
 			DBConnection.getInstance().startTransaction();
 			
 			insertOrderPS.setDate(1, Date.valueOf(b.getDate()));
-			insertOrderPS.setDouble(2, 200d);//b.getTotal()); TODO
+			insertOrderPS.setDouble(2, b.getTotal());
 			insertOrderPS.setInt(3, b.getCustomer().getCustomerID());
 			insertOrderPS.setInt(4, 1); //invoice TODO
 			
-			System.out.println("befOrdQ");
 			int ID = DBConnection.getInstance().executeInsertWithIdentity(insertOrderPS);
-			System.out.println("afterOrdQ");
 			
 			insertBookingPS.setTime(1, Time.valueOf(b.getStartTime()));
 			insertBookingPS.setInt(2, b.getEmployee().getEmployeeID());
 			insertBookingPS.setInt(3, ID);
 			insertBookingPS.setInt(4, b.getBookingType().getBookingTypeID());
 			insertBookingPS.setString(5, b.getCustomerType());
+			
+			insertBookingPS.executeUpdate();
 			
 			DBConnection.getInstance().commitTransaction();
 		} catch (Exception e) {

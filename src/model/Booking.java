@@ -26,6 +26,7 @@ public class Booking extends Order {
 		this.startTime = startTime;
 	}
 
+	@Override
 	protected double calculateTotal() {
 		return bookingType.getBookingPrice().getValue();
 	}

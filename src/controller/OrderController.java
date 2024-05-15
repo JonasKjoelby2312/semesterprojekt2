@@ -57,7 +57,9 @@ public class OrderController {
 	
 	public boolean completeBooking() throws Exception {
 		boolean res = false;
+		System.out.println("Out");
 		if(currBooking != null) {
+			System.out.println("In");
 			bookingDB.insertBooking(currBooking);
 			// TODO Invoice
 			currBooking = null;
