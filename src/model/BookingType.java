@@ -3,17 +3,16 @@ package model;
 public class BookingType {
 	private int bookingTypeID;
 	private int bookingTypeNo;
-	private String type;
+	private String customerType;
 	private String name;
 	private String description;
 	private int duration;
 	private BookingPrice bookingPrice;
 	
-	public BookingType(int bookingTypeID, int bookingTypeNo, String type, String name, String description, int duration, BookingPrice bookingPrice) {
-		super();
+	public BookingType(int bookingTypeID, int bookingTypeNo, String customerType, String name, String description, int duration, BookingPrice bookingPrice) {
 		this.bookingTypeID = bookingTypeID;
 		this.bookingTypeNo = bookingTypeNo;
-		this.type = type;
+		this.customerType = customerType;
 		this.name = name;
 		this.description = description;
 		this.duration = duration;
@@ -25,11 +24,11 @@ public class BookingType {
 	public void setBookingTypeNo(int bookingTypeNo) {
 		this.bookingTypeNo = bookingTypeNo;
 	}
-	public String getType() {
-		return type;
+	public String getCustomerType() {
+		return customerType;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
 	}
 	public String getName() {
 		return name;

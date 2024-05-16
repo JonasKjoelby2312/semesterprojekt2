@@ -1,11 +1,15 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Customer {
 	private int customerID;
 	private String name;
 	private String address;
 	private String phoneNo;
 	private String email;
+	private List<Dog> dogs;
 	
 	
 	public Customer(int customerID, String name, String address, String phoneNo, String email) {
@@ -14,6 +18,7 @@ public class Customer {
 		this.address = address;
 		this.phoneNo = phoneNo;
 		this.email = email;
+		dogs = new ArrayList<>();
 	}
 	public String getName() {
 		return name;
@@ -45,5 +50,12 @@ public class Customer {
 	public void setCustomerID(int customerID) {
 		this.customerID = customerID;
 	}
-
+	public void addDog(Dog d) {
+		if(d != null) {
+			dogs.add(d);
+		}
+	}
+	public List<Dog> getDogs() {
+		return new ArrayList<Dog>(dogs);
+	}
 }

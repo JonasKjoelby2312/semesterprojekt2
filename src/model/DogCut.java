@@ -1,10 +1,18 @@
 package model;
 
-public class DogCut {
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+public class DogCut extends Booking{
 	private String comment;
+	private Dog dog;
 	
-	public DogCut(String comment) {
+	public DogCut(LocalDate date, Customer customer, 
+			LocalTime startTime, Employee employee, BookingType bookingType,
+			String customerType, Dog dog, String comment) {
+		super(date, customer, startTime, employee, bookingType, comment);
 		this.comment = comment;
+		this.dog = dog;
 	}
 
 	public String getComment() {
@@ -15,4 +23,11 @@ public class DogCut {
 		this.comment = comment;
 	}
 
+	public Dog getDog() {
+		return dog;
+	}
+
+	public void setDog(Dog dog) {
+		this.dog = dog;
+	}
 }

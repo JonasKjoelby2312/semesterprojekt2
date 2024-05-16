@@ -15,6 +15,7 @@ import java.util.List;
 import model.Booking;
 import model.BookingType;
 import model.Customer;
+import model.DogCut;
 import model.Employee;
 
 public class BookingDB implements BookingDAO{//
@@ -22,12 +23,14 @@ public class BookingDB implements BookingDAO{//
 	private static final String FIND_BOOKING_BY_CUSTOMER_PHONE = FIND_ALL_Q + " where c_id = ?";
 	private static final String INSERT_ORDER_Q = "insert into orde values(?, ?, ?, ?)";
 	private static final String INSERT_BOOKING_Q = "insert into booking values(?, ?, ?, ?, ?)";
+	private static final String INSERT_DOG_CUT_Q = "insert into dog_cut VALUES (?, ?, ?)";
 	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
 	
 	private PreparedStatement findAllQPS;
 	private PreparedStatement findBookingByCustomerPhonePS;
 	private PreparedStatement insertOrderPS;
 	private PreparedStatement insertBookingPS;
+	private PreparedStatement insertDogCutPS;
 	private PreparedStatement findBookingByDateAndEmployeeIDPS;
 	
 //	private DogDB dogDB;
@@ -45,25 +48,26 @@ public class BookingDB implements BookingDAO{//
 			findAllQPS = con.prepareStatement(FIND_ALL_Q);
 			findBookingByCustomerPhonePS = con.prepareStatement(FIND_BOOKING_BY_CUSTOMER_PHONE);
 			insertOrderPS = con.prepareStatement(INSERT_ORDER_Q, Statement.RETURN_GENERATED_KEYS);
-			insertBookingPS = con.prepareStatement(INSERT_BOOKING_Q);
+			insertBookingPS = con.prepareStatement(INSERT_BOOKING_Q, Statement.RETURN_GENERATED_KEYS);
+			insertDogCutPS = con.prepareStatement(INSERT_DOG_CUT_Q);
 			findBookingByDateAndEmployeeIDPS = con.prepareStatement(FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID);
 		} catch (SQLException e) {
 			throw new Exception("Could not preparedStatement");
 		}
 	}
 	
+//	@Override
+//	public List<Booking> findAllBookings() {
+//		return null;
+//	}
+//	@Override
+//	public List<Booking> findAllBookingsByCustomerPhone(String no) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
 	@Override
-	public List<Booking> findAllBookings() {
-		return null;
-	}
-	@Override
-	public List<Booking> findAllBookingsByCustomerPhone(String no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public boolean insertBooking(Booking b) throws Exception {
-		boolean res = false;
+	public void insertBooking(Booking b) throws Exception {
 		try {
 			DBConnection.getInstance().startTransaction();
 			
@@ -85,11 +89,40 @@ public class BookingDB implements BookingDAO{//
 			DBConnection.getInstance().commitTransaction();
 		} catch (Exception e) {
 			DBConnection.getInstance().rollbackTransaction();
-			res = false;
 			throw new Exception("Could not save booking");
 		}
-		
-		return res;
+	}
+	
+	public void insertDogCut(DogCut dc) throws Exception {
+		try {
+			DBConnection.getInstance().startTransaction();
+			
+			insertOrderPS.setDate(1, Date.valueOf(dc.getDate()));
+			insertOrderPS.setDouble(2, dc.getTotal());
+			insertOrderPS.setInt(3, dc.getCustomer().getCustomerID());
+			insertOrderPS.setInt(4, 1); //invoice TODO
+			
+			int orderID = DBConnection.getInstance().executeInsertWithIdentity(insertDogCutPS);
+			
+			insertBookingPS.setTime(1, Time.valueOf(dc.getStartTime()));
+			insertBookingPS.setInt(2, dc.getEmployee().getEmployeeID());
+			insertBookingPS.setInt(3, orderID);
+			insertBookingPS.setInt(4, dc.getBookingType().getBookingTypeID());
+			insertBookingPS.setString(5, dc.getCustomerType());
+			
+			int bookingID = DBConnection.getInstance().executeInsertWithIdentity(insertBookingPS);
+			
+			insertDogCutPS.setString(1, dc.getComment());
+			insertDogCutPS.setInt(2, bookingID);
+			insertDogCutPS.setInt(3, dc.getDog().getDogID());
+			
+			insertBookingPS.executeUpdate();
+			
+			DBConnection.getInstance().commitTransaction();
+		} catch (Exception e) {
+			DBConnection.getInstance().rollbackTransaction();
+			throw new Exception("Could not save booking");
+		}
 	}
 	
 	public List<Booking> findAvailableTime(LocalDate date, int employeeNo) throws Exception {
