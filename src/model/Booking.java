@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Booking extends Order {
+	private int bookingID;
 	private LocalTime startTime;
 	private Employee employee;
 	private BookingType bookingType;
 	private String customerType;
+
 	
 	public Booking (LocalDate date, Customer customer, 
 			LocalTime startTime, Employee employee, BookingType bookingType, String customerType) {
@@ -59,5 +61,13 @@ public class Booking extends Order {
 	public String toString() {
 		return "Booking [startTime=" + startTime + ", employee=" + employee + ", bookingType=" + bookingType
 				+ ", customerType=" + customerType + "]";
+	}
+
+	public int getBookingID() {
+		return bookingID;
+	}
+
+	public void setBookingID(int bookingID) {
+		this.bookingID = bookingID;
 	}
 }

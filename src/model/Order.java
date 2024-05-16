@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 
 public abstract class Order {
-
+	private int orderID;
 	private LocalDate date;
 	private double total;
 	private Customer customer;
@@ -46,6 +46,14 @@ public abstract class Order {
 
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
+	}
+
+	public int getOrderID() {
+		return orderID;
+	}
+
+	public void setOrderID(int orderID) {
+		this.orderID = orderID;
 	}
 
 }
