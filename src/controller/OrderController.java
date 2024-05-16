@@ -45,7 +45,7 @@ public class OrderController {
 	public boolean createBookingPerson(int bookingTypeID, int employeeNo, 
 			String customerPhone, LocalDate date, LocalTime startTime) throws Exception {
 		boolean res = false;
-		if(LocalDate.now().compareTo(date) <= 0 && LocalTime.now().compareTo(startTime) < 0) {
+		if(LocalDate.now().compareTo(date) < 0 || LocalDate.now().compareTo(date) == 0 && LocalTime.now().compareTo(startTime) < 0) {
 			Customer c = customerCtrl.findCustomerByPhone(customerPhone);
 			Employee e = employeeCtrl.findEmployeeByEmployeeNo(employeeNo);
 			BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
