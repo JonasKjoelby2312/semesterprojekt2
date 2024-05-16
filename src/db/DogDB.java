@@ -4,33 +4,35 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import model.Customer;
 import model.Dog;
 
 public class DogDB implements DogDAO{
 	private static final String FIND_ALL_DOGS_OF_CUSTOMER_Q = "select dog_id, name, dog_description, c_id from dog";
-	private static final String FIND_DOG_BY_CUSTOMER_ID_AND_NAME_Q = FIND_ALL_DOGS_OF_CUSTOMER_Q + " where c_id = ? and name = ?";
+	private static final String FIND_DOG_BY_CUSTOMER_AND_NAME_Q = FIND_ALL_DOGS_OF_CUSTOMER_Q + " where c_id = ? and name = ?";
 	private PreparedStatement findAllDogsOfCustomerPS;
-	private PreparedStatement findDogByCustomerIDAndDogName;
+	private PreparedStatement findDogByCustomerAndDogName;
 	
 	public DogDB() throws Exception {
 		Connection con = DBConnection.getInstance().getConnection();
 		
 		try {
-			findDogByCustomerIDAndDogName = con.prepareStatement(FIND_DOG_BY_CUSTOMER_ID_AND_NAME_Q);
+			findDogByCustomerAndDogName = con.prepareStatement(FIND_DOG_BY_CUSTOMER_AND_NAME_Q);
 		} catch (Exception e) {
 			throw new Exception("Could not prepare statements");
 		}
 	}
 	
 	@Override
-	public Dog findDogByCustomerIDAndDogName(int id, String dogName) throws Exception {
+	public Dog findDogByCustomerAndDogName(Customer c, String dogName) throws Exception {
 		Dog res = null;
-		findDogByCustomerIDAndDogName.setInt(1, id);
-		findDogByCustomerIDAndDogName.setString(2, dogName);
+		findDogByCustomerAndDogName.setInt(1, c.getCustomerID());
+		findDogByCustomerAndDogName.setString(2, dogName);
 		
-		ResultSet rs = findDogByCustomerIDAndDogName.executeQuery();
+		ResultSet rs = findDogByCustomerAndDogName.executeQuery();
 		res = buildObject(rs);
 		
+		c.addDog(res);
 		return res;
 	}
 

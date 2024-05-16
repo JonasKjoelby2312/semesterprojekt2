@@ -73,9 +73,9 @@ public class OrderController {
 		if(LocalDate.now().compareTo(date) < 0 || LocalDate.now().compareTo(date) == 0 && LocalTime.now().compareTo(startTime) < 0) {
 			BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
 			Customer c = customerCtrl.findCustomerByPhone(customerPhone);
-			System.out.println(c);
 			Employee e = employeeCtrl.findEmployeeByEmployeeNo(employeeNo);
-			Dog d = dogDB.findDogByCustomerIDAndDogName(c.getCustomerID(), dogName);
+			Dog d = dogDB.findDogByCustomerAndDogName(c, dogName);
+			
 			if(c != null && e != null && bt != null && d != null) {
 				if(bt.getCustomerType().equals("Dog")) {
 					currDogCut = new DogCut( date, c, startTime, e, bt, "Dog", d, comment);

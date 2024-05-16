@@ -1,7 +1,8 @@
 package db;
 
+import model.Customer;
 import model.Dog;
 
 public interface DogDAO {
-	Dog findDogByCustomerIDAndDogName(int id, String dogName) throws Exception;
+	Dog findDogByCustomerAndDogName(Customer c, String dogName) throws Exception;
 }
