@@ -75,7 +75,7 @@ public class OrderController {
 			Customer c = customerCtrl.findCustomerByPhone(customerPhone);
 			Employee e = employeeCtrl.findEmployeeByEmployeeNo(employeeNo);
 			Dog d = dogDB.findDogByCustomerAndDogName(c, dogName);
-			
+
 			if(c != null && e != null && bt != null && d != null) {
 				if(bt.getCustomerType().equals("Dog")) {
 					currDogCut = new DogCut( date, c, startTime, e, bt, "Dog", d, comment);
@@ -90,7 +90,6 @@ public class OrderController {
 		boolean res = false;
 		if(currBooking != null) {
 			bookingDB.insertBooking(currBooking);
-			// TODO Invoice
 			currBooking = null;
 			res = true;
 		} else if(currDogCut != null) {

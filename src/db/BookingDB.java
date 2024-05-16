@@ -74,7 +74,7 @@ public class BookingDB implements BookingDAO{//
 			insertOrderPS.setDate(1, Date.valueOf(b.getDate()));
 			insertOrderPS.setDouble(2, b.getTotal());
 			insertOrderPS.setInt(3, b.getCustomer().getCustomerID());
-			insertOrderPS.setInt(4, 1); //invoice TODO
+			insertOrderPS.setInt(4, 1);
 			
 			int ID = DBConnection.getInstance().executeInsertWithIdentity(insertOrderPS);
 			

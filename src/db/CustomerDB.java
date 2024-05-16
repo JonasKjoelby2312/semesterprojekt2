@@ -76,8 +76,8 @@ public class CustomerDB implements CustomerDAO {
 						rs.getInt("customer_id"),
 						rs.getString("name"), 
 						findAddress(rs.getInt("a_id")),
-						rs.getString("email"),
-						rs.getString("phone_no"));
+						rs.getString("phone_no"),
+						rs.getString("email"));
 		}
 		return c;
 	}
