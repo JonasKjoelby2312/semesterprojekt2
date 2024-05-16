@@ -75,16 +75,23 @@ public class CustomerDB implements CustomerDAO {
 				c = new Customer(
 						rs.getInt("customer_id"),
 						rs.getString("name"), 
-						findAddress(),
+						rs.getString("address"),
 						rs.getString("email"),
 						rs.getString("phone_no"));
 		}
 		return c;
 	}
-
-	private String findAddress() {
 	
-		return null;
+	private Customer findAddress(int addressId) throws Exception {
+        Customer address = null;
+        findCustomerAddressPS.setInt(1, addressId);
+        try {
+        	ResultSet rs = findCustomerAddressPS.executeQuery();
+        	address = buildObject(rs);
+        } catch (Exception e) {
+        	throw new Exception("Could not find Customer address");
+        }
+		return address;
 	}
 
 	public Customer findCustomerByID(int id) throws Exception {
