@@ -12,7 +12,7 @@ import model.Customer;
 public class CustomerDB implements CustomerDAO {
 	
 	private static final String FIND_ALL_Q = "select customer_id, name, email, a_id, phone_no from customer";
-	private static final String FIND_CUSTOMER_ADDRESS_Q = "select address_id, house_no, road_name, zip from address right outer join zip_city on zip = zipcode";
+	private static final String FIND_CUSTOMER_ADDRESS_Q = "select address_id, house_no, road_name, zip, city from address right outer join zip_city on zip = zipcode where address_id = ?";
 	private static final String FIND_BY_PHONE_Q = FIND_ALL_Q + " where phone_no = ?";
 	private static final String FIND_CUSTOMER_BY_ID_Q = FIND_ALL_Q + " where customer_id = ?";
 	
@@ -59,7 +59,7 @@ public class CustomerDB implements CustomerDAO {
 		return res;
 	}
 	
-	private List<Customer> buildObjects(ResultSet rs) throws SQLException {
+	private List<Customer> buildObjects(ResultSet rs) throws Exception {
 		ArrayList<Customer> res = new ArrayList<>();
 		Customer c = buildObject(rs);
 		while (c != null) {
@@ -69,25 +69,27 @@ public class CustomerDB implements CustomerDAO {
 		return res;
 	}
 	
-	private Customer buildObject(ResultSet rs) throws SQLException {
+	private Customer buildObject(ResultSet rs) throws Exception {
 		Customer c = null;
 		if (rs.next()) {
 				c = new Customer(
 						rs.getInt("customer_id"),
 						rs.getString("name"), 
-						rs.getString("address"),
+						findAddress(rs.getInt("a_id")),
 						rs.getString("email"),
 						rs.getString("phone_no"));
 		}
 		return c;
 	}
 	
-	private Customer findAddress(int addressId) throws Exception {
-        Customer address = null;
+	private String findAddress(int addressId) throws Exception {
+        String address = null;
         findCustomerAddressPS.setInt(1, addressId);
         try {
         	ResultSet rs = findCustomerAddressPS.executeQuery();
-        	address = buildObject(rs);
+        	if(rs.next()) {
+        		address = rs.getString("road_name") + " " + rs.getInt("house_no") + " " + rs.getInt("zip") + " " + rs.getString("city");
+        	}
         } catch (Exception e) {
         	throw new Exception("Could not find Customer address");
         }

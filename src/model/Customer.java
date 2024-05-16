@@ -58,4 +58,9 @@ public class Customer {
 	public List<Dog> getDogs() {
 		return new ArrayList<Dog>(dogs);
 	}
+	@Override
+	public String toString() {
+		return "Customer [customerID=" + customerID + ", name=" + name + ", address=" + address + ", phoneNo=" + phoneNo
+				+ ", email=" + email + ", dogs=" + dogs + "]";
+	}
 }

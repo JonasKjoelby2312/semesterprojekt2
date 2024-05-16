@@ -102,8 +102,8 @@ public class BookingDB implements BookingDAO{//
 			insertOrderPS.setInt(3, dc.getCustomer().getCustomerID());
 			insertOrderPS.setInt(4, 1); //invoice TODO
 			
-			int orderID = DBConnection.getInstance().executeInsertWithIdentity(insertDogCutPS);
-			
+			int orderID = DBConnection.getInstance().executeInsertWithIdentity(insertOrderPS);
+
 			insertBookingPS.setTime(1, Time.valueOf(dc.getStartTime()));
 			insertBookingPS.setInt(2, dc.getEmployee().getEmployeeID());
 			insertBookingPS.setInt(3, orderID);
@@ -111,17 +111,17 @@ public class BookingDB implements BookingDAO{//
 			insertBookingPS.setString(5, dc.getCustomerType());
 			
 			int bookingID = DBConnection.getInstance().executeInsertWithIdentity(insertBookingPS);
-			
+
 			insertDogCutPS.setString(1, dc.getComment());
 			insertDogCutPS.setInt(2, bookingID);
 			insertDogCutPS.setInt(3, dc.getDog().getDogID());
 			
-			insertBookingPS.executeUpdate();
+			insertDogCutPS.executeUpdate();
 			
 			DBConnection.getInstance().commitTransaction();
 		} catch (Exception e) {
 			DBConnection.getInstance().rollbackTransaction();
-			throw new Exception("Could not save booking");
+			throw new Exception("Could not save dog cut");
 		}
 	}
 	
