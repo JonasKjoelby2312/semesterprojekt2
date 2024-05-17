@@ -24,6 +24,8 @@ public class DBConnection {
 	  //private static final String serverAddress = "127.0.0.1";
 	  private static final int serverPort = 1433; 
 	  private static final String userName = "DMA-CSD-S232_10503120"; 
+	  // nedestående kan bruges lokalt, husk at ændre navnet til egen database.
+	  //private static final String userName = "sem2"; 
 	  private static final String password = "Password1!";
 	 
 	  
