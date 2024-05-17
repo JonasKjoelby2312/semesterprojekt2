@@ -11,10 +11,8 @@ import model.BookingType;
 
 public class BookingTypeDB implements BookingTypeDAO {
 	private static final String FIND_ALL_Q = "select booking_type_id, customer_type, name, booking_type_description, duration from booking_type";
-	private static final String FIND_BY_BOOKING_TYPE_NO_Q = FIND_ALL_Q + " where booking_type_no = ?";
 	private static final String FIND_BOOKING_TYPE_BY_ID_Q = FIND_ALL_Q + " where booking_type_id = ?";
 	private PreparedStatement findAllPS;
-	private PreparedStatement findByBookingTypeNoPS;
 	private PreparedStatement findByBookingTypeIDPS;
 	
 	private BookingPriceDB bookingPriceDB;
@@ -23,7 +21,7 @@ public class BookingTypeDB implements BookingTypeDAO {
 		bookingPriceDB = new BookingPriceDB();
 		Connection con = DBConnection.getInstance().getConnection();
 		findAllPS = con.prepareStatement(FIND_ALL_Q);
-		findByBookingTypeNoPS = con.prepareStatement(FIND_BY_BOOKING_TYPE_NO_Q);
+	
 		findByBookingTypeIDPS = con.prepareStatement(FIND_BOOKING_TYPE_BY_ID_Q);
 	}
 

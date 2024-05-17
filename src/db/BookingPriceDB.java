@@ -10,13 +10,13 @@ import java.util.List;
 import model.BookingPrice;
 
 public class BookingPriceDB implements BookingPriceDAO {
-	private static final String FIND_BOOKING_PRICE_BY_BOOKING_TYPE_NO_Q = "select Top 1 booking_price_id, start_date, booking_price_value, bt_id from booking_price where booking_price_id = ? Order by start_date Desc";
+	private static final String FIND_BOOKING_PRICE_BY_BOOKING_TYPE_ID_Q = "select Top 1 booking_price_id, start_date, booking_price_value, bt_id from booking_price where booking_price_id = ? Order by start_date Desc";
 
 	private PreparedStatement findBookingPricesByBookingTypeNo;
 
 	public BookingPriceDB() throws Exception {
 		Connection con = DBConnection.getInstance().getConnection();
-		findBookingPricesByBookingTypeNo = con.prepareStatement(FIND_BOOKING_PRICE_BY_BOOKING_TYPE_NO_Q);
+		findBookingPricesByBookingTypeNo = con.prepareStatement(FIND_BOOKING_PRICE_BY_BOOKING_TYPE_ID_Q);
 	}
 
 	@Override

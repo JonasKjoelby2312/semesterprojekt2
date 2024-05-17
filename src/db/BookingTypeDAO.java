@@ -7,6 +7,6 @@ import model.BookingType;
 public interface BookingTypeDAO {
 	
 	List<BookingType>findAllBookingTypes() throws Exception;
-	BookingType findBookingType(int bookingTypeNo) throws Exception;
+	BookingType findBookingType(int bookingTypeID) throws Exception;
 
 }
