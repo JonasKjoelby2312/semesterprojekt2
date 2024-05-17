@@ -10,7 +10,7 @@ public class DogCut extends Booking{
 	public DogCut(LocalDate date, Customer customer, 
 			LocalTime startTime, Employee employee, BookingType bookingType,
 			String customerType, Dog dog, String comment) {
-		super(date, customer, startTime, employee, bookingType, comment);
+		super(date, customer, startTime, employee, bookingType, customerType);
 		this.comment = comment;
 		this.dog = dog;
 	}

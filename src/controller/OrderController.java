@@ -93,7 +93,7 @@ public class OrderController {
 			currBooking = null;
 			res = true;
 		} else if(currDogCut != null) {
-			bookingDB.insertDogCut(currDogCut);
+			bookingDB.insertBooking(currDogCut);
 			currDogCut = null;
 			res = true;
 		}
