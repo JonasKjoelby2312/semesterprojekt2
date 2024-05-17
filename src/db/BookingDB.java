@@ -19,9 +19,9 @@ import model.DogCut;
 import model.Employee;
 
 public class BookingDB implements BookingDAO{//
-	private static final String FIND_ALL_Q = "select booking_id, start_time, emp_id, o_id, bt_id, customer_type, date, total, c_id from booking right outer join order_t on o_id = order_id";
+	private static final String FIND_ALL_Q = "select booking_id, start_time, emp_id, o_id, bt_id, customer_type, date, total, c_id, i_id from booking right outer join orde on o_id = order_id";
 	private static final String FIND_BOOKING_BY_CUSTOMER_PHONE = FIND_ALL_Q + " where c_id = ?";
-	private static final String INSERT_ORDER_Q = "insert into order_t values(?, ?, ?)";
+	private static final String INSERT_ORDER_Q = "insert into orde values(?, ?, ?, ?)";
 	private static final String INSERT_BOOKING_Q = "insert into booking values(?, ?, ?, ?, ?)";
 	private static final String INSERT_DOG_CUT_Q = "insert into dog_cut VALUES (?, ?, ?)";
 	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
@@ -74,6 +74,7 @@ public class BookingDB implements BookingDAO{//
 			insertOrderPS.setDate(1, Date.valueOf(b.getDate()));
 			insertOrderPS.setDouble(2, b.getTotal());
 			insertOrderPS.setInt(3, b.getCustomer().getCustomerID());
+			insertOrderPS.setInt(4, 1); //invoice TODO
 			
 			int ID = DBConnection.getInstance().executeInsertWithIdentity(insertOrderPS);
 			
@@ -83,19 +84,39 @@ public class BookingDB implements BookingDAO{//
 			insertBookingPS.setInt(4, b.getBookingType().getBookingTypeID());
 			insertBookingPS.setString(5, b.getCustomerType());
 			
-			if(b.getCustomerType().equals("Dog")) {
-				DogCut dc = (DogCut) b;
-				
-				int bookingID = DBConnection.getInstance().executeInsertWithIdentity(insertBookingPS);
-
-				insertDogCutPS.setString(1, dc.getComment());
-				insertDogCutPS.setInt(2, bookingID);
-				insertDogCutPS.setInt(3, dc.getDog().getDogID());
-				
-				insertDogCutPS.executeUpdate();
-			} else {
-				insertBookingPS.executeUpdate();
-			}
+			insertBookingPS.executeUpdate();
+			
+			DBConnection.getInstance().commitTransaction();
+		} catch (Exception e) {
+			DBConnection.getInstance().rollbackTransaction();
+			throw new Exception("Could not save booking");
+		}
+	}
+	
+	public void insertDogCut(DogCut dc) throws Exception {
+		try {
+			DBConnection.getInstance().startTransaction();
+			
+			insertOrderPS.setDate(1, Date.valueOf(dc.getDate()));
+			insertOrderPS.setDouble(2, dc.getTotal());
+			insertOrderPS.setInt(3, dc.getCustomer().getCustomerID());
+			insertOrderPS.setInt(4, 1); //invoice TODO
+			
+			int orderID = DBConnection.getInstance().executeInsertWithIdentity(insertDogCutPS);
+			
+			insertBookingPS.setTime(1, Time.valueOf(dc.getStartTime()));
+			insertBookingPS.setInt(2, dc.getEmployee().getEmployeeID());
+			insertBookingPS.setInt(3, orderID);
+			insertBookingPS.setInt(4, dc.getBookingType().getBookingTypeID());
+			insertBookingPS.setString(5, dc.getCustomerType());
+			
+			int bookingID = DBConnection.getInstance().executeInsertWithIdentity(insertBookingPS);
+			
+			insertDogCutPS.setString(1, dc.getComment());
+			insertDogCutPS.setInt(2, bookingID);
+			insertDogCutPS.setInt(3, dc.getDog().getDogID());
+			
+			insertBookingPS.executeUpdate();
 			
 			DBConnection.getInstance().commitTransaction();
 		} catch (Exception e) {
