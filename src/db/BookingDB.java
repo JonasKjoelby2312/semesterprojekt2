@@ -70,21 +70,16 @@ public class BookingDB implements BookingDAO{//
 		boolean res = true;
 		List<Booking> otherBookings = findAvailableTime(b.getDate(), b.getEmployee().getEmployeeID());
 		LocalTime bStartTime = b.getStartTime();
+		LocalTime bEndTime = b.getStartTime().plusMinutes(b.getBookingType().getDuration());
 		
 		int index = 0;
 		while(res && index < otherBookings.size()) {
 			Booking currBooking = otherBookings.get(index);
 			
-			System.out.println(bStartTime);
-			System.out.println(currBooking.getStartTime());
-			System.out.println(currBooking.getBookingType().getDuration());
-			
-			System.out.println(bStartTime + " compared to " + currBooking.getStartTime() + " is " + bStartTime.compareTo(currBooking.getStartTime()));
-			System.out.println(bStartTime + " compared to " + currBooking.getStartTime().plusMinutes(10) + " is " + bStartTime.compareTo(currBooking.getStartTime().plusMinutes(10)));
-			
 			if(bStartTime.compareTo(currBooking.getStartTime()) >= 0 && bStartTime.
 				compareTo(currBooking.getStartTime().plusMinutes(currBooking.
-				getBookingType().getDuration())) < 0) {
+				getBookingType().getDuration())) < 0 || bEndTime.
+				compareTo(currBooking.getStartTime()) > 0) {
 				
 				res = false;
 			}
@@ -94,8 +89,10 @@ public class BookingDB implements BookingDAO{//
 	}
 	
 	@Override
-	public void insertBooking(Booking b) throws Exception {
+	public boolean insertBooking(Booking b) throws Exception {
+		boolean res = false;
 		if(confirmAvailability(b)) {
+			res = true;
 			try {
 				DBConnection.getInstance().startTransaction();
 				
@@ -119,6 +116,7 @@ public class BookingDB implements BookingDAO{//
 				throw new Exception("Could not save booking");
 			}
 		}
+		return res;
 	}
 	
 	public List<Booking> findAvailableTime(LocalDate date, int employeeID) throws Exception {

@@ -89,13 +89,11 @@ public class OrderController {
 	public boolean completeBooking() throws Exception {
 		boolean res = false;
 		if(currBooking != null) {
-			bookingDB.insertBooking(currBooking);
+			res = bookingDB.insertBooking(currBooking);
 			currBooking = null;
-			res = true;
 		} else if(currDogCut != null) {
-			bookingDB.insertBooking(currDogCut);
+			res = bookingDB.insertBooking(currDogCut);
 			currDogCut = null;
-			res = true;
 		}
 		return res;
 	}
