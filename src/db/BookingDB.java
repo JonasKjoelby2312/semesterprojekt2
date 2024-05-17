@@ -78,8 +78,8 @@ public class BookingDB implements BookingDAO{//
 			
 			if(bStartTime.compareTo(currBooking.getStartTime()) >= 0 && bStartTime.
 				compareTo(currBooking.getStartTime().plusMinutes(currBooking.
-				getBookingType().getDuration())) < 0 || bEndTime.
-				compareTo(currBooking.getStartTime()) > 0) {
+				getBookingType().getDuration())) < 0 || bEndTime.compareTo(currBooking.
+				getStartTime()) > 0 && bStartTime.compareTo(currBooking.getStartTime()) <= 0) {
 				
 				res = false;
 			}
@@ -108,12 +108,24 @@ public class BookingDB implements BookingDAO{//
 				insertBookingPS.setInt(4, b.getBookingType().getBookingTypeID());
 				insertBookingPS.setString(5, b.getCustomerType());
 				
-				insertBookingPS.executeUpdate();
+				if(b.getCustomerType().equals("Dog")) {
+					DogCut dc = (DogCut) b;
+					
+					int bookingID = DBConnection.getInstance().executeInsertWithIdentity(insertBookingPS);
+					
+					insertDogCutPS.setString(1, dc.getComment());
+					insertDogCutPS.setInt(2, bookingID);
+					insertDogCutPS.setInt(3, dc.getDog().getDogID());
+					
+					insertDogCutPS.executeUpdate();
+				} else {
+					insertBookingPS.executeUpdate();
+				}
 				
 				DBConnection.getInstance().commitTransaction();
 			} catch (Exception e) {
 				DBConnection.getInstance().rollbackTransaction();
-				throw new Exception("Could not save booking");
+				throw new Exception("Could not save booking or dog cut");
 			}
 		}
 		return res;
