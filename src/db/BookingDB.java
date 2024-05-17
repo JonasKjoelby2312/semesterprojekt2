@@ -19,9 +19,9 @@ import model.DogCut;
 import model.Employee;
 
 public class BookingDB implements BookingDAO{//
-	private static final String FIND_ALL_Q = "select booking_id, start_time, emp_id, o_id, bt_id, customer_type, date, total, c_id, i_id from booking right outer join orde on o_id = order_id";
+	private static final String FIND_ALL_Q = "select booking_id, start_time, emp_id, o_id, bt_id, customer_type, date, total, c_id from booking right outer join order_t on o_id = order_id";
 	private static final String FIND_BOOKING_BY_CUSTOMER_PHONE = FIND_ALL_Q + " where c_id = ?";
-	private static final String INSERT_ORDER_Q = "insert into orde values(?, ?, ?, ?)";
+	private static final String INSERT_ORDER_Q = "insert into order_t values(?, ?, ?)";
 	private static final String INSERT_BOOKING_Q = "insert into booking values(?, ?, ?, ?, ?)";
 	private static final String INSERT_DOG_CUT_Q = "insert into dog_cut VALUES (?, ?, ?)";
 	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
@@ -66,68 +66,64 @@ public class BookingDB implements BookingDAO{//
 //		return null;
 //	}
 	
+	private boolean confirmAvailability(Booking b) throws Exception {
+		boolean res = true;
+		List<Booking> otherBookings = findAvailableTime(b.getDate(), b.getEmployee().getEmployeeID());
+		LocalTime bStartTime = b.getStartTime();
+		
+		int index = 0;
+		while(res && index < otherBookings.size()) {
+			Booking currBooking = otherBookings.get(index);
+			
+			System.out.println(bStartTime);
+			System.out.println(currBooking.getStartTime());
+			System.out.println(currBooking.getBookingType().getDuration());
+			
+			System.out.println(bStartTime + " compared to " + currBooking.getStartTime() + " is " + bStartTime.compareTo(currBooking.getStartTime()));
+			System.out.println(bStartTime + " compared to " + currBooking.getStartTime().plusMinutes(10) + " is " + bStartTime.compareTo(currBooking.getStartTime().plusMinutes(10)));
+			
+			if(bStartTime.compareTo(currBooking.getStartTime()) >= 0 && bStartTime.
+				compareTo(currBooking.getStartTime().plusMinutes(currBooking.
+				getBookingType().getDuration())) < 0) {
+				
+				res = false;
+			}
+			index++;
+		}
+		return res;
+	}
+	
 	@Override
 	public void insertBooking(Booking b) throws Exception {
-		try {
-			DBConnection.getInstance().startTransaction();
-			
-			insertOrderPS.setDate(1, Date.valueOf(b.getDate()));
-			insertOrderPS.setDouble(2, b.getTotal());
-			insertOrderPS.setInt(3, b.getCustomer().getCustomerID());
-			insertOrderPS.setInt(4, 1); //invoice TODO
-			
-			int ID = DBConnection.getInstance().executeInsertWithIdentity(insertOrderPS);
-			
-			insertBookingPS.setTime(1, Time.valueOf(b.getStartTime()));
-			insertBookingPS.setInt(2, b.getEmployee().getEmployeeID());
-			insertBookingPS.setInt(3, ID);
-			insertBookingPS.setInt(4, b.getBookingType().getBookingTypeID());
-			insertBookingPS.setString(5, b.getCustomerType());
-			
-			insertBookingPS.executeUpdate();
-			
-			DBConnection.getInstance().commitTransaction();
-		} catch (Exception e) {
-			DBConnection.getInstance().rollbackTransaction();
-			throw new Exception("Could not save booking");
+		if(confirmAvailability(b)) {
+			try {
+				DBConnection.getInstance().startTransaction();
+				
+				insertOrderPS.setDate(1, Date.valueOf(b.getDate()));
+				insertOrderPS.setDouble(2, b.getTotal());
+				insertOrderPS.setInt(3, b.getCustomer().getCustomerID());
+				
+				int ID = DBConnection.getInstance().executeInsertWithIdentity(insertOrderPS);
+				
+				insertBookingPS.setTime(1, Time.valueOf(b.getStartTime()));
+				insertBookingPS.setInt(2, b.getEmployee().getEmployeeID());
+				insertBookingPS.setInt(3, ID);
+				insertBookingPS.setInt(4, b.getBookingType().getBookingTypeID());
+				insertBookingPS.setString(5, b.getCustomerType());
+				
+				insertBookingPS.executeUpdate();
+				
+				DBConnection.getInstance().commitTransaction();
+			} catch (Exception e) {
+				DBConnection.getInstance().rollbackTransaction();
+				throw new Exception("Could not save booking");
+			}
 		}
 	}
 	
-	public void insertDogCut(DogCut dc) throws Exception {
-		try {
-			DBConnection.getInstance().startTransaction();
-			
-			insertOrderPS.setDate(1, Date.valueOf(dc.getDate()));
-			insertOrderPS.setDouble(2, dc.getTotal());
-			insertOrderPS.setInt(3, dc.getCustomer().getCustomerID());
-			insertOrderPS.setInt(4, 1); //invoice TODO
-			
-			int orderID = DBConnection.getInstance().executeInsertWithIdentity(insertDogCutPS);
-			
-			insertBookingPS.setTime(1, Time.valueOf(dc.getStartTime()));
-			insertBookingPS.setInt(2, dc.getEmployee().getEmployeeID());
-			insertBookingPS.setInt(3, orderID);
-			insertBookingPS.setInt(4, dc.getBookingType().getBookingTypeID());
-			insertBookingPS.setString(5, dc.getCustomerType());
-			
-			int bookingID = DBConnection.getInstance().executeInsertWithIdentity(insertBookingPS);
-			
-			insertDogCutPS.setString(1, dc.getComment());
-			insertDogCutPS.setInt(2, bookingID);
-			insertDogCutPS.setInt(3, dc.getDog().getDogID());
-			
-			insertBookingPS.executeUpdate();
-			
-			DBConnection.getInstance().commitTransaction();
-		} catch (Exception e) {
-			DBConnection.getInstance().rollbackTransaction();
-			throw new Exception("Could not save booking");
-		}
-	}
-	
-	public List<Booking> findAvailableTime(LocalDate date, int employeeNo) throws Exception {
+	public List<Booking> findAvailableTime(LocalDate date, int employeeID) throws Exception {
 		List<Booking> res = new ArrayList<>();
-		findBookingByDateAndEmployeeIDPS.setInt(1, employeeNo);
+		findBookingByDateAndEmployeeIDPS.setInt(1, employeeID);
 		findBookingByDateAndEmployeeIDPS.setDate(2, Date.valueOf(date));
 		try {
 			ResultSet rs = findBookingByDateAndEmployeeIDPS.executeQuery();
