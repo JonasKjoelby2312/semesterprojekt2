@@ -7,7 +7,6 @@ public abstract class Order {
 	private LocalDate date;
 	private double total;
 	private Customer customer;
-	private Invoice invoice;
 
 	public Order(LocalDate date, Customer customer) {
 		this.date = date;
@@ -38,14 +37,6 @@ public abstract class Order {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
-
-	public Invoice getInvoice() {
-		return invoice;
-	}
-
-	public void setInvoice(Invoice invoice) {
-		this.invoice = invoice;
 	}
 
 	public int getOrderID() {
