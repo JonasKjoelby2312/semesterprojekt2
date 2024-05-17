@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
@@ -40,11 +41,19 @@ class testFindAvailableTime {
 	}
 
 	@Test
-	void testFindAvailableTime() throws Exception {
+	void testFindAvailableTimeCorrect() throws Exception {
+		//findAvailableTime() får en dato og et korrekt medarbejderID. 
 		List<Booking> res = new ArrayList<>();
 		res = bookingDB.findAvailableTime(LocalDate.of(2024, 5, 16), 1);
-		System.out.println(res);
 		assertNotNull(res);
+	}
+	
+	@Test
+	void testFindAvailableTimeWrong() throws Exception {
+		//findAvailableTime() får en dato og et forkert medarbejderID. 
+		List<Booking> res = new ArrayList<>();
+		res = bookingDB.findAvailableTime(LocalDate.of(2024, 5, 16), 2);
+		assertTrue(res.isEmpty());
 	}
 
 }
