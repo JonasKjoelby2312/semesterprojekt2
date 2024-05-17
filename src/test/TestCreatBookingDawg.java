@@ -47,11 +47,11 @@ class TestCreatBookingDawg {
 
 	@Test
 	void testCreateBookingDawgCorrect() throws Exception {
-		boolean currBooking = oc.createBookingDawg(1, 1, "+4551938113", "Christian", "SØD KAT", LocalDate.of(2024, 5, 18), LocalTime.of(14, 30));
+		boolean currBooking = oc.createBookingDawg(2, 1, "+4551938113", "Christian", "SØD KAT", LocalDate.of(2024, 5, 18), LocalTime.of(14, 30));
 		assertTrue(currBooking);
 	}
 	void testCreateBookingDawgWrong() throws Exception {
-		boolean currBooking = oc.createBookingDawg(1, 17, "+4551938113", "Christian", "SØD KAT", LocalDate.of(2024, 5, 18), LocalTime.of(14, 30));
-		assertTrue(currBooking);
+		boolean currBooking = oc.createBookingDawg(2, 17, "+4551938113", "Christian", "SØD KAT", LocalDate.of(2024, 5, 18), LocalTime.of(14, 30));
+		assertFalse(currBooking);
 	}
 }
