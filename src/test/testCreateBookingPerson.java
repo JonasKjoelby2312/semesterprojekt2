@@ -50,11 +50,13 @@ class testCreateBookingPerson {
 
 	@Test
 	void testCreateBookingPersonWrongInfo() throws Exception {
+		//Første parameter er bookingTypeID, der ligger ikke en bookingType med id'et 17. 
 		boolean currBooking = oc.createBookingPerson(1, 17, "+4551938113", LocalDate.of(2024, 5, 18), LocalTime.of(14, 30));
 		assertFalse(currBooking);
 	}
 	
 	void testCreateBookingPersonCorrectInfo() throws Exception {
+		//Første parameter er bookingTypeID, der ligger en bookingType med id'et 1. 
 		boolean currBooking = oc.createBookingPerson(1, 1, "+4551938113", LocalDate.of(2024, 5, 18), LocalTime.of(14, 30));
 		assertTrue(currBooking);
 	}
