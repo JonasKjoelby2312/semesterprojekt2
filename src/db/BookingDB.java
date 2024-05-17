@@ -76,16 +76,20 @@ public class BookingDB implements BookingDAO{//
 		while(res && index < otherBookings.size()) {
 			Booking currBooking = otherBookings.get(index);
 			
-			if(bStartTime.compareTo(currBooking.getStartTime()) >= 0 && bStartTime.
-				compareTo(currBooking.getStartTime().plusMinutes(currBooking.
-				getBookingType().getDuration())) < 0 || bEndTime.compareTo(currBooking.
-				getStartTime()) > 0 && bStartTime.compareTo(currBooking.getStartTime()) <= 0) {
-				
+			if(checkConflict(bStartTime, bEndTime, currBooking)) {
 				res = false;
 			}
 			index++;
 		}
 		return res;
+	}
+	//TODO kog det ned
+	protected boolean checkConflict(LocalTime bStartTime, LocalTime bEndTime, Booking currBooking) {
+		boolean res = bStartTime.compareTo(currBooking.getStartTime()) >= 0 
+				&& bStartTime.compareTo(currBooking.getStartTime().plusMinutes(currBooking.
+			getBookingType().getDuration())) < 0 || bEndTime.compareTo(currBooking.
+			getStartTime()) > 0 && bStartTime.compareTo(currBooking.getStartTime()) <= 0;
+			return res;
 	}
 	
 	@Override
