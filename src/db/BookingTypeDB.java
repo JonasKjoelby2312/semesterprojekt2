@@ -68,7 +68,6 @@ public class BookingTypeDB implements BookingTypeDAO {
 		if(rs.next()) {
 			res = new BookingType(
 					rs.getInt("booking_type_id"),
-					1, //rs.getInt("booking_type_no"), //TODO
 					rs.getString("customer_type"),
 					rs.getString("name"),
 					rs.getString("booking_type_description"),

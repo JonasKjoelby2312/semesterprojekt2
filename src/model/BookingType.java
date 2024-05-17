@@ -9,9 +9,8 @@ public class BookingType {
 	private int duration;
 	private BookingPrice bookingPrice;
 	
-	public BookingType(int bookingTypeID, int bookingTypeNo, String customerType, String name, String description, int duration, BookingPrice bookingPrice) {
+	public BookingType(int bookingTypeID, String customerType, String name, String description, int duration, BookingPrice bookingPrice) {
 		this.bookingTypeID = bookingTypeID;
-		this.bookingTypeNo = bookingTypeNo;
 		this.customerType = customerType;
 		this.name = name;
 		this.description = description;
