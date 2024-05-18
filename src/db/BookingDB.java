@@ -75,22 +75,30 @@ public class BookingDB implements BookingDAO{//
 		int index = 0;
 		while(res && index < otherBookings.size()) {
 			Booking currBooking = otherBookings.get(index);
+			LocalTime cbStartTime = currBooking.getStartTime();
+			LocalTime cbEndTime = cbStartTime.plusMinutes(currBooking.getBookingType().getDuration());
 			
-			if(checkConflict(bStartTime, bEndTime, currBooking)) {
+			if(checkConflict(bStartTime, bEndTime, cbStartTime, cbEndTime)) {
 				res = false;
 			}
 			index++;
 		}
 		return res;
 	}
-	//TODO kog det ned
-	protected boolean checkConflict(LocalTime bStartTime, LocalTime bEndTime, Booking currBooking) {
-		boolean res = bStartTime.compareTo(currBooking.getStartTime()) >= 0 
-				&& bStartTime.compareTo(currBooking.getStartTime().plusMinutes(currBooking.
-			getBookingType().getDuration())) < 0 || bEndTime.compareTo(currBooking.
-			getStartTime()) > 0 && bStartTime.compareTo(currBooking.getStartTime()) <= 0;
+	//TODO kog det ned - Test det
+	protected boolean checkConflict(LocalTime bStartTime, LocalTime bEndTime, LocalTime cbStartTime, LocalTime cbEndTime) {
+		boolean res = bStartTime.compareTo(cbStartTime) >= 0 && bStartTime.compareTo(cbEndTime) < 0
+				|| bEndTime.compareTo(cbStartTime) > 0 && bStartTime.compareTo(cbStartTime) <= 0;
 			return res;
 	}
+	
+//	protected boolean checkConflict(LocalTime bStartTime, LocalTime bEndTime, Booking currBooking) {
+//		boolean res = bStartTime.compareTo(currBooking.getStartTime()) >= 0 
+//				&& bStartTime.compareTo(currBooking.getStartTime().plusMinutes(currBooking.
+//			getBookingType().getDuration())) < 0 || bEndTime.compareTo(currBooking.
+//			getStartTime()) > 0 && bStartTime.compareTo(currBooking.getStartTime()) <= 0;
+//			return res;
+//	}
 	
 	@Override
 	public boolean insertBooking(Booking b) throws Exception {
