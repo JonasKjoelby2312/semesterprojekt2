@@ -45,8 +45,8 @@ public class OrderController {
 		return bookingTypeCtrl.findBookingPriceByBookingTypeID(bookingTypeID);
 	}
 
-	public List<Booking> findAvailableTime(LocalDate date, int employeeNo) throws Exception {
-		return bookingDB.findAvailableTime(date, employeeNo);
+	public List<Booking> findAvailableTime(LocalDate date, int employeeID) throws Exception {
+		return bookingDB.findAvailableTime(date, employeeID);
 	}
 	
 	public boolean createBookingPerson(int bookingTypeID, int employeeNo, 
@@ -54,12 +54,14 @@ public class OrderController {
 		boolean res = false;
 		currDogCut = null;
 		if(LocalDate.now().compareTo(date) < 0 || LocalDate.now().compareTo(date) == 0 && LocalTime.now().compareTo(startTime) < 0) {
-			Customer c = customerCtrl.findCustomerByPhone(customerPhone);
 			Employee e = employeeCtrl.findEmployeeByEmployeeNo(employeeNo);
-			BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
-			if(c != null && e != null && bt != null) {
-				currBooking = new Booking(date, c, startTime, e, bt, "Person");
-				res = true;
+			if(e.getCompanyPosition().equals("Dog Barber")) {
+				Customer c = customerCtrl.findCustomerByPhone(customerPhone);
+				BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
+				if(c != null && e != null && bt != null) {
+					currBooking = new Booking(date, c, startTime, e, bt, "Person");
+					res = true;
+				}
 			}
 		}
 		return res;
