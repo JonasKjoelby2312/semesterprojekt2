@@ -82,7 +82,7 @@ public class CreateBookingGUI extends JDialog {
 				
 				comboBoxDogPerson.addItemListener(new ItemListener() {
 					public void itemStateChanged(ItemEvent e) {
-						if(comboBoxDogPerson.equals("Person")) { 
+						if(comboBoxDogPerson.getSelectedItem().equals("Person")) { 
 							textFieldDogName.setEnabled(false);
 							textFieldComment.setEnabled(false);
 						} else {
