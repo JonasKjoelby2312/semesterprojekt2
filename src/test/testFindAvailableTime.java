@@ -44,7 +44,7 @@ class testFindAvailableTime {
 	void testFindAvailableTimeCorrect() throws Exception {
 		//findAvailableTime() får en dato og et korrekt medarbejderID. 
 		List<Booking> res = new ArrayList<>();
-		res = bookingDB.findAvailableTime(LocalDate.of(2024, 5, 16), 1);
+		res = bookingDB.findAvailableTime(LocalDate.of(2024, 5, 24), 1);
 		assertNotNull(res);
 	}
 	
