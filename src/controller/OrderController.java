@@ -45,41 +45,44 @@ public class OrderController {
 		return bookingTypeCtrl.findBookingPriceByBookingTypeID(bookingTypeID);
 	}
 
-	public List<Booking> findAvailableTime(LocalDate date, int employeeNo) throws Exception {
-		return bookingDB.findAvailableTime(date, employeeNo);
+	public List<Booking> findAvailableTime(LocalDate date, int employeeID) throws Exception {
+		return bookingDB.findAvailableTime(date, employeeID);
 	}
 	
-	public boolean createBookingPerson(int bookingTypeID, int employeeNo, 
+	public boolean createBookingPerson(int bookingTypeID, int employeeID, 
 			String customerPhone, LocalDate date, LocalTime startTime) throws Exception {
 		boolean res = false;
 		currDogCut = null;
 		if(LocalDate.now().compareTo(date) < 0 || LocalDate.now().compareTo(date) == 0 && LocalTime.now().compareTo(startTime) < 0) {
-			Customer c = customerCtrl.findCustomerByPhone(customerPhone);
-			Employee e = employeeCtrl.findEmployeeByEmployeeNo(employeeNo);
-			BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
-			if(c != null && e != null && bt != null) {
-				currBooking = new Booking(date, c, startTime, e, bt, "Person");
-				res = true;
+			Employee e = employeeCtrl.findEmployeeByID(employeeID);
+			if(e.getBarberType().equals("Person")) {
+				Customer c = customerCtrl.findCustomerByPhone(customerPhone);
+				BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
+				if(c != null && e != null && bt != null) {
+					currBooking = new Booking(date, c, startTime, e, bt, "Person");
+					res = true;
+				}
 			}
 		}
 		return res;
 	}
 	
-	public boolean createBookingDawg(int bookingTypeID, int employeeNo, 
+	public boolean createBookingDog(int bookingTypeID, int employeeID, 
 			String customerPhone, String dogName, String comment,
 			LocalDate date, LocalTime startTime) throws Exception {
 		boolean res = false;
 		currBooking = null;
 		if(LocalDate.now().compareTo(date) < 0 || LocalDate.now().compareTo(date) == 0 && LocalTime.now().compareTo(startTime) < 0) {
-			BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
-			Customer c = customerCtrl.findCustomerByPhone(customerPhone);
-			Employee e = employeeCtrl.findEmployeeByEmployeeNo(employeeNo);
-			Dog d = dogDB.findDogByCustomerAndDogName(c, dogName);
-
-			if(c != null && e != null && bt != null && d != null) {
-				if(bt.getCustomerType().equals("Dog")) {
-					currDogCut = new DogCut( date, c, startTime, e, bt, "Dog", d, comment);
-					res = true;
+			Employee e = employeeCtrl.findEmployeeByID(employeeID);
+			if(e.getBarberType().equals("Dog")) {
+				BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
+				Customer c = customerCtrl.findCustomerByPhone(customerPhone);
+				Dog d = dogDB.findDogByCustomerAndDogName(c, dogName);
+				if(c != null && e != null && bt != null && d != null) {
+					if(bt.getCustomerType().equals("Dog")) {
+						currDogCut = new DogCut( date, c, startTime, e, bt, "Dog", d, comment);
+						res = true;
+					}
 				}
 			}
 		}

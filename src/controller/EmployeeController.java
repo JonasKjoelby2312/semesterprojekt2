@@ -17,8 +17,8 @@ public class EmployeeController {
 		return employeeDB.findAllEmployees();
 	}
 	
-	public Employee findEmployeeByEmployeeNo(int number) throws Exception {
-		return employeeDB.findEmployeeByEmployeeNo(number);
+	public Employee findEmployeeByID(int id) throws Exception {
+		return employeeDB.findEmployeeByID(id);
 	}
 }
       
