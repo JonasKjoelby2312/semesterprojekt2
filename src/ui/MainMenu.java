@@ -68,9 +68,22 @@ public class MainMenu extends JFrame {
 		panel.add(btnSchema);
 		
 		JButton btnCreateBooking = new JButton("Create Booking");
+		btnCreateBooking.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					createBookingClicked();
+				} catch (Exception e1) {
+				}
+			}
+		});
 		btnCreateBooking.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnCreateBooking.setBounds(147, 102, 335, 51);
 		panel.add(btnCreateBooking);
+	}
+
+	private void createBookingClicked() throws Exception {
+		CreateBookingGUI cbg = new CreateBookingGUI();
+		cbg.setVisible(true);
 	}
 
 	private void schemaClicked() throws Exception {
