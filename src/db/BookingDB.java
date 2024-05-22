@@ -26,8 +26,8 @@ public class BookingDB implements BookingDAO{//
 	private static final String INSERT_DOG_CUT_Q = "insert into dog_cut VALUES (?, ?, ?)";
 	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
 	
-	private PreparedStatement findAllQPS;
-	private PreparedStatement findBookingByCustomerPhonePS;
+	//private PreparedStatement findAllQPS;
+	//private PreparedStatement findBookingByCustomerPhonePS;
 	private PreparedStatement insertOrderPS;
 	private PreparedStatement insertBookingPS;
 	private PreparedStatement insertDogCutPS;
@@ -45,8 +45,8 @@ public class BookingDB implements BookingDAO{//
 		bookingTypeDB = new BookingTypeDB();
 		
 		try {
-			findAllQPS = con.prepareStatement(FIND_ALL_Q);
-			findBookingByCustomerPhonePS = con.prepareStatement(FIND_BOOKING_BY_CUSTOMER_PHONE);
+			//findAllQPS = con.prepareStatement(FIND_ALL_Q);
+			//findBookingByCustomerPhonePS = con.prepareStatement(FIND_BOOKING_BY_CUSTOMER_PHONE);
 			insertOrderPS = con.prepareStatement(INSERT_ORDER_Q, Statement.RETURN_GENERATED_KEYS);
 			insertBookingPS = con.prepareStatement(INSERT_BOOKING_Q, Statement.RETURN_GENERATED_KEYS);
 			insertDogCutPS = con.prepareStatement(INSERT_DOG_CUT_Q);

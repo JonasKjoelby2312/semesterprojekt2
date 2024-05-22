@@ -7,6 +7,5 @@ import model.Employee;
 public interface EmployeeDAO {
 
 	List<Employee> findAllEmployees() throws Exception;
-	Employee findEmployeeByEmployeeNo(int number) throws Exception;
 	Employee findEmployeeByID(int id) throws Exception;
 }

@@ -2,7 +2,6 @@ package model;
 
 public class BookingType {
 	private int bookingTypeID;
-	private int bookingTypeNo;
 	private String customerType;
 	private String name;
 	private String description;
@@ -16,12 +15,6 @@ public class BookingType {
 		this.description = description;
 		this.duration = duration;
 		this.bookingPrice = bookingPrice;
-	}
-	public int getBookingTypeNo() {
-		return bookingTypeNo;
-	}
-	public void setBookingTypeNo(int bookingTypeNo) {
-		this.bookingTypeNo = bookingTypeNo;
 	}
 	public String getCustomerType() {
 		return customerType;

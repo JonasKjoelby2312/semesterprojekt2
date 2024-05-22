@@ -10,7 +10,7 @@ import model.Dog;
 public class DogDB implements DogDAO{
 	private static final String FIND_ALL_DOGS_OF_CUSTOMER_Q = "select dog_id, name, dog_description, c_id from dog";
 	private static final String FIND_DOG_BY_CUSTOMER_AND_NAME_Q = FIND_ALL_DOGS_OF_CUSTOMER_Q + " where c_id = ? and name = ?";
-	private PreparedStatement findAllDogsOfCustomerPS;
+	//private PreparedStatement findAllDogsOfCustomerPS;
 	private PreparedStatement findDogByCustomerAndDogName;
 	
 	public DogDB() throws Exception {
