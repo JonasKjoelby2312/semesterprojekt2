@@ -36,10 +36,12 @@ class testCreateBookingWithTime {
 
 	@Test
 	void testCreateBookingPersonWithTimeAndDate() throws Exception {
+		//Der oprettes en booking med en dato og et klokkeslet, der allerede ligger i DB.  
 		boolean currBooking = oc.createBookingPerson(1, 1, "51938113", LocalDate.of(2024, 5, 25), LocalTime.of(15, 30));
 		assertNotNull(currBooking);
 		boolean res = oc.completeBooking();
-		System.out.println(assertFalse(res));
+		//Tjekker her, at res er false, så vi ved at completeBooking() ikke persitere bookningen. 
+		assertFalse(res);
 		
 	}
 
