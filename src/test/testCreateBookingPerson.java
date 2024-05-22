@@ -66,6 +66,8 @@ class testCreateBookingPerson {
 		BookingDB bdb = new BookingDB();
 		List<Booking> res = new ArrayList<>();
 		res = bdb.findAvailableTime(LocalDate.of(2024, 5, 18), 1);
+		
+		assertEquals(res.get(0).getBookingID(), 1);
 	
 		
 		
