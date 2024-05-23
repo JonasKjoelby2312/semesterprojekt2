@@ -56,7 +56,7 @@ public class CreateBookingGUI extends JDialog {
 		}
 	}
 
-	/**
+	/** TODO
 	 * Create the dialog.
 	 */
 	public CreateBookingGUI() throws Exception {
