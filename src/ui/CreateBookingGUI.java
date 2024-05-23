@@ -14,6 +14,8 @@ import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -56,7 +58,7 @@ public class CreateBookingGUI extends JDialog {
 		}
 	}
 
-	/** TODO
+	/**
 	 * Create the dialog.
 	 */
 	public CreateBookingGUI() throws Exception {
@@ -125,7 +127,7 @@ public class CreateBookingGUI extends JDialog {
 				textFieldBookingTypeID.setColumns(10);
 			}
 			{
-				JLabel lblEmployeeID = new JLabel("Employee ID: ");
+				JLabel lblEmployeeID = new JLabel("Employee No : ");
 				lblEmployeeID.setHorizontalAlignment(SwingConstants.LEFT);
 				lblEmployeeID.setFont(new Font("Tahoma", Font.PLAIN, 16));
 				GridBagConstraints gbc_lblEmployeeID = new GridBagConstraints();
@@ -316,6 +318,7 @@ public class CreateBookingGUI extends JDialog {
 		}
 		oc.completeBooking();
 		cancelClicked();
+		
 	}
 
 }

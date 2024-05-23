@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 
 import controller.OrderController;
+import db.BookingDB;
 import model.Booking;
 
 import java.awt.Color;
@@ -143,6 +144,8 @@ public class SchemaGUI extends JDialog {
 	private void init() throws Exception {
 		oc = new OrderController();
 		dtf = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		//stm = new SchemaTableModel(List.of());
+		//tblBookings.setModel(stm);
 	}
 
 	private void cancelClicked() {
