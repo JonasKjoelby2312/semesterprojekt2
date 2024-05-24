@@ -77,7 +77,7 @@ public class OrderController {
 			if(e.getBarberType().equals("Dog")) {
 				BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
 				Customer c = customerCtrl.findCustomerByPhone(customerPhone);
-				Dog d = dogDB.findDogByCustomerAndDogName(c, dogName);
+				Dog d = dogDB.findDogByPhoneNoAndDogName(c, dogName);
 				if(c != null && e != null && bt != null && d != null) {
 					if(bt.getCustomerType().equals("Dog")) {
 						currDogCut = new DogCut( date, c, startTime, e, bt, "Dog", d, comment);
