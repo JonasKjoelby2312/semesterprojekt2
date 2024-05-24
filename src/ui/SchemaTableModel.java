@@ -24,11 +24,13 @@ public class SchemaTableModel extends AbstractTableModel {
 		String res = "";
 		switch(columnIndex) {
 		case 0: res = "" + b.getEmployee().getName(); break;
-		case 1: res = "" + b.getDate(); break;
-		case 2: res = "" + b.getStartTime(); break;
-		case 3: res = b.getBookingType().getName(); break;
-		case 4: res = "" + b.getCustomerType(); break;
-		case 5:
+		case 1: res = " " + b.getCustomer().getName(); break;
+		case 2: res = " " + b.getCustomer().getPhoneNo(); break; 
+		case 3: res = "" + b.getDate(); break;
+		case 4: res = "" + b.getStartTime(); break;
+		case 5: res = b.getBookingType().getName(); break;
+		case 6: res = "" + b.getCustomerType(); break;
+		case 7:
 			if(b.getCustomerType().equals("Dog")) {
 				//DogCut dc = (DogCut) b; TODO
 				//res = dc.getDog().getName();
@@ -37,7 +39,7 @@ public class SchemaTableModel extends AbstractTableModel {
 				res = "NULL";
 			}
 			break;
-		case 6: res = "" + b.getTotal(); break;
+		case 8: res = "" + b.getTotal(); break;
 		default: res ="<UNKNOWN " + columnIndex + ">"; 
 		}
 		
@@ -45,7 +47,7 @@ public class SchemaTableModel extends AbstractTableModel {
 	}
 	
 	private static final String[] COL_NAMES = {
-			"Employee Name", "Date", "Start Time", "Booking Type", "Customer Type", "Dog Name", "Total"
+			"Employee Name", "Customer Name", "Phone", "Date", "Start Time", "Booking Type", "Customer Type", "Dog Name", "Total"
 	};
 	
 	@Override
