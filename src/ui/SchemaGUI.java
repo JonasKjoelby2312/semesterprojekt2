@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -48,7 +49,7 @@ public class SchemaGUI extends JDialog {
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
-			//TODO
+			JOptionPane.showMessageDialog(null, "An Error has occured while opening SchemaGUI");
 			e.printStackTrace();
 		}
 	}
@@ -94,7 +95,7 @@ public class SchemaGUI extends JDialog {
 				try {
 					searchClicked();
 				} catch (Exception e1) {
-					//TODO ( "INVAILD DATA INUPT" ) eller noget
+					JOptionPane.showMessageDialog(null, "Date needs to be 'dd/mm/yyyy' and employee ID needs to a number!");
 				}
 			}
 		});

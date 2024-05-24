@@ -3,6 +3,7 @@ package ui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
@@ -71,7 +72,7 @@ public class MainMenu extends JFrame {
 				try {
 					schemaClicked();
 				} catch (Exception e1) {
-					//TODO
+					JOptionPane.showMessageDialog(null, "Schema could not open");
 				}
 			}
 		});
@@ -85,7 +86,7 @@ public class MainMenu extends JFrame {
 				try {
 					createBookingClicked();
 				} catch (Exception e1) {
-					//TODO
+					JOptionPane.showMessageDialog(null, "CreatBooking could not open");
 				}
 				
 			

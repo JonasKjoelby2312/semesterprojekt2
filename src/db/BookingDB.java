@@ -59,7 +59,6 @@ public class BookingDB implements BookingDAO{//
 	
 //	@Override
 //	public List<Booking> findAllBookingsByCustomerPhone(String no) {
-//		// TODO Auto-generated method stub
 //		return null;
 //	}
 	
