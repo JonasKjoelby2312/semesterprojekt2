@@ -59,7 +59,7 @@ public class SchemaGUI extends JDialog {
 	 * @throws Exception 
 	 */
 	public SchemaGUI() throws Exception {
-		setBounds(100, 100, 650, 400);
+		setBounds(100, 100, 877, 541);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
