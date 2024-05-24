@@ -26,7 +26,7 @@ public class BookingDB implements BookingDAO{//
 	private static final String INSERT_DOG_CUT_Q = "insert into dog_cut VALUES (?, ?, ?)";
 	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
 	
-	//private PreparedStatement findAllQPS;
+	private PreparedStatement findAllQPS;
 	//private PreparedStatement findBookingByCustomerPhonePS;
 	private PreparedStatement insertOrderPS;
 	private PreparedStatement insertBookingPS;
@@ -56,10 +56,7 @@ public class BookingDB implements BookingDAO{//
 		}
 	}
 	
-//	@Override
-//	public List<Booking> findAllBookings() {
-//		return null;
-//	}
+	
 //	@Override
 //	public List<Booking> findAllBookingsByCustomerPhone(String no) {
 //		// TODO Auto-generated method stub
@@ -134,6 +131,18 @@ public class BookingDB implements BookingDAO{//
 		}
 		return res;
 	}
+	
+	@Override
+	public List<Booking> findAllBookings() throws Exception {
+		List<Booking> res = new ArrayList<>();
+		ResultSet rs = findAllQPS.executeQuery();
+		res = buildObjects(rs);
+		return res;
+	
+	
+	}
+	
+	
 	
 	public List<Booking> findAvailableTime(LocalDate date, int employeeID) throws Exception {
 		List<Booking> res = new ArrayList<>();

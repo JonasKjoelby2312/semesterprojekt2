@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import controller.BookingTypeController;
 import model.BookingType;
 
-class testbookingtypeid {
+class TestBookingTypeID {
 	
 	private static BookingTypeController bTCtrl;
 	@BeforeAll
@@ -35,9 +35,7 @@ class testbookingtypeid {
 	void testCreateBookingTypeIDValid() throws Exception {
 		BookingType res = bTCtrl.findBookingTypeByBookingTypeID(1);
 		
-		//Ser om vi får et BookintType object tilbage.. eller noget... hjælp
 		assertNotNull(res);
-		// BookingTypeID skal være matche til input id'en.
 		assertEquals(1, res.getBookingTypeID());
 		
 	}
@@ -45,7 +43,6 @@ class testbookingtypeid {
 	@Test
 	void testCreateBookingTypeIDInvalid() throws Exception {
 		BookingType res = bTCtrl.findBookingTypeByBookingTypeID(4);
-		
 		assertNull(res);
 		
 		

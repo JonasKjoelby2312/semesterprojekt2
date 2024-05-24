@@ -155,6 +155,7 @@ public class SchemaGUI extends JDialog {
 		dispose();
 	}
 	
+	
 	private void updateTable() throws NumberFormatException, Exception {
 		bookings = oc.findAvailableTime(LocalDate.parse(txtDate.getText(), dtf), Integer.parseInt(txtEmployeeID.getText()));
 		stm = new SchemaTableModel(bookings);

@@ -4,7 +4,12 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+
+import controller.OrderController;
+import model.Booking;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -15,12 +20,18 @@ import java.awt.GridBagConstraints;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class MainMenu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private List<Booking> bookings;
+	private OrderController oc;
+	private JTable tblBookings;
+	private SchemaTableModel stm;
+
 
 	/**
 	 * Launch the application.
@@ -76,11 +87,19 @@ public class MainMenu extends JFrame {
 				} catch (Exception e1) {
 					//TODO
 				}
+				
+			
 			}
 		});
 		btnCreateBooking.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnCreateBooking.setBounds(147, 102, 335, 51);
 		panel.add(btnCreateBooking);
+		
+		init();
+	}
+	
+	private void init() {
+		
 	}
 
 	private void createBookingClicked() throws Exception {
@@ -91,5 +110,13 @@ public class MainMenu extends JFrame {
 	private void schemaClicked() throws Exception {
 		SchemaGUI s = new SchemaGUI();
 		s.setVisible(true);
+		getBookings();
+	}
+	
+	private void getBookings() throws Exception {
+		bookings = oc.findAllBooking();
+		stm = new SchemaTableModel(bookings);
+		tblBookings.setModel(stm);
+		
 	}
 }

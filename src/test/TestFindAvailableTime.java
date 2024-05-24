@@ -17,7 +17,7 @@ import controller.OrderController;
 import db.BookingDB;
 import model.Booking;
 
-class testFindAvailableTime {
+class TestFindAvailableTime {
 	
 	private static OrderController orderCtrl;
 	private static BookingDB bookingDB;

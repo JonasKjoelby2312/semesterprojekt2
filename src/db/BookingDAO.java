@@ -7,7 +7,7 @@ import model.Booking;
 import model.DogCut;
 
 public interface BookingDAO { 
-//	List<Booking> findAllBookings();
+	List<Booking> findAllBookings() throws Exception;
 //	List<Booking> findAllBookingsByCustomerPhone(String no);
 	boolean insertBooking(Booking b) throws Exception;
 	List<Booking> findAvailableTime(LocalDate date, int employeeID) throws Exception;

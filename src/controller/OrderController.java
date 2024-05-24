@@ -49,6 +49,11 @@ public class OrderController {
 		return bookingDB.findAvailableTime(date, employeeID);
 	}
 	
+	public List<Booking> findAllBooking() throws Exception {
+		return bookingDB.findAllBookings();
+		
+	}
+	
 	public boolean createBookingPerson(int bookingTypeID, int employeeID, 
 			String customerPhone, LocalDate date, LocalTime startTime) throws Exception {
 		boolean res = false;
