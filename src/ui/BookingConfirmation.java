@@ -79,7 +79,5 @@ public class BookingConfirmation extends JDialog {
 	private void okayClicked() {
 		setVisible(false);
 		dispose();
-
 	}
-
 }

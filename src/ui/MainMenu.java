@@ -60,6 +60,7 @@ public class MainMenu extends JFrame {
 				try {
 					schemaClicked();
 				} catch (Exception e1) {
+					//TODO
 				}
 			}
 		});
@@ -73,6 +74,7 @@ public class MainMenu extends JFrame {
 				try {
 					createBookingClicked();
 				} catch (Exception e1) {
+					//TODO
 				}
 			}
 		});

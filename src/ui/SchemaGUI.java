@@ -48,6 +48,7 @@ public class SchemaGUI extends JDialog {
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
+			//TODO
 			e.printStackTrace();
 		}
 	}
@@ -93,6 +94,7 @@ public class SchemaGUI extends JDialog {
 				try {
 					searchClicked();
 				} catch (Exception e1) {
+					//TODO ( "INVAILD DATA INUPT" ) eller noget
 				}
 			}
 		});

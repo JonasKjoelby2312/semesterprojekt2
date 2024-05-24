@@ -317,6 +317,8 @@ public class CreateBookingGUI extends JDialog {
 					LocalTime.parse(textFieldStartTime.getText(), dtfTime));
 		}
 		oc.completeBooking();
+		BookingConfirmation bc = new BookingConfirmation();
+		bc.setVisible(true);
 		cancelClicked();
 		
 	}
