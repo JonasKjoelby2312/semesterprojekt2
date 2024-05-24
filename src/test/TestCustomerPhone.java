@@ -32,15 +32,15 @@ class TestCustomerPhone {
 
 	@Test
 	void testCustomerPhoneRightNumber() throws Exception {
-		Customer res = cCtrl.findCustomerByPhone("+4551938113");
+		Customer res = cCtrl.findCustomerByPhone("51938113");
 		assertNotNull(res);
 		
-		assertEquals("+4551938113", res.getPhoneNo());
+		assertEquals("51938113", res.getPhoneNo());
 	}
 	
 	@Test
 	void testCustomerPhoneWrongNumber() throws Exception {
-		Customer res = cCtrl.findCustomerByPhone("+4551938114");
+		Customer res = cCtrl.findCustomerByPhone("51938114");
 		assertNull(res);
 	}
 
