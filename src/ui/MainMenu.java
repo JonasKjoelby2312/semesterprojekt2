@@ -111,13 +111,13 @@ public class MainMenu extends JFrame {
 	private void schemaClicked() throws Exception {
 		SchemaGUI s = new SchemaGUI();
 		s.setVisible(true);
-		getBookings();
+		//getBookings();
 	}
 	
-	private void getBookings() throws Exception {
-		bookings = oc.findAllBooking();
-		stm = new SchemaTableModel(bookings);
-		tblBookings.setModel(stm);
-		
-	}
+//	private void getBookings() throws Exception {
+//		bookings = oc.findAllBooking();
+//		stm = new SchemaTableModel(bookings);
+//		tblBookings.setModel(stm);
+//		
+//	}
 }
