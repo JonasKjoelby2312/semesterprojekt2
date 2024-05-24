@@ -45,7 +45,7 @@ public class BookingDB implements BookingDAO{//
 		bookingTypeDB = new BookingTypeDB();
 		
 		try {
-			//findAllQPS = con.prepareStatement(FIND_ALL_Q);
+			findAllQPS = con.prepareStatement(FIND_ALL_Q);
 			//findBookingByCustomerPhonePS = con.prepareStatement(FIND_BOOKING_BY_CUSTOMER_PHONE);
 			insertOrderPS = con.prepareStatement(INSERT_ORDER_Q, Statement.RETURN_GENERATED_KEYS);
 			insertBookingPS = con.prepareStatement(INSERT_BOOKING_Q, Statement.RETURN_GENERATED_KEYS);

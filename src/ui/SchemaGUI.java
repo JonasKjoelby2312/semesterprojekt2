@@ -146,15 +146,16 @@ public class SchemaGUI extends JDialog {
 	private void init() throws Exception {
 		oc = new OrderController();
 		dtf = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		//stm = new SchemaTableModel(List.of());
-		//tblBookings.setModel(stm);
+		stm = new SchemaTableModel(oc.findAllBooking());
+		
+		tblBookings.setModel(stm);
+		
 	}
 
 	private void cancelClicked() {
 		setVisible(false);
 		dispose();
 	}
-	
 	
 	private void updateTable() throws NumberFormatException, Exception {
 		bookings = oc.findAvailableTime(LocalDate.parse(txtDate.getText(), dtf), Integer.parseInt(txtEmployeeID.getText()));
