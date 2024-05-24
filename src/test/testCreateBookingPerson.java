@@ -53,7 +53,7 @@ class testCreateBookingPerson {
 
 	@Test
 	void testCreateBookingPersonWrongInfo() throws Exception {
-		boolean currBooking = oc.createBookingPerson(1, 17, "51938113", 
+		boolean currBooking = oc.createBookingPerson(1, 1, "51938114", 
 				LocalDate.of(2024, 5, 30), LocalTime.of(14, 30));
 				assertFalse(currBooking);	
 	}
