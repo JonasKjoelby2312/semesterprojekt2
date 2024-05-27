@@ -1,13 +1,14 @@
 package model;
 
-public class Employee {
-	
+/*
+ * This is a constructor for Employee with getters and setters. 
+ */
+ class Employee {	
 	private int employeeID;
 	private String name; 
 	private String companyPosition;
 	private double salary;
 	private String barberType;
-	
 	
 	public Employee(int employeeID, String name, String companyPosition, double salary, String barberType) {
 		this.employeeID =  employeeID;

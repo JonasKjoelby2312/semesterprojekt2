@@ -1,5 +1,8 @@
 package model;
 
+/*
+ * This is a constructor for Dog with getters and setters. 
+ */
 public class Dog {
 	private int dogID;
 	private String name;

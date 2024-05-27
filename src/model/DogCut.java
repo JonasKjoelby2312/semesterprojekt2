@@ -3,6 +3,9 @@ package model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/*
+ * This is a constructor for DogCut with getters and setters. 
+ */
 public class DogCut extends Booking{
 	private String comment;
 	private Dog dog;

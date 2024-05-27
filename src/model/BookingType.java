@@ -1,5 +1,8 @@
 package model;
 
+/*
+ * This is a constructor for BookingType with getters and setters. 
+ */
 public class BookingType {
 	private int bookingTypeID;
 	private String customerType;

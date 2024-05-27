@@ -2,7 +2,10 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+/*
+ * This is a constructor for Customer with getters and setters
+ * which extends Order so it can use the Order Objects(?). 
+ */
 public class Booking extends Order {
 	private int bookingID;
 	private LocalTime startTime;

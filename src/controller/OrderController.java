@@ -16,6 +16,12 @@ import model.Dog;
 import model.DogCut;
 import model.Employee;
 
+/*
+ * ---
+ * It uses the methods from the DAO interface 
+ * to return objects from the database.
+ */
+
 public class OrderController {
 	private BookingTypeController bookingTypeCtrl;
 	private EmployeeController employeeCtrl;
@@ -53,7 +59,9 @@ public class OrderController {
 		return bookingDB.findAllBookings();
 		
 	}
-	
+	/*
+	 * This method is for creating a booking for a person.
+	 */
 	public boolean createBookingPerson(int bookingTypeID, int employeeID, 
 			String customerPhone, LocalDate date, LocalTime startTime) throws Exception {
 		boolean res = false;
@@ -71,7 +79,9 @@ public class OrderController {
 		}
 		return res;
 	}
-	
+	/*
+	 * This method is for creating a booking for a dog.
+	 */
 	public boolean createBookingDog(int bookingTypeID, int employeeID, 
 			String customerPhone, String dogName, String comment,
 			LocalDate date, LocalTime startTime) throws Exception {
@@ -94,6 +104,10 @@ public class OrderController {
 		return res;
 	}
 	
+	/*
+	 * This method is for persisting the booking in the database,
+	 * both person haircut and dog cuts.
+	 */
 	public boolean completeBooking() throws Exception {
 		boolean res = false;
 		if(currBooking != null) {

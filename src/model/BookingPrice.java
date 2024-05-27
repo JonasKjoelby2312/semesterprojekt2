@@ -2,13 +2,14 @@ package model;
 
 import java.time.LocalDate;
 
+/*
+ * This is a constructor for BookingPrice with getters and setters. 
+ */
+
 public class BookingPrice {
 	private LocalDate startDate;
 	private Double value;
 	
-	/*
-	 * Constructor for BookingPrice
-	 */
 	public BookingPrice(LocalDate startDate, Double value) {
 		this.startDate = startDate;
 		this.value = value;

@@ -2,12 +2,15 @@ package model;
 
 import java.time.LocalDate;
 
+/*
+ * This is a constructor for Order with getters and setters. 
+ */
 public abstract class Order {
 	private int orderID;
 	private LocalDate date;
 	private double total;
 	private Customer customer;
-
+	
 	public Order(LocalDate date, Customer customer) {
 		this.date = date;
 		this.customer = customer;

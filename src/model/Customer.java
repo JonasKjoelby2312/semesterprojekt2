@@ -11,7 +11,9 @@ public class Customer {
 	private String email;
 	private List<Dog> dogs;
 	
-	
+	/*
+	 * This is a constructor for Customer with getters and setters. 
+	 */
 	public Customer(int customerID, String name, String address, String phoneNo, String email) {
 		this.customerID = customerID;
 		this.name = name;
