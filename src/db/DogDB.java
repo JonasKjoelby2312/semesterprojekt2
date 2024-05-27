@@ -10,14 +10,18 @@ import model.Dog;
 public class DogDB implements DogDAO{
 	private static final String FIND_ALL_DOGS_OF_CUSTOMER_Q = "select dog_id, name, dog_description, c_id from dog";
 	private static final String FIND_DOG_BY_PHONENR_AND_DOGNAME_Q = FIND_ALL_DOGS_OF_CUSTOMER_Q + " where c_id = ? and name = ?";
+	private static final String FIND_DOG_BY_ID_Q = "select dog_id, name, dog_description, c_id from dog";
+	
 	//private PreparedStatement findAllDogsOfCustomerPS;
 	private PreparedStatement findDogByPhoneNoAndDogName;
+	private PreparedStatement findDogByIDPS;
 	
 	public DogDB() throws Exception {
 		Connection con = DBConnection.getInstance().getConnection();
 		
 		try {
 			findDogByPhoneNoAndDogName = con.prepareStatement(FIND_DOG_BY_PHONENR_AND_DOGNAME_Q);
+			findDogByIDPS = con.prepareStatement(FIND_DOG_BY_ID_Q); 
 		} catch (Exception e) {
 			throw new Exception("Could not prepare statements");
 		}
@@ -51,6 +55,14 @@ public class DogDB implements DogDAO{
 		}
 		return res;
 	}
-
+	
+	public Dog findDogByID(int d_id) throws Exception {
+		Dog res = null;
+		findDogByIDPS.setInt(1, d_id);
+		ResultSet rs = findDogByIDPS.executeQuery();
+		res = buildObject(rs);
+		return res;
+		
+	}
 	
 }

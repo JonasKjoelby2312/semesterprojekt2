@@ -53,11 +53,32 @@ public class SchemaGUI extends JDialog {
 			JOptionPane.showMessageDialog(null, "An Error has occured while opening SchemaGUI");
 			e.printStackTrace();
 		}
+//		new Thread(() -> {
+//			while(true) {
+//				try {
+//					Thread.sleep(5000);
+//					dialog.updateTableThread();
+//					
+//					
+//				} catch (InterruptedException e){
+//					e.printStackTrace();
+//				} catch (NumberFormatException e) {
+//					e.printStackTrace();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}).start(); 
+		startThread(dialog);
+	}
+	
+	public static void startThread(SchemaGUI s) {
+		dialog = s;
 		new Thread(() -> {
 			while(true) {
 				try {
 					Thread.sleep(5000);
-					dialog.init();
+					dialog.updateTableThread();
 					
 					
 				} catch (InterruptedException e){
@@ -184,5 +205,6 @@ public class SchemaGUI extends JDialog {
 	private void updateTableThread() throws Exception {
 		stm = new SchemaTableModel(oc.findAllBookings());
 		tblBookings.setModel(stm);
+		System.out.println("Update");
 	}
 }

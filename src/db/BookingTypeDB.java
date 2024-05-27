@@ -114,6 +114,7 @@ public class BookingTypeDB implements BookingTypeDAO {
  * @throws Exception if a database access error appear
  */
 	public BookingType findBookingTypeByID(int id) throws Exception {
+		System.out.println("marker");
 		BookingType res = null;
 		findByBookingTypeIDPS.setInt(1, id);
 		try {

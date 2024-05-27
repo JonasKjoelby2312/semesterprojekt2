@@ -31,8 +31,8 @@ public class SchemaTableModel extends AbstractTableModel {
 		case 5: res = b.getBookingType().getName(); break;
 		case 6: res = "" + b.getCustomerType(); break;
 		case 7:
-			if(b.getCustomerType().equals("Dog")) {
-				//DogCut dc = (DogCut) b; TODO
+			if(b.getCustomerType().equals("Dog")) { 
+				DogCut dc = (DogCut) b;
 				//res = dc.getDog().getName();
 				res = "NULL";
 			} else {

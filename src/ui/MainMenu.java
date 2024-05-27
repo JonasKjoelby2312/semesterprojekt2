@@ -111,6 +111,7 @@ public class MainMenu extends JFrame {
 	private void schemaClicked() throws Exception {
 		SchemaGUI s = new SchemaGUI();
 		s.setVisible(true);
+		SchemaGUI.startThread(s);
 		//getBookings();
 	}
 	

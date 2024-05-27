@@ -87,7 +87,8 @@ public class OrderController {
 			LocalDate date, LocalTime startTime) throws Exception {
 		boolean res = false;
 		currBooking = null;
-		if(LocalDate.now().compareTo(date) < 0 || LocalDate.now().compareTo(date) == 0 && LocalTime.now().compareTo(startTime) < 0) {
+		if(LocalDate.now().compareTo(date) < 0 || LocalDate.now().compareTo(date) 
+				== 0 && LocalTime.now().compareTo(startTime) < 0) {
 			Employee e = employeeCtrl.findEmployeeByID(employeeID);
 			if(e.getBarberType().equals("Dog")) {
 				BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);

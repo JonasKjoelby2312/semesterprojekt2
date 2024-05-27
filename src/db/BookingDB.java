@@ -25,6 +25,7 @@ public class BookingDB implements BookingDAO{//
 	private static final String INSERT_BOOKING_Q = "insert into booking values(?, ?, ?, ?, ?)";
 	private static final String INSERT_DOG_CUT_Q = "insert into dog_cut VALUES (?, ?, ?)";
 	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
+	private static final String FIND_DOG_CUT_BY_ID_Q = "select comment, b_id, d_id from dog_cut where b_id = ?";
 	
 	private PreparedStatement findAllQPS;
 	//private PreparedStatement findBookingByCustomerPhonePS;
@@ -32,17 +33,20 @@ public class BookingDB implements BookingDAO{//
 	private PreparedStatement insertBookingPS;
 	private PreparedStatement insertDogCutPS;
 	private PreparedStatement findBookingByDateAndEmployeeIDPS;
+	private PreparedStatement findDogCutByIDPS;
 	
 //	private DogDB dogDB;
 	private CustomerDB customerDB;
 	private EmployeeDB employeeDB;
 	private BookingTypeDB bookingTypeDB;
+	private DogDB dogDB;
 	
 	public BookingDB() throws Exception {
 		Connection con = DBConnection.getInstance().getConnection();
 		customerDB = new CustomerDB();
 		employeeDB = new EmployeeDB();
 		bookingTypeDB = new BookingTypeDB();
+		dogDB = new DogDB();
 		
 		try {
 			findAllQPS = con.prepareStatement(FIND_ALL_Q);
@@ -51,6 +55,7 @@ public class BookingDB implements BookingDAO{//
 			insertBookingPS = con.prepareStatement(INSERT_BOOKING_Q, Statement.RETURN_GENERATED_KEYS);
 			insertDogCutPS = con.prepareStatement(INSERT_DOG_CUT_Q);
 			findBookingByDateAndEmployeeIDPS = con.prepareStatement(FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID);
+			findDogCutByIDPS = con.prepareStatement(FIND_DOG_CUT_BY_ID_Q);
 		} catch (SQLException e) {
 			throw new Exception("Could not preparedStatement");
 		}
@@ -165,12 +170,13 @@ public class BookingDB implements BookingDAO{//
 			b = buildObject(rs);
 		}
 		return res;
-	}
+	} 
 
 	private Booking buildObject(ResultSet rs) throws Exception {
 		Booking res = null;
 		try {
 			if(rs.next()) {
+				if(rs.getString("customer_type").equals("Person")) {
 				res = new Booking(
 						rs.getDate("date").toLocalDate(),
 						customerDB.findCustomerByID(rs.getInt("c_id")),
@@ -179,6 +185,19 @@ public class BookingDB implements BookingDAO{//
 						bookingTypeDB.findBookingTypeByID(rs.getInt("bt_id")),
 						rs.getString("customer_type")
 						);
+				} else {
+					ResultSet nrs = dogCutInBooking(rs.getInt("b_id"));
+					res = new DogCut(
+							rs.getDate("date").toLocalDate(),
+							customerDB.findCustomerByID(rs.getInt("c_id")),
+							rs.getTime("start_time").toLocalTime(),
+							employeeDB.findEmployeeByID(rs.getInt("emp_id")),
+							bookingTypeDB.findBookingTypeByID(rs.getInt("bt_id")),
+							rs.getString("customer_type"),
+							dogDB.findDogByID(nrs.getInt("d_id")),
+							nrs.getString("comment")
+							);
+				}
 			}
 		} catch (Exception e) {
 			throw new Exception("Could not build booking");
@@ -186,4 +205,10 @@ public class BookingDB implements BookingDAO{//
 		
 		return res;
 	}
+	
+	private ResultSet dogCutInBooking(int b_id) throws SQLException {
+		findDogCutByIDPS.setInt(1, b_id);
+		return findDogCutByIDPS.executeQuery();
+	}
+	
 }
