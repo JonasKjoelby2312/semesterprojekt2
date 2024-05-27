@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
+import javax.swing.table.TableModel;
 
 import controller.OrderController;
 import db.BookingDB;
@@ -39,6 +40,8 @@ public class SchemaGUI extends JDialog {
 	private JTable tblBookings;
 	private SchemaTableModel stm;
 	DateTimeFormatter dtf;
+	private DetailsGUI dGUI;
+	
 	
 
 	/**
@@ -160,6 +163,14 @@ public class SchemaGUI extends JDialog {
 						cancelClicked();
 					}
 				});
+				
+				JButton btnDetails = new JButton("Details");
+				btnDetails.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						detailsClicked();
+					}
+				});
+				buttonPane.add(btnDetails);
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -178,6 +189,30 @@ public class SchemaGUI extends JDialog {
 		init();
 	}
 	
+	private void detailsClicked() {
+		int index = tblBookings.getSelectedRow();
+		TableModel model = tblBookings.getModel();
+		DetailsGUI dGUI = new DetailsGUI();
+		
+		String BookingTypeID = model.getValueAt(index, 0).toString();
+		String EmployeeID = model.getValueAt(index, 1).toString();
+		String PhoneNumber = model.getValueAt(index, 2).toString();
+		String Date = model.getValueAt(index, 3).toString();
+		String StartTime = model.getValueAt(index, 4).toString();
+		String DogName = model.getValueAt(index, 5).toString();
+		String Comment = model.getValueAt(index, 6).toString();
+		
+		dGUI.setVisible(true);
+		
+		dGUI.textFieldBookingTypeID.setText(BookingTypeID);
+		dGUI.textFieldEmployeeID.setText(EmployeeID);
+		dGUI.textFieldPhoneNumber.setText(PhoneNumber);
+		dGUI.textFieldDate.setText(Date);
+		dGUI.textFieldStartTime.setText(StartTime);
+		dGUI.textFieldDogName.setText(DogName);
+		dGUI.textFieldComment.setText(Comment);
+		}
+
 	private void searchClicked() throws NumberFormatException, Exception {
 		updateTable();
 	}
