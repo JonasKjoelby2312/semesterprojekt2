@@ -194,23 +194,27 @@ public class SchemaGUI extends JDialog {
 		TableModel model = tblBookings.getModel();
 		DetailsGUI dGUI = new DetailsGUI();
 		
-		String BookingTypeID = model.getValueAt(index, 0).toString();
-		String EmployeeID = model.getValueAt(index, 1).toString();
-		String PhoneNumber = model.getValueAt(index, 2).toString();
+		String EmployeeName = model.getValueAt(index, 0).toString();
+		String CustomerName = model.getValueAt(index, 1).toString();
+		String Phone = model.getValueAt(index, 2).toString();
 		String Date = model.getValueAt(index, 3).toString();
 		String StartTime = model.getValueAt(index, 4).toString();
-		String DogName = model.getValueAt(index, 5).toString();
-		String Comment = model.getValueAt(index, 6).toString();
+		String BookingType = model.getValueAt(index, 5).toString();
+		String CustomerType = model.getValueAt(index, 6).toString();
+		String DogName = model.getValueAt(index, 7).toString();
+		String Total = model.getValueAt(index, 8).toString();
 		
 		dGUI.setVisible(true);
 		
-		dGUI.textFieldBookingTypeID.setText(BookingTypeID);
-		dGUI.textFieldEmployeeID.setText(EmployeeID);
-		dGUI.textFieldPhoneNumber.setText(PhoneNumber);
+		dGUI.textFieldEmployeeName.setText(EmployeeName);
+		dGUI.textFieldCustomerName.setText(CustomerName);
+		dGUI.textFieldPhone.setText(Phone);
 		dGUI.textFieldDate.setText(Date);
 		dGUI.textFieldStartTime.setText(StartTime);
+		dGUI.textFieldBookingType.setText(BookingType);
+		dGUI.textFieldCustomerType.setText(CustomerType);
 		dGUI.textFieldDogName.setText(DogName);
-		dGUI.textFieldComment.setText(Comment);
+		dGUI.textFieldTotal.setText(Total);
 		}
 
 	private void searchClicked() throws NumberFormatException, Exception {

@@ -21,13 +21,15 @@ public class DetailsGUI extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	JTextField textFieldBookingTypeID;
-	JTextField textFieldEmployeeID;
-	JTextField textFieldPhoneNumber;
+	JTextField textFieldEmployeeName;
+	JTextField textFieldCustomerName;
+	JTextField textFieldPhone;
 	JTextField textFieldDate;
 	JTextField textFieldStartTime;
+	JTextField textFieldBookingType;
+	JTextField textFieldCustomerType;
 	JTextField textFieldDogName;
-	JTextField textFieldComment;
+	JTextField textFieldTotal;
 
 	/**
 	 * Launch the application.
@@ -46,78 +48,78 @@ public class DetailsGUI extends JDialog {
 	 * Create the dialog.
 	 */
 	public DetailsGUI() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 517, 363);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
-			JLabel lblBookingTypeNo = new JLabel("Booking Type No:");
-			lblBookingTypeNo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			GridBagConstraints gbc_lblBookingTypeNo = new GridBagConstraints();
-			gbc_lblBookingTypeNo.anchor = GridBagConstraints.WEST;
-			gbc_lblBookingTypeNo.insets = new Insets(0, 0, 5, 5);
-			gbc_lblBookingTypeNo.gridx = 0;
-			gbc_lblBookingTypeNo.gridy = 0;
-			contentPanel.add(lblBookingTypeNo, gbc_lblBookingTypeNo);
+			JLabel lblEmployeeName = new JLabel("Employee Name:");
+			lblEmployeeName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblEmployeeName = new GridBagConstraints();
+			gbc_lblEmployeeName.anchor = GridBagConstraints.WEST;
+			gbc_lblEmployeeName.insets = new Insets(0, 0, 5, 5);
+			gbc_lblEmployeeName.gridx = 0;
+			gbc_lblEmployeeName.gridy = 0;
+			contentPanel.add(lblEmployeeName, gbc_lblEmployeeName);
 		}
 		{
-			textFieldBookingTypeID = new JTextField();
-			textFieldBookingTypeID.setEditable(false);
-			GridBagConstraints gbc_textFieldBookingTypeID = new GridBagConstraints();
-			gbc_textFieldBookingTypeID.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldBookingTypeID.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldBookingTypeID.gridx = 1;
-			gbc_textFieldBookingTypeID.gridy = 0;
-			contentPanel.add(textFieldBookingTypeID, gbc_textFieldBookingTypeID);
-			textFieldBookingTypeID.setColumns(10);
+			textFieldEmployeeName = new JTextField();
+			textFieldEmployeeName.setEditable(false);
+			GridBagConstraints gbc_textFieldEmployeeName = new GridBagConstraints();
+			gbc_textFieldEmployeeName.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldEmployeeName.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldEmployeeName.gridx = 1;
+			gbc_textFieldEmployeeName.gridy = 0;
+			contentPanel.add(textFieldEmployeeName, gbc_textFieldEmployeeName);
+			textFieldEmployeeName.setColumns(10);
 		}
 		{
-			JLabel lblEmployeeNo = new JLabel("Employee NO: ");
-			lblEmployeeNo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			GridBagConstraints gbc_lblEmployeeNo = new GridBagConstraints();
-			gbc_lblEmployeeNo.anchor = GridBagConstraints.WEST;
-			gbc_lblEmployeeNo.insets = new Insets(0, 0, 5, 5);
-			gbc_lblEmployeeNo.gridx = 0;
-			gbc_lblEmployeeNo.gridy = 1;
-			contentPanel.add(lblEmployeeNo, gbc_lblEmployeeNo);
+			JLabel lblCustomerName = new JLabel("Customer Name:");
+			lblCustomerName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblCustomerName = new GridBagConstraints();
+			gbc_lblCustomerName.anchor = GridBagConstraints.WEST;
+			gbc_lblCustomerName.insets = new Insets(0, 0, 5, 5);
+			gbc_lblCustomerName.gridx = 0;
+			gbc_lblCustomerName.gridy = 1;
+			contentPanel.add(lblCustomerName, gbc_lblCustomerName);
 		}
 		{
-			textFieldEmployeeID = new JTextField();
-			textFieldEmployeeID.setEditable(false);
-			GridBagConstraints gbc_textFieldEmployeeNo = new GridBagConstraints();
-			gbc_textFieldEmployeeNo.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldEmployeeNo.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldEmployeeNo.gridx = 1;
-			gbc_textFieldEmployeeNo.gridy = 1;
-			contentPanel.add(textFieldEmployeeID, gbc_textFieldEmployeeNo);
-			textFieldEmployeeID.setColumns(10);
+			textFieldCustomerName = new JTextField();
+			textFieldCustomerName.setEditable(false);
+			GridBagConstraints gbc_textFieldCustomerName = new GridBagConstraints();
+			gbc_textFieldCustomerName.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldCustomerName.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldCustomerName.gridx = 1;
+			gbc_textFieldCustomerName.gridy = 1;
+			contentPanel.add(textFieldCustomerName, gbc_textFieldCustomerName);
+			textFieldCustomerName.setColumns(10);
 		}
 		{
-			JLabel lblPhoneNumber = new JLabel("Phone Number:");
-			lblPhoneNumber.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			GridBagConstraints gbc_lblPhoneNumber = new GridBagConstraints();
-			gbc_lblPhoneNumber.anchor = GridBagConstraints.WEST;
-			gbc_lblPhoneNumber.insets = new Insets(0, 0, 5, 5);
-			gbc_lblPhoneNumber.gridx = 0;
-			gbc_lblPhoneNumber.gridy = 2;
-			contentPanel.add(lblPhoneNumber, gbc_lblPhoneNumber);
+			JLabel lblPhone = new JLabel("Phone:");
+			lblPhone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblPhone = new GridBagConstraints();
+			gbc_lblPhone.anchor = GridBagConstraints.WEST;
+			gbc_lblPhone.insets = new Insets(0, 0, 5, 5);
+			gbc_lblPhone.gridx = 0;
+			gbc_lblPhone.gridy = 2;
+			contentPanel.add(lblPhone, gbc_lblPhone);
 		}
 		{
-			textFieldPhoneNumber = new JTextField();
-			textFieldPhoneNumber.setEditable(false);
-			GridBagConstraints gbc_textFieldPhoneNumber = new GridBagConstraints();
-			gbc_textFieldPhoneNumber.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldPhoneNumber.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldPhoneNumber.gridx = 1;
-			gbc_textFieldPhoneNumber.gridy = 2;
-			contentPanel.add(textFieldPhoneNumber, gbc_textFieldPhoneNumber);
-			textFieldPhoneNumber.setColumns(10);
+			textFieldPhone = new JTextField();
+			textFieldPhone.setEditable(false);
+			GridBagConstraints gbc_textFieldPhone = new GridBagConstraints();
+			gbc_textFieldPhone.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldPhone.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldPhone.gridx = 1;
+			gbc_textFieldPhone.gridy = 2;
+			contentPanel.add(textFieldPhone, gbc_textFieldPhone);
+			textFieldPhone.setColumns(10);
 		}
 		{
 			JLabel lblDate = new JLabel("Date: ");
@@ -162,13 +164,55 @@ public class DetailsGUI extends JDialog {
 			textFieldStartTime.setColumns(10);
 		}
 		{
+			JLabel lblBookingType = new JLabel("Booking Type:");
+			lblBookingType.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblBookingType = new GridBagConstraints();
+			gbc_lblBookingType.anchor = GridBagConstraints.WEST;
+			gbc_lblBookingType.insets = new Insets(0, 0, 5, 5);
+			gbc_lblBookingType.gridx = 0;
+			gbc_lblBookingType.gridy = 5;
+			contentPanel.add(lblBookingType, gbc_lblBookingType);
+		}
+		{
+			textFieldBookingType = new JTextField();
+			textFieldBookingType.setEditable(false);
+			GridBagConstraints gbc_textFieldBookingType = new GridBagConstraints();
+			gbc_textFieldBookingType.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldBookingType.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldBookingType.gridx = 1;
+			gbc_textFieldBookingType.gridy = 5;
+			contentPanel.add(textFieldBookingType, gbc_textFieldBookingType);
+			textFieldBookingType.setColumns(10);
+		}
+		{
+			JLabel lblCustomerType = new JLabel("Customer Type:");
+			lblCustomerType.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblCustomerType = new GridBagConstraints();
+			gbc_lblCustomerType.anchor = GridBagConstraints.WEST;
+			gbc_lblCustomerType.insets = new Insets(0, 0, 5, 5);
+			gbc_lblCustomerType.gridx = 0;
+			gbc_lblCustomerType.gridy = 6;
+			contentPanel.add(lblCustomerType, gbc_lblCustomerType);
+		}
+		{
+			textFieldCustomerType = new JTextField();
+			textFieldCustomerType.setEditable(false);
+			GridBagConstraints gbc_textFieldCustomerType = new GridBagConstraints();
+			gbc_textFieldCustomerType.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldCustomerType.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldCustomerType.gridx = 1;
+			gbc_textFieldCustomerType.gridy = 6;
+			contentPanel.add(textFieldCustomerType, gbc_textFieldCustomerType);
+			textFieldCustomerType.setColumns(10);
+		}
+		{
 			JLabel lblDogName = new JLabel("Dog Name:");
 			lblDogName.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			GridBagConstraints gbc_lblDogName = new GridBagConstraints();
 			gbc_lblDogName.anchor = GridBagConstraints.WEST;
 			gbc_lblDogName.insets = new Insets(0, 0, 5, 5);
 			gbc_lblDogName.gridx = 0;
-			gbc_lblDogName.gridy = 5;
+			gbc_lblDogName.gridy = 7;
 			contentPanel.add(lblDogName, gbc_lblDogName);
 		}
 		{
@@ -178,30 +222,29 @@ public class DetailsGUI extends JDialog {
 			gbc_textFieldDogName.insets = new Insets(0, 0, 5, 0);
 			gbc_textFieldDogName.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldDogName.gridx = 1;
-			gbc_textFieldDogName.gridy = 5;
+			gbc_textFieldDogName.gridy = 7;
 			contentPanel.add(textFieldDogName, gbc_textFieldDogName);
 			textFieldDogName.setColumns(10);
 		}
 		{
-			JLabel lblComment = new JLabel("Comment:");
-			lblComment.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			GridBagConstraints gbc_lblComment = new GridBagConstraints();
-			gbc_lblComment.anchor = GridBagConstraints.WEST;
-			gbc_lblComment.insets = new Insets(0, 0, 5, 5);
-			gbc_lblComment.gridx = 0;
-			gbc_lblComment.gridy = 6;
-			contentPanel.add(lblComment, gbc_lblComment);
+			JLabel lblTotal = new JLabel("Total:");
+			lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblTotal = new GridBagConstraints();
+			gbc_lblTotal.anchor = GridBagConstraints.WEST;
+			gbc_lblTotal.insets = new Insets(0, 0, 0, 5);
+			gbc_lblTotal.gridx = 0;
+			gbc_lblTotal.gridy = 8;
+			contentPanel.add(lblTotal, gbc_lblTotal);
 		}
 		{
-			textFieldComment = new JTextField();
-			textFieldComment.setEditable(false);
-			GridBagConstraints gbc_textFieldComment = new GridBagConstraints();
-			gbc_textFieldComment.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldComment.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldComment.gridx = 1;
-			gbc_textFieldComment.gridy = 6;
-			contentPanel.add(textFieldComment, gbc_textFieldComment);
-			textFieldComment.setColumns(10);
+			textFieldTotal = new JTextField();
+			textFieldTotal.setEditable(false);
+			GridBagConstraints gbc_textFieldTotal = new GridBagConstraints();
+			gbc_textFieldTotal.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldTotal.gridx = 1;
+			gbc_textFieldTotal.gridy = 8;
+			contentPanel.add(textFieldTotal, gbc_textFieldTotal);
+			textFieldTotal.setColumns(10);
 		}
 		{
 			JPanel buttonPane = new JPanel();
