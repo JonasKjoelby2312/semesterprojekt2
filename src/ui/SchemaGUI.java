@@ -26,8 +26,8 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class SchemaGUI extends JDialog {
-
 	private static final long serialVersionUID = 1L;
+	private static SchemaGUI dialog;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtEmployeeID;
 	private JTextField txtDate;
@@ -39,19 +39,36 @@ public class SchemaGUI extends JDialog {
 	private JTable tblBookings;
 	private SchemaTableModel stm;
 	DateTimeFormatter dtf;
+	
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			SchemaGUI dialog = new SchemaGUI();
+			dialog = new SchemaGUI();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "An Error has occured while opening SchemaGUI");
 			e.printStackTrace();
 		}
+		new Thread(() -> {
+			while(true) {
+				try {
+					Thread.sleep(5000);
+					dialog.init();
+					
+					
+				} catch (InterruptedException e){
+					e.printStackTrace();
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
 	}
 
 	/**
@@ -147,7 +164,7 @@ public class SchemaGUI extends JDialog {
 	private void init() throws Exception {
 		oc = new OrderController();
 		dtf = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		stm = new SchemaTableModel(oc.findAllBooking());
+		stm = new SchemaTableModel(oc.findAllBookings());
 		
 		tblBookings.setModel(stm);
 		
@@ -161,6 +178,11 @@ public class SchemaGUI extends JDialog {
 	private void updateTable() throws NumberFormatException, Exception {
 		bookings = oc.findAvailableTime(LocalDate.parse(txtDate.getText(), dtf), Integer.parseInt(txtEmployeeID.getText()));
 		stm = new SchemaTableModel(bookings);
+		tblBookings.setModel(stm);
+	}
+	
+	private void updateTableThread() throws Exception {
+		stm = new SchemaTableModel(oc.findAllBookings());
 		tblBookings.setModel(stm);
 	}
 }

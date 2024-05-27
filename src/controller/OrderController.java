@@ -18,7 +18,7 @@ import model.Employee;
 
 /*
  * ---
- * It uses the methods from the DAO interface 
+ * It uses the methods from the BookingDAO and DogDAO interface 
  * to return objects from the database.
  */
 
@@ -55,7 +55,7 @@ public class OrderController {
 		return bookingDB.findAvailableTime(date, employeeID);
 	}
 	
-	public List<Booking> findAllBooking() throws Exception {
+	public List<Booking> findAllBookings() throws Exception {
 		return bookingDB.findAllBookings();
 		
 	}
