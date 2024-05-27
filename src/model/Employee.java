@@ -3,7 +3,7 @@ package model;
 /*
  * This is a constructor for Employee with getters and setters. 
  */
- class Employee {	
+ public class Employee {	
 	private int employeeID;
 	private String name; 
 	private String companyPosition;
