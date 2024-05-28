@@ -103,6 +103,7 @@ public class CustomerDB implements CustomerDAO {
 			ResultSet rs = findCustomerByID.executeQuery();
 			res = buildObject(rs);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception("Could not find customer by ID");
 		}
 		return res;
