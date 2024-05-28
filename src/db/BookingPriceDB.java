@@ -14,20 +14,20 @@ public class BookingPriceDB implements BookingPriceDAO {
 
 	private PreparedStatement findBookingPricesByBookingTypeNo;
 
-	public BookingPriceDB() throws Exception {
+	public BookingPriceDB() throws DataAccessException, SQLException {
 		Connection con = DBConnection.getInstance().getConnection();
 		findBookingPricesByBookingTypeNo = con.prepareStatement(FIND_BOOKING_PRICE_BY_BOOKING_TYPE_ID_Q);
 	}
 
 	@Override
-	public BookingPrice findBookingPricesByBookingTypeID(int bookingTypeID) throws Exception {
+	public BookingPrice findBookingPricesByBookingTypeID(int bookingTypeID) throws DataAccessException, SQLException {
 		findBookingPricesByBookingTypeNo.setInt(1, bookingTypeID);
 		ResultSet rs = findBookingPricesByBookingTypeNo.executeQuery();
 		BookingPrice res = buildObject(rs);
 		return res;
 	}
 
-	private List<BookingPrice> buildObjects(ResultSet rs) throws SQLException {
+	private List<BookingPrice> buildObjects(ResultSet rs) throws DataAccessException, SQLException {
 		ArrayList<BookingPrice> res = new ArrayList<>();
 		BookingPrice bp = buildObject(rs);
 		while (bp != null) {
@@ -37,7 +37,7 @@ public class BookingPriceDB implements BookingPriceDAO {
 		return res;
 	}
 
-	private BookingPrice buildObject(ResultSet rs) throws SQLException {
+	private BookingPrice buildObject(ResultSet rs) throws DataAccessException, SQLException {
 		BookingPrice res = null;
 		if (rs.next()) {
 			res = new BookingPrice(rs.getDate("start_date").toLocalDate(), rs.getDouble("booking_price_value"));

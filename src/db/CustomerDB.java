@@ -22,7 +22,7 @@ public class CustomerDB implements CustomerDAO {
 	private PreparedStatement findByPhonePS;
 	private PreparedStatement findCustomerByID;
 	
-	public CustomerDB() throws Exception {
+	public CustomerDB() throws DataAccessException {
 		Connection con = DBConnection.getInstance().getConnection();
 		try {
 			findAllPS = con.prepareStatement(FIND_ALL_Q);
@@ -30,36 +30,36 @@ public class CustomerDB implements CustomerDAO {
 			findByPhonePS = con.prepareStatement(FIND_BY_PHONE_Q);
 			findCustomerByID = con.prepareStatement(FIND_CUSTOMER_BY_ID_Q);
 		} catch (SQLException e) {
-			throw new Exception("Prepare query at the moment, i could not - Yoda", e);
+			throw new DataAccessException("Prepare query at the moment, i could not - Yoda", e);
 		}
 	}
 	
-	public List<Customer> findAllCustomers() throws Exception {
+	public List<Customer> findAllCustomers() throws DataAccessException {
 		List<Customer> res = new ArrayList<>();
 		try {
 			ResultSet rs = findAllPS.executeQuery();
 			res = buildObjects(rs);
 		} catch (SQLException e) {
-			throw new Exception("Could not find customers", e);
+			throw new DataAccessException("Could not find customers", e);
 		}
 		return res;
 	}
 	
 
 	@Override
-	public Customer findCustomerByPhone(String phoneNo) throws Exception {
+	public Customer findCustomerByPhone(String phoneNo) throws DataAccessException {
 		Customer res = null;
 		try {
 			findByPhonePS.setString(1, phoneNo);
 			ResultSet rs = findByPhonePS.executeQuery();
 			res = buildObject(rs);
 		} catch (SQLException e) {
-			throw new Exception("Could not Find by Phone", e);
+			throw new DataAccessException("Could not Find by Phone", e);
 		}
 		return res;
 	}
 	
-	private List<Customer> buildObjects(ResultSet rs) throws Exception {
+	private List<Customer> buildObjects(ResultSet rs) throws DataAccessException, SQLException {
 		ArrayList<Customer> res = new ArrayList<>();
 		Customer c = buildObject(rs);
 		while (c != null) {
@@ -69,7 +69,7 @@ public class CustomerDB implements CustomerDAO {
 		return res;
 	}
 	
-	private Customer buildObject(ResultSet rs) throws Exception {
+	private Customer buildObject(ResultSet rs) throws DataAccessException, SQLException {
 		Customer c = null;
 		if (rs.next()) {
 				c = new Customer(
@@ -82,7 +82,7 @@ public class CustomerDB implements CustomerDAO {
 		return c;
 	}
 	
-	private String findAddress(int addressId) throws Exception {
+	private String findAddress(int addressId) throws DataAccessException, SQLException {
         String address = null;
         findCustomerAddressPS.setInt(1, addressId);
         try {
@@ -91,12 +91,12 @@ public class CustomerDB implements CustomerDAO {
         		address = rs.getString("road_name") + " " + rs.getInt("house_no") + " " + rs.getInt("zip") + " " + rs.getString("city");
         	}
         } catch (Exception e) {
-        	throw new Exception("Could not find Customer address");
+        	throw new DataAccessException("Could not find Customer address", e);
         }
 		return address;
 	}
 
-	public Customer findCustomerByID(int id) throws Exception {
+	public Customer findCustomerByID(int id) throws DataAccessException, SQLException {
 		Customer res = null;
 		findCustomerByID.setInt(1, id);
 		try {
@@ -104,7 +104,7 @@ public class CustomerDB implements CustomerDAO {
 			res = buildObject(rs);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception("Could not find customer by ID");
+			throw new DataAccessException("Could not find customer by ID", e);
 		}
 		return res;
 	}

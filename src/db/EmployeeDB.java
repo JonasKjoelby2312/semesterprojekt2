@@ -16,32 +16,32 @@ public class EmployeeDB implements EmployeeDAO {
 	private PreparedStatement findAllPS;
 	private PreparedStatement findByIdPS;
 	
-	public EmployeeDB() throws Exception {
+	public EmployeeDB() throws DataAccessException {
 
 		Connection con = DBConnection.getInstance().getConnection();
 		try {
 			findAllPS = con.prepareStatement(FIND_ALL_Q);
 			findByIdPS = con.prepareStatement(FIND_BY_ID_Q);
 		} catch (SQLException e) {
-			throw new Exception("Could not prepare qurey", e);
+			throw new DataAccessException("Could not prepare qurey", e);
 		}
 	}
 
 	@Override
-	public List<Employee> findAllEmployees() throws Exception {
+	public List<Employee> findAllEmployees() throws DataAccessException {
 		ResultSet rs;
 		try {
 			rs = findAllPS.executeQuery();
 			List<Employee> res = buildObjects(rs);
 			return res;
 		} catch(SQLException e) {
-			throw new Exception("Could not retrive all employees", e);
+			throw new DataAccessException("Could not retrive all employees", e);
 		}
 		
 	}
 
 	@Override
-	public Employee findEmployeeByID(int id) throws Exception {
+	public Employee findEmployeeByID(int id) throws DataAccessException {
 		Employee res = null;
 		ResultSet rs;
 		try {
@@ -49,12 +49,12 @@ public class EmployeeDB implements EmployeeDAO {
 			rs = findByIdPS.executeQuery();
 			res = buildObject(rs);
 		} catch(SQLException e) {
-			throw new Exception("Could not find employee by employee_no", e);
+			throw new DataAccessException("Could not find employee by employee_no", e);
 		}
 		return res;
 	}
 	
-	private Employee buildObject(ResultSet rs) throws SQLException {
+	private Employee buildObject(ResultSet rs) throws DataAccessException, SQLException {
 		Employee res = null;
 		if(rs.next()) {
 			res = new Employee(
@@ -68,7 +68,7 @@ public class EmployeeDB implements EmployeeDAO {
 		return res;
 	}
 	
-	private List<Employee> buildObjects(ResultSet rs) throws SQLException {
+	private List<Employee> buildObjects(ResultSet rs) throws DataAccessException, SQLException {
 		ArrayList<Employee> res = new ArrayList<>();
 		Employee e = buildObject(rs);
 		while (e != null) {

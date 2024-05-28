@@ -6,6 +6,6 @@ import model.Customer;
 
 public interface CustomerDAO {
 	
-	List<Customer> findAllCustomers() throws Exception;
-	Customer findCustomerByPhone(String phoneNo) throws Exception;
+	List<Customer> findAllCustomers() throws DataAccessException;
+	Customer findCustomerByPhone(String phoneNo) throws DataAccessException;
 }

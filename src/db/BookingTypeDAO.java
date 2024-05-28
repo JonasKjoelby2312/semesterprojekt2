@@ -15,7 +15,7 @@ public interface BookingTypeDAO {
 	 * @return a list of booking types
 	 * @throws Exception if a database access error appear
 	 */
-	List<BookingType>findAllBookingTypes() throws Exception;
+	List<BookingType>findAllBookingTypes() throws DataAccessException;
 	
 	/**
 	 * returns a specific booking type by its ID from the database.
@@ -24,6 +24,6 @@ public interface BookingTypeDAO {
 	 * @return The BookingType object that matches the given ID, or null if not found
 	 * @throws Exception if a database access error appear
 	 */
-	BookingType findBookingType(int bookingTypeID) throws Exception;
+	BookingType findBookingType(int bookingTypeID) throws DataAccessException;
 
 }

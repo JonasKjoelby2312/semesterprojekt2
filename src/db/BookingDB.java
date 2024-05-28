@@ -41,7 +41,7 @@ public class BookingDB implements BookingDAO{//
 	private BookingTypeDB bookingTypeDB;
 	private DogDB dogDB;
 	
-	public BookingDB() throws Exception {
+	public BookingDB() throws DataAccessException, SQLException {
 		Connection con = DBConnection.getInstance().getConnection();
 		customerDB = new CustomerDB();
 		employeeDB = new EmployeeDB();
@@ -57,7 +57,7 @@ public class BookingDB implements BookingDAO{//
 			findBookingByDateAndEmployeeIDPS = con.prepareStatement(FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID);
 			findDogCutByIDPS = con.prepareStatement(FIND_DOG_CUT_BY_ID_Q);
 		} catch (SQLException e) {
-			throw new Exception("Could not preparedStatement");
+			throw new DataAccessException("Could not preparedStatement", e);
 		}
 	}
 	
@@ -67,7 +67,7 @@ public class BookingDB implements BookingDAO{//
 //		return null;
 //	}
 	
-	private boolean confirmAvailability(Booking b) throws Exception {
+	private boolean confirmAvailability(Booking b) throws DataAccessException, SQLException {
 		boolean res = true;
 		List<Booking> otherBookings = findAvailableTime(b.getDate(), b.getEmployee().getEmployeeID());
 		LocalTime bStartTime = b.getStartTime();
@@ -94,7 +94,7 @@ public class BookingDB implements BookingDAO{//
 	}
 	
 	@Override
-	public boolean insertBooking(Booking b) throws Exception {
+	public boolean insertBooking(Booking b) throws DataAccessException, SQLException {
 		boolean res = false;
 		if(confirmAvailability(b)) {
 			res = true;
@@ -128,16 +128,16 @@ public class BookingDB implements BookingDAO{//
 				}
 				
 				DBConnection.getInstance().commitTransaction();
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				DBConnection.getInstance().rollbackTransaction();
-				throw new Exception("Could not save booking or dog cut");
+				throw new DataAccessException("Could not save booking or dog cut", e);
 			}
 		}
 		return res;
 	}
 	
 	@Override
-	public List<Booking> findAllBookings() throws Exception {
+	public List<Booking> findAllBookings() throws DataAccessException, SQLException {
 		List<Booking> res = new ArrayList<>();
 		ResultSet rs = findAllQPS.executeQuery();
 		res = buildObjects(rs);
@@ -148,7 +148,7 @@ public class BookingDB implements BookingDAO{//
 	
 	
 	
-	public List<Booking> findAvailableTime(LocalDate date, int employeeID) throws Exception {
+	public List<Booking> findAvailableTime(LocalDate date, int employeeID) throws DataAccessException, SQLException {
 		List<Booking> res = new ArrayList<>();
 		findBookingByDateAndEmployeeIDPS.setInt(1, employeeID);
 		findBookingByDateAndEmployeeIDPS.setDate(2, Date.valueOf(date));
@@ -156,13 +156,13 @@ public class BookingDB implements BookingDAO{//
 			ResultSet rs = findBookingByDateAndEmployeeIDPS.executeQuery();
 			res = buildObjects(rs);
 		} catch (Exception e) {
-			throw new Exception("Could not find available time");
+			throw new DataAccessException("Could not find available time", e);
 		}
 		
 		return res;
 	}
 
-	private List<Booking> buildObjects(ResultSet rs) throws Exception {
+	private List<Booking> buildObjects(ResultSet rs) throws DataAccessException, SQLException {
 		List<Booking> res = new ArrayList<>();
 		Booking b = buildObject(rs);
 		while(b != null) {
@@ -171,8 +171,7 @@ public class BookingDB implements BookingDAO{//
 		}
 		return res;
 	} 
-
-	private Booking buildObject(ResultSet rs) throws Exception {
+ Booking buildObject(ResultSet rs) throws DataAccessException, SQLException {
 		Booking res = null;
 		try {
 			if(rs.next()) {
@@ -206,15 +205,15 @@ public class BookingDB implements BookingDAO{//
 					}
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new Exception("Could not build booking");
+			throw new DataAccessException("Could not build booking", e);
 		}
 		
 		return res;
 	}
 	
-	private ResultSet dogCutInBooking(int b_id) throws SQLException {
+	private ResultSet dogCutInBooking(int b_id) throws DataAccessException, SQLException {
 		findDogCutByIDPS.setInt(1, b_id);
 		return findDogCutByIDPS.executeQuery();
 	}

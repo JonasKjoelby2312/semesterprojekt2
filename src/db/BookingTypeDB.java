@@ -25,7 +25,7 @@ public class BookingTypeDB implements BookingTypeDAO {
 	 * Constructs a new BookingTypeDB instance and prepares SQL statements
 	 * @throws Exception if the database access error appear or the SQL statements cannot be prepared
 	 */
-	public BookingTypeDB() throws Exception {
+	public BookingTypeDB() throws DataAccessException, SQLException {
 		bookingPriceDB = new BookingPriceDB();
 		Connection con = DBConnection.getInstance().getConnection();
 		findAllPS = con.prepareStatement(FIND_ALL_Q);
@@ -40,13 +40,13 @@ public class BookingTypeDB implements BookingTypeDAO {
 	 * @throws Exception if a database access error appear
 	 */
 	@Override
-	public List<BookingType> findAllBookingTypes() throws Exception {
+	public List<BookingType> findAllBookingTypes() throws DataAccessException {
 		List<BookingType> res = new ArrayList<BookingType>();
 		try {
 			ResultSet rs = findAllPS.executeQuery();
 			res = buildObjects(rs);
 		} catch (SQLException e) {
-			throw new Exception("Could not find bookingTypes", e);
+			throw new DataAccessException("Could not find bookingTypes", e);
 		}
 		return res;
 	}
@@ -58,7 +58,7 @@ public class BookingTypeDB implements BookingTypeDAO {
 	 * @throws Exception if a database access error appear
 	 */
 
-	private List<BookingType> buildObjects(ResultSet rs) throws Exception {
+	private List<BookingType> buildObjects(ResultSet rs) throws DataAccessException, SQLException {
 		ArrayList<BookingType> res = new ArrayList<>();
 		BookingType bt = buildObject(rs);
 		while(bt != null) {
@@ -76,14 +76,14 @@ public class BookingTypeDB implements BookingTypeDAO {
      * @throws Exception if a database access error appear
      */
 	@Override
-	public BookingType findBookingType(int bookingTypeID) throws Exception {
+	public BookingType findBookingType(int bookingTypeID) throws DataAccessException {
 		BookingType res = null;
 		try {
 			findByBookingTypeIDPS.setInt(1, bookingTypeID);
 			ResultSet rs = findByBookingTypeIDPS.executeQuery();
 			res = buildObject(rs);
 		} catch (SQLException e) {
-			throw new Exception("Could not find bookingType by ID", e);
+			throw new DataAccessException("Could not find bookingType by ID", e);
 		}
 		return res;
 	}
@@ -93,7 +93,7 @@ public class BookingTypeDB implements BookingTypeDAO {
  * @return The method returns a booking type object or null if the ResultSet is empty
  * @throws Exception if a database access error appear
  */
-	private BookingType buildObject(ResultSet rs) throws Exception {
+	private BookingType buildObject(ResultSet rs) throws DataAccessException, SQLException {
 		BookingType res = null;
 		if(rs.next()) {
 			res = new BookingType(
@@ -113,14 +113,14 @@ public class BookingTypeDB implements BookingTypeDAO {
  * @return A BookingType object that matches the given ID, or null if not found
  * @throws Exception if a database access error appear
  */
-	public BookingType findBookingTypeByID(int id) throws Exception {
+	public BookingType findBookingTypeByID(int id) throws DataAccessException, SQLException {
 		BookingType res = null;
 		findByBookingTypeIDPS.setInt(1, id);
 		try {
 			ResultSet rs = findByBookingTypeIDPS.executeQuery();
 			res = buildObject(rs);
 		} catch (Exception e) {
-			throw new Exception("Could not find booking type");
+			throw new DataAccessException("Could not find booking type", e);
 		}
 		return res;
 	}
