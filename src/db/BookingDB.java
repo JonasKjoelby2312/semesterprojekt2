@@ -186,7 +186,12 @@ public class BookingDB implements BookingDAO{//
 						rs.getString("customer_type")
 						);
 				} else {
-					ResultSet nrs = dogCutInBooking(rs.getInt("b_id"));
+					int bit = rs.getInt("booking_id");
+					ResultSet nrs = dogCutInBooking(bit);
+					if (nrs.next()) {
+						
+					
+					//ResultSet nrs = dogCutInBooking(rs.getInt("b_id"));
 					res = new DogCut(
 							rs.getDate("date").toLocalDate(),
 							customerDB.findCustomerByID(rs.getInt("c_id")),
@@ -196,10 +201,13 @@ public class BookingDB implements BookingDAO{//
 							rs.getString("customer_type"),
 							dogDB.findDogByID(nrs.getInt("d_id")),
 							nrs.getString("comment")
+				
 							);
+					}
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception("Could not build booking");
 		}
 		

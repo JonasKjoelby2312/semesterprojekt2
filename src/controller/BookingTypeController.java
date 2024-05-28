@@ -27,7 +27,8 @@ public class BookingTypeController {
 	}
 	
 	/*
-	 * This method is for finding all the different booking types laying in the database.
+	 * This method is for finding all the different booking types 
+	 * which is persisted in the database.
 	 */
 	public List<BookingType> findAllBookingTypes() throws Exception {
 		return bookingTypeDB.findAllBookingTypes();

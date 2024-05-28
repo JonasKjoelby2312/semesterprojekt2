@@ -244,6 +244,5 @@ public class SchemaGUI extends JDialog {
 	private void updateTableThread() throws Exception {
 		stm = new SchemaTableModel(oc.findAllBookings());
 		tblBookings.setModel(stm);
-		System.out.println("Update");
 	}
 }

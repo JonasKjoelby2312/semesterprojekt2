@@ -7,8 +7,8 @@ import db.CustomerDB;
 import model.Customer;
 
 /*
- * CustomerController håndterer metoderne der ligger i CustomerDAO og retunere
- * objecter fra databasen
+ * CustomerController is for handling the different methods in CustomerDAO
+ * which is used to return objects from the database.
  */
 
 public class CustomerController {

@@ -1,10 +1,14 @@
 package controller;
 
 import java.util.List;
-
 import db.EmployeeDAO;
 import db.EmployeeDB;
 import model.Employee;
+
+/*
+ * CustomerController is for handling the different methods in CustomerDAO
+ * which is used to return objects from the database.
+ */
 
 public class EmployeeController {
 	private EmployeeDAO employeeDB;
