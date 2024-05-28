@@ -3,6 +3,7 @@ package db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import model.Customer;
 import model.Dog;
@@ -16,19 +17,19 @@ public class DogDB implements DogDAO{
 	private PreparedStatement findDogByPhoneNoAndDogName;
 	private PreparedStatement findDogByIDPS;
 	
-	public DogDB() throws Exception {
+	public DogDB() throws DataAccessException {
 		Connection con = DBConnection.getInstance().getConnection();
 		
 		try {
 			findDogByPhoneNoAndDogName = con.prepareStatement(FIND_DOG_BY_PHONENR_AND_DOGNAME_Q);
 			findDogByIDPS = con.prepareStatement(FIND_DOG_BY_ID_Q); 
-		} catch (Exception e) {
-			throw new Exception("Could not prepare statements");
+		} catch (SQLException e) {
+			throw new DataAccessException("Could not prepare statements", e);
 		}
 	}
 	
 	@Override
-	public Dog findDogByPhoneNoAndDogName(Customer c, String dogName) throws Exception {
+	public Dog findDogByPhoneNoAndDogName(Customer c, String dogName) throws DataAccessException, SQLException {
 		Dog res = null;
 		findDogByPhoneNoAndDogName.setInt(1, c.getCustomerID());
 		findDogByPhoneNoAndDogName.setString(2, dogName);
@@ -40,7 +41,7 @@ public class DogDB implements DogDAO{
 		return res;
 	}
 
-	private Dog buildObject(ResultSet rs) throws Exception {
+	private Dog buildObject(ResultSet rs) throws DataAccessException {
 		Dog res = null;
 		try {
 			if(rs.next()) {
@@ -50,13 +51,13 @@ public class DogDB implements DogDAO{
 						rs.getString("dog_description")
 						);
 			}
-		} catch (Exception e) {
-			throw new Exception("Could not build object");
+		} catch (SQLException e) {
+			throw new DataAccessException("Could not build object", e);
 		}
 		return res;
 	}
 	
-	public Dog findDogByID(int d_id) throws Exception {
+	public Dog findDogByID(int d_id) throws DataAccessException, SQLException {
 		Dog res = null;
 		findDogByIDPS.setInt(1, d_id);
 		ResultSet rs = findDogByIDPS.executeQuery();

@@ -40,7 +40,7 @@ public class DBConnection {
 //	private static final String userName = "sa";
 //	private static final String password = "dockerStrongPwd123";
 
-	private DBConnection() throws Exception { //DataAccessException before
+	private DBConnection() throws DataAccessException { //DataAccessException before
 		// Cheat sheet for the printf() method, the format is also used in the
 		// String.format() method
 		// http://alvinalexander.com/programming/printf-format-cheat-sheet
@@ -50,36 +50,36 @@ public class DBConnection {
 			Class.forName(driverClass);
 			connection = DriverManager.getConnection(connectionString);
 		} catch (ClassNotFoundException e) {
-			throw new Exception("Missing JDBC driver", e); //DataAccessException before
+			throw new DataAccessException("Missing JDBC driver", e); //DataAccessException before
 			// System.err.println("Could not load JDBC driver");
 			// e.printStackTrace();
 
 		} catch (SQLException e) {
 			 System.out.println("Connection string was: " + connectionString);
 			 e.printStackTrace();
-			throw new Exception(String.format("Could not connect to database %s@%s:%d user %s", dbName, //DataAccessException before
+			throw new DataAccessException(String.format("Could not connect to database %s@%s:%d user %s", dbName, //DataAccessException before
 					serverAddress, serverPort, userName), e);
 			
 		}
 	}
 
-	public static synchronized DBConnection getInstance() throws Exception { //DataAccessException before
+	public static synchronized DBConnection getInstance() throws DataAccessException { //DataAccessException before
 		if (dbConnection == null) {
 			dbConnection = new DBConnection();
 		}
 		return dbConnection;
 	}
 
-	public void startTransaction() throws Exception { //DataAccessException before
+	public void startTransaction() throws DataAccessException { //DataAccessException before
 		try {
 			connection.setAutoCommit(false);
 		} catch (SQLException e) {
 			// e.printStackTrace();
-			throw new Exception("Could not start transaction.", e); //DataAccessException before
+			throw new DataAccessException("Could not start transaction.", e); //DataAccessException before
 		}
 	}
 
-	public void commitTransaction() throws Exception { //DataAccessException before
+	public void commitTransaction() throws DataAccessException { //DataAccessException before
 		try {
 			try {
 				connection.commit();
@@ -90,11 +90,11 @@ public class DBConnection {
 				connection.setAutoCommit(true);
 			}
 		} catch (SQLException e) {
-			throw new Exception("Could not commit transaction", e); //DataAccessException before
+			throw new DataAccessException("Could not commit transaction", e); //DataAccessException before
 		}
 	}
 
-	public void rollbackTransaction() throws Exception { //DataAccessException before
+	public void rollbackTransaction() throws DataAccessException { //DataAccessException before
 		try {
 			try {
 				connection.rollback();
@@ -105,11 +105,11 @@ public class DBConnection {
 				connection.setAutoCommit(true);
 			}
 		} catch (SQLException e) {
-			throw new Exception("Could not rollback transaction", e); //DataAccessException before
+			throw new DataAccessException("Could not rollback transaction", e); //DataAccessException before
 		}
 	}
 
-	public int executeInsertWithIdentity(String sql) throws Exception { //DataAccessException before
+	public int executeInsertWithIdentity(String sql) throws DataAccessException { //DataAccessException before
 		System.out.println("DBConnection, Inserting: " + sql);
 		int res = -1;
 		try (Statement s = connection.createStatement()) {
@@ -123,12 +123,12 @@ public class DBConnection {
 
 		} catch (SQLException e) {
 			// e.printStackTrace();
-			throw new Exception("Could not execute insert (" + sql + ").", e); //DataAccessException before
+			throw new DataAccessException("Could not execute insert (" + sql + ").", e); //DataAccessException before
 		}
 		return res;
 	}
 
-	public int executeInsertWithIdentity(PreparedStatement ps) throws Exception { //DataAccessException before
+	public int executeInsertWithIdentity(PreparedStatement ps) throws DataAccessException { //DataAccessException before
 		// requires perpared statement to be created with the additional argument PreparedStatement.RETURN_GENERATED_KEYS  
 		int res = -1;
 		try {
@@ -140,7 +140,7 @@ public class DBConnection {
 			}
 		} catch (SQLException e) {
 			// e.printStackTrace();
-			throw new Exception("Could not execute insert", e); //DataAccessException before
+			throw new DataAccessException("Could not execute insert", e); //DataAccessException before
 		}
 		return res;
 	}
