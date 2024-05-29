@@ -7,6 +7,10 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.Booking;
+import model.DogCut;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -30,13 +34,15 @@ public class DetailsGUI extends JDialog {
 	JTextField textFieldCustomerType;
 	JTextField textFieldDogName;
 	JTextField textFieldTotal;
+	private JTextField textFieldDescription;
+	private JTextField textFieldComment;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			DetailsGUI dialog = new DetailsGUI();
+			DetailsGUI dialog = new DetailsGUI(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -47,16 +53,16 @@ public class DetailsGUI extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DetailsGUI() {
+	public DetailsGUI(Booking sb) {
 		setBounds(100, 100, 517, 363);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblEmployeeName = new JLabel("Employee Name:");
@@ -227,13 +233,55 @@ public class DetailsGUI extends JDialog {
 			textFieldDogName.setColumns(10);
 		}
 		{
+			JLabel lblDescription = new JLabel("Description:");
+			lblDescription.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblDescription = new GridBagConstraints();
+			gbc_lblDescription.anchor = GridBagConstraints.WEST;
+			gbc_lblDescription.insets = new Insets(0, 0, 5, 5);
+			gbc_lblDescription.gridx = 0;
+			gbc_lblDescription.gridy = 8;
+			contentPanel.add(lblDescription, gbc_lblDescription);
+		}
+		{
+			textFieldDescription = new JTextField();
+			textFieldDescription.setEditable(false);
+			GridBagConstraints gbc_textFieldDescription = new GridBagConstraints();
+			gbc_textFieldDescription.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldDescription.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldDescription.gridx = 1;
+			gbc_textFieldDescription.gridy = 8;
+			contentPanel.add(textFieldDescription, gbc_textFieldDescription);
+			textFieldDescription.setColumns(10);
+		}
+		{
+			JLabel lblComment = new JLabel("Comment:");
+			lblComment.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			GridBagConstraints gbc_lblComment = new GridBagConstraints();
+			gbc_lblComment.anchor = GridBagConstraints.WEST;
+			gbc_lblComment.insets = new Insets(0, 0, 5, 5);
+			gbc_lblComment.gridx = 0;
+			gbc_lblComment.gridy = 9;
+			contentPanel.add(lblComment, gbc_lblComment);
+		}
+		{
+			textFieldComment = new JTextField();
+			textFieldComment.setEditable(false);
+			GridBagConstraints gbc_textFieldComment = new GridBagConstraints();
+			gbc_textFieldComment.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldComment.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldComment.gridx = 1;
+			gbc_textFieldComment.gridy = 9;
+			contentPanel.add(textFieldComment, gbc_textFieldComment);
+			textFieldComment.setColumns(10);
+		}
+		{
 			JLabel lblTotal = new JLabel("Total:");
 			lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			GridBagConstraints gbc_lblTotal = new GridBagConstraints();
 			gbc_lblTotal.anchor = GridBagConstraints.WEST;
 			gbc_lblTotal.insets = new Insets(0, 0, 0, 5);
 			gbc_lblTotal.gridx = 0;
-			gbc_lblTotal.gridy = 8;
+			gbc_lblTotal.gridy = 10;
 			contentPanel.add(lblTotal, gbc_lblTotal);
 		}
 		{
@@ -242,7 +290,7 @@ public class DetailsGUI extends JDialog {
 			GridBagConstraints gbc_textFieldTotal = new GridBagConstraints();
 			gbc_textFieldTotal.fill = GridBagConstraints.HORIZONTAL;
 			gbc_textFieldTotal.gridx = 1;
-			gbc_textFieldTotal.gridy = 8;
+			gbc_textFieldTotal.gridy = 10;
 			contentPanel.add(textFieldTotal, gbc_textFieldTotal);
 			textFieldTotal.setColumns(10);
 		}
@@ -260,6 +308,27 @@ public class DetailsGUI extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
+		}
+		
+		init(sb);
+	}
+
+	private void init(Booking sb) {
+		textFieldEmployeeName.setText(sb.getEmployee().getName());
+		textFieldCustomerName.setText(sb.getCustomer().getName());
+		textFieldPhone.setText(sb.getCustomer().getPhoneNo());
+		textFieldDate.setText("" + sb.getDate());
+		textFieldStartTime.setText("" + sb.getStartTime());
+		textFieldBookingType.setText("" + sb.getBookingType().getBookingTypeID());
+		textFieldCustomerType.setText(sb.getCustomerType());
+		textFieldTotal.setText("" + sb.getTotal());
+		
+		if(sb.getCustomerType().equals("Dog")) {
+			DogCut dc = (DogCut) sb;
+			
+			textFieldDogName.setText(dc.getDog().getName());
+			textFieldDescription.setText(dc.getDog().getDescription());
+			textFieldComment.setText(dc.getComment());
 		}
 	}
 
