@@ -1,6 +1,3 @@
-use database sem2(Brug egen database navn)
-go
-
 -- Den første der fejler skal findes(nede i konsollen), hvorfor fejler den? 
 -- Alle dem der pejes på, skal flyttes op. 
 DROP TABLE order_line
@@ -56,8 +53,8 @@ CREATE TABLE employee (
     name varchar(40) not NULL,
     company_position varchar(50) not NULL,
     salary int not NULL,
-    employee_no int not NULL
-)
+    barber_type varchar(20) not NULL
+);
 
 
 create table order_t(
@@ -146,48 +143,60 @@ create TABLE stock (
 )
 
 
-insert into product VALUEs 
-('Shampo', 'XXXX', 125, null), ('Trøje', 'Lille', 78, null);
 
 
-insert into sales_price VALUEs
+insert into product (name, product_description, purchase_price, s_id) VALUEs 
+('Shampo', 'XXXX', 125, null), ('Trøje', 'Lille', 78, null); -- NULL værdier er supplier
+
+
+insert into sales_price (start_date, value, p_id) VALUEs
 ('2021-12-22', 69, 1), ('2021-04-06', 87, 2);
 
 
 INSERT into employee VALUES
-('Senad the man', 'BOSS', 4567890, 1);
+('Preben Kim', 'Manager', 40000, 'Person'), 
+('Hans Peter', 'Fisør', 20000, 'Dog'),
+('Richard', 'Frisør', 21000, 'Dog'),
+('Kamilla', 'Frisør', 22000, 'Person')
 
-insert into zip_city VALUEs 
-(9000, 'Aalborg')
+insert into zip_city (zipcode, city) VALUEs 
+(9000, 'Aalborg'), 
+(8000, 'Aarhus C'),
+(9400, 'Nørresundby'),
+(9430, 'Vadum')
+
+insert into address (house_no, road_name, zip) VALUES 
+(1, 'Klostermarken', 9000),
+(22, 'Klokkestøbergade', 8000),
+(23, 'Østerbrogade', 9400),
+(76, 'Vesterbrogade', 9400),
+(3, 'Brorholtvej', 9430)
+
+insert into customer (name, email, a_id, phone_no) VALUES 
+('August Nielsen', 'augustnielsen@mail.com', 1, '51938113'),
+('Kim Preben', 'kp@hotmail.com', 2, '11111111'),
+('Lisa Thomsen', 'lt@mail.dk', 3, '22222222'),
+('Elsebeth Jørgensen', 'elsejoer@mail.dk', 4, '33333333'),
+('John iler', 'iler@hotmail.com', 5, '44444444')
+
+insert into dog (name, dog_description, c_id) VALUES 
+('Fido', 'Sort labrador', 1),
+('Karen', 'Rottweiler', 1),
+('Rollo', 'Puddel', 3)
 
 
-insert into address VALUES 
-(1, 'AVSGADE', 9000)
-
-insert into customer VALUES 
-('August the pesant', 'augustthepesant@mail.com', 1, '+4551938113')
-
-insert into dog VALUES 
-('Christian', 'SØD KAT', 1)
-
-
-insert into booking_type VALUES 
+insert into booking_type (customer_type, name, booking_type_description, duration) VALUES 
 ('Person', 'Herre klip', 'En frisk fade?', 30),
-('Dog', 'Nosseklip', 'Kasterering?', 10)
+('Dog', 'Trimning', '???', 20)
 
-insert into booking_price VALUES 
+insert into booking_price (start_date, booking_price_value, bt_id) VALUES 
 ('2024-05-14', 500, 1), ('2024-05-15', 600, 1)
 
-insert into order_t values 
-('2024-05-16', 500, 1)
+insert into order_t (date, total, c_id) values 
+('2024-07-01', 500, 1)
 
-insert into booking VALUES 
-('14:30', 1, 1, 1, 'Person')
-
-
-
-
-
+insert into booking (start_time, emp_id, o_id, bt_id, customer_type) VALUES 
+('15:30', 1, 1, 1, 'Person')
 
 
 --SELECT * from product, sales_price where product.product_id = sales_price.p_id
@@ -204,11 +213,17 @@ insert into booking VALUES
 
 --SELECT TOP 1 * FROM booking_price ORDER BY start_date DESC
 
+SELECT * from employee
+
+select * from customer
+
 SELECT * from booking
 
 SELECT * from order_t
 
 SELECT * from dog_cut
+
+
 
 
 
