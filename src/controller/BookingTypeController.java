@@ -38,7 +38,7 @@ public class BookingTypeController {
 	 * This method is for finding a specific booking type by its ID in the database.
 	 */
 	public BookingType findBookingTypeByBookingTypeID(int bookingTypeID) throws Exception {
-		return bookingTypeDB.findBookingType(bookingTypeID);
+		return bookingTypeDB.findBookingTypeByID(bookingTypeID);
 	}
 	
 	/*
@@ -46,7 +46,7 @@ public class BookingTypeController {
 	 * the booking type which contains a booking price.
 	 */
 	public BookingPrice findBookingPriceByBookingTypeID(int bookingTypeID) throws Exception {
-		BookingPrice bookingPrice = bookingPriceDB.findBookingPricesByBookingTypeID(bookingTypeID);
+		BookingPrice bookingPrice = bookingPriceDB.findBookingPriceByBookingTypeID(bookingTypeID);
 		
 //		BookingPrice res = null;
 //		for(BookingPrice bp : bookingPrices) {

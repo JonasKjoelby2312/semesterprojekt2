@@ -18,6 +18,6 @@ public interface BookingPriceDAO {
 	 * @return The booking price object that matches to the given booking type ID, or null if not found
 	 * @throws DataAccessException and SQLException if a database access error appear
 	 */
-	BookingPrice findBookingPricesByBookingTypeID(int id) throws DataAccessException, SQLException;
+	BookingPrice findBookingPriceByBookingTypeID(int id) throws DataAccessException, SQLException;
 	
 }

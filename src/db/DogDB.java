@@ -9,29 +9,24 @@ import model.Customer;
 import model.Dog;
 
 public class DogDB implements DogDAO{
-	private static final String FIND_ALL_DOGS_OF_CUSTOMER_Q = "select dog_id, name, dog_description, c_id from dog";
-	private static final String FIND_DOG_BY_PHONENR_AND_DOGNAME_Q = FIND_ALL_DOGS_OF_CUSTOMER_Q + " where c_id = ? and name = ?";
 	private static final String FIND_DOG_BY_ID_Q = "select dog_id, name, dog_description, c_id from dog where dog_id = ?";
+	private static final String FIND_DOG_BY_CUSTOMER_AND_DOG_NAME_Q = "select dog_id, name, dog_description, c_id from dog where c_id = ? and name = ?";
 	
 	//private PreparedStatement findAllDogsOfCustomerPS;
-	private PreparedStatement findDogByPhoneNoAndDogName;
 	private PreparedStatement findDogByIDPS;
-	
+	private PreparedStatement findDogByCustomerAndDogNamePS;
 	
 	
 	public DogDB() throws DataAccessException {
 		Connection con = DBConnection.getInstance().getConnection();
 		
 		try {
-			findDogByPhoneNoAndDogName = con.prepareStatement(FIND_DOG_BY_PHONENR_AND_DOGNAME_Q);
 			findDogByIDPS = con.prepareStatement(FIND_DOG_BY_ID_Q); 
+			findDogByCustomerAndDogNamePS = con.prepareStatement(FIND_DOG_BY_CUSTOMER_AND_DOG_NAME_Q);
 		} catch (SQLException e) {
 			throw new DataAccessException("Could not prepare statements", e);
 		}
 	}
-	
-	
-	
 	
 	/**
 	 * This method is used for finding a dog by dogname, and a customer. 
@@ -41,12 +36,12 @@ public class DogDB implements DogDAO{
 	 * @throws DataAccessException, SQLException
 	 */
 	@Override
-	public Dog findDogByPhoneNoAndDogName(Customer c, String dogName) throws DataAccessException, SQLException {
+	public Dog findDogByCustomerAndDogName(Customer c, String dogName) throws DataAccessException, SQLException {
 		Dog res = null;
-		findDogByPhoneNoAndDogName.setInt(1, c.getCustomerID());
-		findDogByPhoneNoAndDogName.setString(2, dogName);
+		findDogByCustomerAndDogNamePS.setInt(1, c.getCustomerID());
+		findDogByCustomerAndDogNamePS.setString(2, dogName);
 		
-		ResultSet rs = findDogByPhoneNoAndDogName.executeQuery();
+		ResultSet rs = findDogByCustomerAndDogNamePS.executeQuery();
 		res = buildObject(rs);
 		
 		c.addDog(res);
@@ -83,6 +78,7 @@ public class DogDB implements DogDAO{
 	 * @throws DataAccessException
 	 * @throws SQLException
 	 */
+	@Override
 	public Dog findDogByID(int d_id) throws DataAccessException, SQLException {
 		Dog res = null;
 		findDogByIDPS.setInt(1, d_id);

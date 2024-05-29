@@ -20,24 +20,21 @@ import model.Employee;
 
 public class BookingDB implements BookingDAO{//
 	private static final String FIND_ALL_Q = "select booking_id, start_time, emp_id, o_id, bt_id, customer_type, date, total, c_id from booking right outer join order_t on o_id = order_id";
-	private static final String FIND_BOOKING_BY_CUSTOMER_PHONE = FIND_ALL_Q + " where c_id = ?";
 	private static final String INSERT_ORDER_Q = "insert into order_t values(?, ?, ?)";
 	private static final String INSERT_BOOKING_Q = "insert into booking values(?, ?, ?, ?, ?)";
 	private static final String INSERT_DOG_CUT_Q = "insert into dog_cut VALUES (?, ?, ?)";
-	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
+	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID_Q = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
 	private static final String FIND_DOG_CUT_BY_ID_Q = "select comment, b_id, d_id from dog_cut where b_id = ?";
-	private static final String FIND_BOOKING_ORDER_BY_ASC = FIND_ALL_Q + " ORDER BY date ASC";
+	private static final String FIND_BOOKING_ORDER_BY_ASC_Q = FIND_ALL_Q + " ORDER BY date ASC";
 	
-	private PreparedStatement findAllQPS;
+	private PreparedStatement findAllPS;
 	private PreparedStatement findBookingOrderByAscPS;
-	//private PreparedStatement findBookingByCustomerPhonePS;
 	private PreparedStatement insertOrderPS;
 	private PreparedStatement insertBookingPS;
 	private PreparedStatement insertDogCutPS;
 	private PreparedStatement findBookingByDateAndEmployeeIDPS;
 	private PreparedStatement findDogCutByIDPS;
 	
-//	private DogDB dogDB;
 	private CustomerDB customerDB;
 	private EmployeeDB employeeDB;
 	private BookingTypeDB bookingTypeDB;
@@ -51,24 +48,17 @@ public class BookingDB implements BookingDAO{//
 		dogDB = new DogDB();
 		
 		try {
-			findAllQPS = con.prepareStatement(FIND_ALL_Q);
-			//findBookingByCustomerPhonePS = con.prepareStatement(FIND_BOOKING_BY_CUSTOMER_PHONE);
+			findAllPS = con.prepareStatement(FIND_ALL_Q);
 			insertOrderPS = con.prepareStatement(INSERT_ORDER_Q, Statement.RETURN_GENERATED_KEYS);
 			insertBookingPS = con.prepareStatement(INSERT_BOOKING_Q, Statement.RETURN_GENERATED_KEYS);
 			insertDogCutPS = con.prepareStatement(INSERT_DOG_CUT_Q);
-			findBookingByDateAndEmployeeIDPS = con.prepareStatement(FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID);
+			findBookingByDateAndEmployeeIDPS = con.prepareStatement(FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID_Q);
 			findDogCutByIDPS = con.prepareStatement(FIND_DOG_CUT_BY_ID_Q);
-			findBookingOrderByAscPS = con.prepareStatement(FIND_BOOKING_ORDER_BY_ASC);
+			findBookingOrderByAscPS = con.prepareStatement(FIND_BOOKING_ORDER_BY_ASC_Q);
 		} catch (SQLException e) {
 			throw new DataAccessException("Could not preparedStatement", e);
 		}
 	}
-	
-	
-//	@Override
-//	public List<Booking> findAllBookingsByCustomerPhone(String no) {
-//		return null;
-//	}
 	
 	/**
 	 * This method checks if the current booking could have any conflicts with bookings already in our database. 
@@ -177,7 +167,7 @@ public class BookingDB implements BookingDAO{//
 	@Override
 	public List<Booking> findAllBookings() throws DataAccessException, SQLException {
 		List<Booking> res = new ArrayList<>();
-		ResultSet rs = findAllQPS.executeQuery();
+		ResultSet rs = findAllPS.executeQuery();
 		res = buildObjects(rs);
 		return res;
 	}

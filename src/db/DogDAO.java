@@ -6,5 +6,6 @@ import model.Customer;
 import model.Dog;
 
 public interface DogDAO {
-	Dog findDogByPhoneNoAndDogName(Customer c, String dogName) throws DataAccessException, SQLException;
+	Dog findDogByCustomerAndDogName(Customer c, String dogname) throws DataAccessException, SQLException;
+	Dog findDogByID(int d_id) throws DataAccessException, SQLException;
 }

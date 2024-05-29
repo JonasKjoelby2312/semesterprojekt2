@@ -67,25 +67,7 @@ public class BookingTypeDB implements BookingTypeDAO {
 		}
 		return res;
 	}
-	
-    /**
-     * Returns a specific booking type by its ID from the database.
-     * @param bookingTypeID is the ID of the booking type to return
-     * @return a BookingType object that matches to the given ID, or null if not found
-     * @throws DataAccessException if a database access error appear
-     */
-	@Override
-	public BookingType findBookingType(int bookingTypeID) throws DataAccessException {
-		BookingType res = null;
-		try {
-			findByBookingTypeIDPS.setInt(1, bookingTypeID);
-			ResultSet rs = findByBookingTypeIDPS.executeQuery();
-			res = buildObject(rs);
-		} catch (SQLException e) {
-			throw new DataAccessException("Could not find bookingType by ID", e);
-		}
-		return res;
-	}
+
 /**
  * Construct a BookingType object from the ResultSet
  * @param rs is the ResultSet containing booking type data
@@ -102,7 +84,7 @@ public class BookingTypeDB implements BookingTypeDAO {
 					rs.getString("name"),
 					rs.getString("booking_type_description"),
 					rs.getInt("duration"),
-					bookingPriceDB.findBookingPricesByBookingTypeID(rs.getInt("booking_type_id"))
+					bookingPriceDB.findBookingPriceByBookingTypeID(rs.getInt("booking_type_id"))
 					);
 		}
 		return res;

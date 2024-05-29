@@ -16,7 +16,7 @@ import model.BookingPrice;
 public class BookingPriceDB implements BookingPriceDAO {
 	private static final String FIND_BOOKING_PRICE_BY_BOOKING_TYPE_ID_Q = "select Top 1 booking_price_id, start_date, booking_price_value, bt_id from booking_price where booking_price_id = ? Order by start_date Desc";
 
-	private PreparedStatement findBookingPricesByBookingTypeID;
+	private PreparedStatement findBookingPriceByBookingTypeIDPS;
 
 	/**
 	 * Constructs a new BookingPriceDB instance and prepares SQL statements
@@ -25,7 +25,7 @@ public class BookingPriceDB implements BookingPriceDAO {
 	 */
 	public BookingPriceDB() throws DataAccessException, SQLException {
 		Connection con = DBConnection.getInstance().getConnection();
-		findBookingPricesByBookingTypeID = con.prepareStatement(FIND_BOOKING_PRICE_BY_BOOKING_TYPE_ID_Q);
+		findBookingPriceByBookingTypeIDPS = con.prepareStatement(FIND_BOOKING_PRICE_BY_BOOKING_TYPE_ID_Q);
 	}
 
 	/**
@@ -36,9 +36,9 @@ public class BookingPriceDB implements BookingPriceDAO {
      * @throws SQLException if a database access error appear
      */
 	@Override
-	public BookingPrice findBookingPricesByBookingTypeID(int bookingTypeID) throws DataAccessException, SQLException {
-		findBookingPricesByBookingTypeID.setInt(1, bookingTypeID);
-		ResultSet rs = findBookingPricesByBookingTypeID.executeQuery();
+	public BookingPrice findBookingPriceByBookingTypeID(int bookingTypeID) throws DataAccessException, SQLException {
+		findBookingPriceByBookingTypeIDPS.setInt(1, bookingTypeID);
+		ResultSet rs = findBookingPriceByBookingTypeIDPS.executeQuery();
 		BookingPrice res = buildObject(rs);
 		return res;
 	}
