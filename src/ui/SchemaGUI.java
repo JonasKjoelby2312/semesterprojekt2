@@ -179,31 +179,9 @@ public class SchemaGUI extends JDialog {
 	private synchronized void detailsClicked() {
 		int index = tblBookings.getSelectedRow();
 		if (index >= 0) {
-
-			TableModel model = tblBookings.getModel();
-			DetailsGUI dGUI = new DetailsGUI();
-
-			String EmployeeName = model.getValueAt(index, 0).toString();
-			String CustomerName = model.getValueAt(index, 1).toString();
-			String Phone = model.getValueAt(index, 2).toString();
-			String Date = model.getValueAt(index, 3).toString();
-			String StartTime = model.getValueAt(index, 4).toString();
-			String BookingType = model.getValueAt(index, 5).toString();
-			String CustomerType = model.getValueAt(index, 6).toString();
-			String DogName = model.getValueAt(index, 7).toString();
-			String Total = model.getValueAt(index, 8).toString();
-
+			Booking selectedBooking = bookings.get(index);
+			DetailsGUI dGUI = new DetailsGUI(selectedBooking);
 			dGUI.setVisible(true);
-
-			dGUI.textFieldEmployeeName.setText(EmployeeName);
-			dGUI.textFieldCustomerName.setText(CustomerName);
-			dGUI.textFieldPhone.setText(Phone);
-			dGUI.textFieldDate.setText(Date);
-			dGUI.textFieldStartTime.setText(StartTime);
-			dGUI.textFieldBookingType.setText(BookingType);
-			dGUI.textFieldCustomerType.setText(CustomerType);
-			dGUI.textFieldDogName.setText(DogName);
-			dGUI.textFieldTotal.setText(Total);
 		}
 	}
 
@@ -237,9 +215,7 @@ public class SchemaGUI extends JDialog {
 		try {
 			if(searchDate != null && searchID > 0) {
 				bookings = oc.findAvailableTime(searchDate, searchID);
-				System.out.println("serched");
 			} else {
-				System.out.println("not serched " + searchDate + " " + searchID);
 				bookings = oc.findAllBookingsOrderByAsc();
 			}
 			stm.setData(bookings);
@@ -248,7 +224,6 @@ public class SchemaGUI extends JDialog {
 			e.printStackTrace();
 		}
 		if (stm.getRowCount() >= selectedRow && selectedRow >= 0) {
-			System.out.println(stm.getRowCount() + " >= " + selectedRow);
 			this.tblBookings.setRowSelectionInterval(selectedRow, selectedRow);
 		}
 	}
