@@ -64,7 +64,7 @@ public class BookingDB implements BookingDAO{//
 	 * This method checks if the current booking could have any conflicts with bookings already in our database. 
 	 * A local variable res is created. 
 	 * A local variable otherBookings is created. 
-	 * bStartTime and bEndTime is created, and gets the start and endtime from our current booking.
+	 * bStartTime and bEndTime is created, and gets their values from the @param.
 	 *  
 	 * @param b
 	 * @return true or false, depending on if the booking is conflicting with others. 
@@ -91,6 +91,17 @@ public class BookingDB implements BookingDAO{//
 		return res;
 	}
 	
+	
+	/**
+	 * This method is used to check if the four @params are conflicting with each other.
+	 * Conflict being if bStartTime or bEndTime is in between cbStarTime and cbEndTime.
+	 * 
+	 * @param bStartTime
+	 * @param bEndTime
+	 * @param cbStartTime
+	 * @param cbEndTime
+	 * @return true or false, depending on if bStartTime and bEndTime are conflicting with cbStartTime and cbEndTime
+	 */
 	protected boolean checkConflict(LocalTime bStartTime, LocalTime bEndTime, LocalTime cbStartTime, LocalTime cbEndTime) {
 		boolean res = bStartTime.compareTo(cbStartTime) >= 0 && bStartTime.compareTo(cbEndTime) < 0
 				|| bEndTime.compareTo(cbStartTime) > 0 && bStartTime.compareTo(cbStartTime) <= 0;
