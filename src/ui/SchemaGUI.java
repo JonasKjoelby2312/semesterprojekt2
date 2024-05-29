@@ -57,22 +57,6 @@ public class SchemaGUI extends JDialog {
 			JOptionPane.showMessageDialog(null, "An Error has occured while opening SchemaGUI");
 			e.printStackTrace();
 		}
-//		new Thread(() -> {
-//			while(true) {
-//				try {
-//					Thread.sleep(5000);
-//					dialog.updateTableThread();
-//					
-//					
-//				} catch (InterruptedException e){
-//					e.printStackTrace();
-//				} catch (NumberFormatException e) {
-//					e.printStackTrace();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}).start(); 
 		startThread(dialog);
 	}
 
@@ -231,7 +215,6 @@ public class SchemaGUI extends JDialog {
 			searchDate = LocalDate.parse(txtDate.getText(), dtf);
 			searchID = Integer.parseInt(txtEmployeeID.getText());
 		}
-		//updateTable();
 		updateTableThread();
 	}
 
@@ -248,25 +231,10 @@ public class SchemaGUI extends JDialog {
 		dispose();
 	}
 
-	private void updateTable() throws NumberFormatException, Exception {
-		if(searchDate != null && searchID > 0) {
-			bookings = oc.findAvailableTime(searchDate, searchID);
-			System.out.println("serched");
-		} else {
-			System.out.println("not serched " + searchDate + " " + searchID);
-			bookings = oc.findAllBookingsOrderByAsc();
-		}
-		stm.setData(bookings);
-	}
-
 	private synchronized void updateTableThread() throws Exception {
-		// EventQueue.invokeLater(() -> {
 		int selectedRow = this.tblBookings.getSelectedRow();
 
 		try {
-			// stm = new SchemaTableModel(oc.findAllBookings());
-			// stm.setData(oc.findAllBookings());
-			
 			if(searchDate != null && searchID > 0) {
 				bookings = oc.findAvailableTime(searchDate, searchID);
 				System.out.println("serched");
@@ -279,11 +247,9 @@ public class SchemaGUI extends JDialog {
 			JOptionPane.showConfirmDialog(null, e.getMessage());
 			e.printStackTrace();
 		}
-		// tblBookings.setModel(stm);
 		if (stm.getRowCount() >= selectedRow && selectedRow >= 0) {
 			System.out.println(stm.getRowCount() + " >= " + selectedRow);
 			this.tblBookings.setRowSelectionInterval(selectedRow, selectedRow);
 		}
-		// });
 	}
 }
