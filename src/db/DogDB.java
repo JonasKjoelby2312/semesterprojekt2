@@ -40,7 +40,14 @@ public class DogDB implements DogDAO{
 		c.addDog(res);
 		return res;
 	}
-
+	
+	/**
+	 * This method is used for creating objects, when the data is retrieved from the database. 
+	 * The method checks if the ResusltSet 
+	 * @param rs
+	 * @return
+	 * @throws DataAccessException
+	 */
 	private Dog buildObject(ResultSet rs) throws DataAccessException {
 		Dog res = null;
 		try {
@@ -57,6 +64,13 @@ public class DogDB implements DogDAO{
 		return res;
 	}
 	
+	/**
+	 * This method is used for finding an dog for the dog cut. 
+	 * @param d_id is the id for dog. 
+	 * @return an dog object. 
+	 * @throws DataAccessException
+	 * @throws SQLException
+	 */
 	public Dog findDogByID(int d_id) throws DataAccessException, SQLException {
 		Dog res = null;
 		findDogByIDPS.setInt(1, d_id);

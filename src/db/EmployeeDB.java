@@ -27,6 +27,13 @@ public class EmployeeDB implements EmployeeDAO {
 		}
 	}
 
+	
+	/**
+	 * This method is used fir finding all of our employees. 
+	 * The method calls the buildObjects method.
+	 *@return a list of employee objects
+	 *@throws DataAccesException. 
+	 */
 	@Override
 	public List<Employee> findAllEmployees() throws DataAccessException {
 		ResultSet rs;
@@ -39,8 +46,16 @@ public class EmployeeDB implements EmployeeDAO {
 		}
 		
 	}
-
-	@Override
+	
+	
+	/**
+	 * This method is used for finding employees by employeeID
+	 * The method takes the found data from the database, and calls the buildObject method. 
+	 * @param employee id
+	 * @return employee object
+	 * @throws DataAccessException
+	 */
+	@Override 
 	public Employee findEmployeeByID(int id) throws DataAccessException {
 		Employee res = null;
 		ResultSet rs;
@@ -54,6 +69,14 @@ public class EmployeeDB implements EmployeeDAO {
 		return res;
 	}
 	
+	/**
+	 * This method is used for creating employee objects 
+	 * The method checks if the ResusltSet have a next element. 
+	 * @param rs
+	 * @return employee object
+	 * @throws DataAccessException
+	 * @throws SQLException
+	 */
 	private Employee buildObject(ResultSet rs) throws DataAccessException, SQLException {
 		Employee res = null;
 		if(rs.next()) {
@@ -68,6 +91,15 @@ public class EmployeeDB implements EmployeeDAO {
 		return res;
 	}
 	
+	/**
+	 * This method is used for creating a list of employee objects.
+	 * The method calls the buildObject method. 
+	 * The method keeps adding employee objects to our list, until the local variable is null. 
+	 * @param rs
+	 * @return a list of employee objects. 
+	 * @throws DataAccessException
+	 * @throws SQLException
+	 */
 	private List<Employee> buildObjects(ResultSet rs) throws DataAccessException, SQLException {
 		ArrayList<Employee> res = new ArrayList<>();
 		Employee e = buildObject(rs);
