@@ -12,4 +12,7 @@ public interface BookingDAO {
 //	List<Booking> findAllBookingsByCustomerPhone(String no);
 	boolean insertBooking(Booking b) throws DataAccessException, SQLException;
 	List<Booking> findAvailableTime(LocalDate date, int employeeID) throws DataAccessException, SQLException;
+	List<Booking> findAllBookingsOrderByAsc() throws DataAccessException, SQLException;
+
+	
 }

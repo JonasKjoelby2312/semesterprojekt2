@@ -1,11 +1,13 @@
 package controller;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 import db.BookingDAO;
 import db.BookingDB;
+import db.DataAccessException;
 import db.DogDAO;
 import db.DogDB;
 import model.Booking;
@@ -57,10 +59,27 @@ public class OrderController {
 	
 	public List<Booking> findAllBookings() throws Exception {
 		return bookingDB.findAllBookings();
-		
+	}
+	
+	public List<Booking> findAllBookingsOrderByAsc() throws DataAccessException, SQLException {
+		return bookingDB.findAllBookingsOrderByAsc();
 	}
 	/*
 	 * This method is for creating a booking for a person.
+	 */
+	
+	/**
+	 * This method is used for creating bookings for persons. The method checks that the date is not
+	 * before today, or before the current date and time. The method checks that the employee
+	 * has the barber_type "person" to make sure the employee has the right set of cutting abilities
+	 * The method then checks that neither customer, employee, and booking_type is not null
+	 * @param bookingTypeID
+	 * @param employeeID
+	 * @param customerPhone
+	 * @param date
+	 * @param startTime
+	 * @return either true or false, depending on if the booking has been created. 
+	 * @throws Exception
 	 */
 	public boolean createBookingPerson(int bookingTypeID, int employeeID, 
 			String customerPhone, LocalDate date, LocalTime startTime) throws Exception {

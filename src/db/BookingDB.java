@@ -26,8 +26,10 @@ public class BookingDB implements BookingDAO{//
 	private static final String INSERT_DOG_CUT_Q = "insert into dog_cut VALUES (?, ?, ?)";
 	private static final String FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID = FIND_ALL_Q + " where emp_id = ? and date = ?" ;
 	private static final String FIND_DOG_CUT_BY_ID_Q = "select comment, b_id, d_id from dog_cut where b_id = ?";
+	private static final String FIND_BOOKING_ORDER_BY_ASC = FIND_ALL_Q + " ORDER BY date ASC";
 	
 	private PreparedStatement findAllQPS;
+	private PreparedStatement findBookingOrderByAscPS;
 	//private PreparedStatement findBookingByCustomerPhonePS;
 	private PreparedStatement insertOrderPS;
 	private PreparedStatement insertBookingPS;
@@ -56,6 +58,7 @@ public class BookingDB implements BookingDAO{//
 			insertDogCutPS = con.prepareStatement(INSERT_DOG_CUT_Q);
 			findBookingByDateAndEmployeeIDPS = con.prepareStatement(FIND_BOOKING_BY_DATE_AND_EMPLOYEE_ID);
 			findDogCutByIDPS = con.prepareStatement(FIND_DOG_CUT_BY_ID_Q);
+			findBookingOrderByAscPS = con.prepareStatement(FIND_BOOKING_ORDER_BY_ASC);
 		} catch (SQLException e) {
 			throw new DataAccessException("Could not preparedStatement", e);
 		}
@@ -67,6 +70,13 @@ public class BookingDB implements BookingDAO{//
 //		return null;
 //	}
 	
+	/**
+	 * This method checks 
+	 * @param b
+	 * @return
+	 * @throws DataAccessException
+	 * @throws SQLException
+	 */
 	private boolean confirmAvailability(Booking b) throws DataAccessException, SQLException {
 		boolean res = true;
 		List<Booking> otherBookings = findAvailableTime(b.getDate(), b.getEmployee().getEmployeeID());
@@ -93,6 +103,11 @@ public class BookingDB implements BookingDAO{//
 			return res;
 	}
 	
+	
+	
+	/**
+	 * 
+	 */
 	@Override
 	public boolean insertBooking(Booking b) throws DataAccessException, SQLException {
 		boolean res = false;
@@ -142,8 +157,14 @@ public class BookingDB implements BookingDAO{//
 		ResultSet rs = findAllQPS.executeQuery();
 		res = buildObjects(rs);
 		return res;
+	}
 	
-	
+	@Override
+	public List<Booking> findAllBookingsOrderByAsc() throws DataAccessException, SQLException {
+		List<Booking> res = new ArrayList<>();
+		ResultSet rs = findBookingOrderByAscPS.executeQuery();
+		res = buildObjects(rs);
+		return res;
 	}
 	
 	
@@ -217,5 +238,8 @@ public class BookingDB implements BookingDAO{//
 		findDogCutByIDPS.setInt(1, b_id);
 		return findDogCutByIDPS.executeQuery();
 	}
-	
 }
+
+
+
+	

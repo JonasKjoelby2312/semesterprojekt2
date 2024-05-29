@@ -86,7 +86,7 @@ public class MainMenu extends JFrame {
 				try {
 					createBookingClicked();
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "CreatBooking could not open");
+					JOptionPane.showMessageDialog(null, "Create Booking could not open");
 				}
 				
 			

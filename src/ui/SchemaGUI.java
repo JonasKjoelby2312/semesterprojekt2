@@ -75,23 +75,24 @@ public class SchemaGUI extends JDialog {
 	}
 
 	public static void startThread(SchemaGUI s) {
-		dialog = s;
-		new Thread(() -> {
-			while (true) {
-				try {
-					Thread.sleep(5000);
-					dialog.updateTableThread();
+			dialog = s;
+			new Thread(() -> {
+				while (true) {
+					try {
+						Thread.sleep(5000);
+						dialog.updateTableThread();
 
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
-				} catch (Exception e) {
-					e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		}).start();
-	}
+			}).start();
+		}
+
 
 	/**
 	 * Create the dialog.
@@ -227,8 +228,7 @@ public class SchemaGUI extends JDialog {
 	private void init() throws Exception {
 		oc = new OrderController();
 		dtf = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		stm = new SchemaTableModel(oc.findAllBookings());
-
+		stm = new SchemaTableModel(oc.findAllBookingsOrderByAsc());
 		tblBookings.setModel(stm);
 
 	}
@@ -251,7 +251,8 @@ public class SchemaGUI extends JDialog {
 
 		try {
 			// stm = new SchemaTableModel(oc.findAllBookings());
-			stm.setData(oc.findAllBookings());
+			// stm.setData(oc.findAllBookings());
+			stm.setData(oc.findAllBookingsOrderByAsc());
 		} catch (Exception e) {
 			JOptionPane.showConfirmDialog(null, e.getMessage());
 			e.printStackTrace();
