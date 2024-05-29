@@ -18,12 +18,12 @@ public class BookingTypeDB implements BookingTypeDAO {
 	private static final String FIND_BOOKING_TYPE_BY_ID_Q = FIND_ALL_Q + " where booking_type_id = ?";
 	private PreparedStatement findAllPS;
 	private PreparedStatement findByBookingTypeIDPS;
-	
 	private BookingPriceDB bookingPriceDB;
 	
 	/**
 	 * Constructs a new BookingTypeDB instance and prepares SQL statements
-	 * @throws Exception if the database access error appear or the SQL statements cannot be prepared
+	 * @throws DataAccessException if the database access error appear or the SQL statements cannot be prepared
+	 * @throws SQLException if the database access error appear or the SQL statements cannot be prepared
 	 */
 	public BookingTypeDB() throws DataAccessException, SQLException {
 		bookingPriceDB = new BookingPriceDB();
@@ -35,9 +35,8 @@ public class BookingTypeDB implements BookingTypeDAO {
 
 	/**
 	 * Returns all booking types from the database
-	 * 
 	 * @return a list of all booking types
-	 * @throws Exception if a database access error appear
+	 * @throws DataAccessException if a database access error appear
 	 */
 	@Override
 	public List<BookingType> findAllBookingTypes() throws DataAccessException {
@@ -55,7 +54,8 @@ public class BookingTypeDB implements BookingTypeDAO {
 	 * Construct a List of BookingType objects from a ResultSet
 	 * @param rs is the ResultSet containing booking type data
 	 * @return a list of BookingType objects
-	 * @throws Exception if a database access error appear
+	 * @throws DataAccessException if a database access error appear
+	 * @throws SQLException if a database access error appear
 	 */
 
 	private List<BookingType> buildObjects(ResultSet rs) throws DataAccessException, SQLException {
@@ -70,10 +70,9 @@ public class BookingTypeDB implements BookingTypeDAO {
 	
     /**
      * Returns a specific booking type by its ID from the database.
-     * 
      * @param bookingTypeID is the ID of the booking type to return
      * @return a BookingType object that matches to the given ID, or null if not found
-     * @throws Exception if a database access error appear
+     * @throws DataAccessException if a database access error appear
      */
 	@Override
 	public BookingType findBookingType(int bookingTypeID) throws DataAccessException {
@@ -91,7 +90,8 @@ public class BookingTypeDB implements BookingTypeDAO {
  * Construct a BookingType object from the ResultSet
  * @param rs is the ResultSet containing booking type data
  * @return The method returns a booking type object or null if the ResultSet is empty
- * @throws Exception if a database access error appear
+ * @throws DataAccessException if a database access error appear
+ * @throws SQLException if a database access error appear
  */
 	private BookingType buildObject(ResultSet rs) throws DataAccessException, SQLException {
 		BookingType res = null;
@@ -111,7 +111,8 @@ public class BookingTypeDB implements BookingTypeDAO {
  * Returns a specific booking type by its id from the database
  * @param id is the id of the booking type to return
  * @return A BookingType object that matches the given ID, or null if not found
- * @throws Exception if a database access error appear
+ * @throws DataAccessException if a database access error appear
+ * @throws SQLException if a database access error appear
  */
 	public BookingType findBookingTypeByID(int id) throws DataAccessException, SQLException {
 		BookingType res = null;

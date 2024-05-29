@@ -101,6 +101,23 @@ public class OrderController {
 	/*
 	 * This method is for creating a booking for a dog.
 	 */
+	
+	/**
+	 * This method is used for creating a booking for a dog cut. 
+	 * The method checks that the date is not before today, or before the current date and time.
+	 * We find an employee by employeeID, and if the employees barber_type is "dog", then we can go forward with the method. 
+	 * The method checks that our employee, customer, booking_type and date is not NULL. 
+	 * The method checks that the customer also has the customer_type is "dog"
+	 * @param bookingTypeID
+	 * @param employeeID
+	 * @param customerPhone
+	 * @param dogName
+	 * @param comment
+	 * @param date
+	 * @param startTime
+	 * @return either true or false, depending on if the booking has been created.
+	 * @throws Exception
+	 */
 	public boolean createBookingDog(int bookingTypeID, int employeeID, 
 			String customerPhone, String dogName, String comment,
 			LocalDate date, LocalTime startTime) throws Exception {
@@ -124,9 +141,13 @@ public class OrderController {
 		return res;
 	}
 	
-	/*
-	 * This method is for persisting the booking in the database,
-	 * both person haircut and dog cuts.
+	
+	/**
+	 * This method takes the created sale, and persist it in our database. 
+	 * The method checks if the current booking is a normal booking or a dog cut. 
+	 * The method then calls the bookingDB, to insert the booking in our database. 
+	 * @return either true or false, depending on if the booking has been inserted.
+	 * @throws Exception
 	 */
 	public boolean completeBooking() throws Exception {
 		boolean res = false;

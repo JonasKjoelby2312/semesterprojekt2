@@ -9,6 +9,10 @@ import java.util.List;
 
 import model.Customer;
 
+/**
+ * Manages database operations related to customers
+ * Provides method to find all customers and a specific customer by its phoneNo
+ */
 public class CustomerDB implements CustomerDAO {
 	
 	private static final String FIND_ALL_Q = "select customer_id, name, email, a_id, phone_no from customer";
@@ -22,6 +26,11 @@ public class CustomerDB implements CustomerDAO {
 	private PreparedStatement findByPhonePS;
 	private PreparedStatement findCustomerByID;
 	
+	
+	/**
+	 * Constructs a new CustomerDB instance and prepares SQL statements
+	 * @throws DataAccessException if the database access error appear or the SQL statements cannot be prepared
+	 */
 	public CustomerDB() throws DataAccessException {
 		Connection con = DBConnection.getInstance().getConnection();
 		try {
@@ -34,6 +43,11 @@ public class CustomerDB implements CustomerDAO {
 		}
 	}
 	
+	/**
+	 * Returns all customers from the database
+	 * @return a list of all customers
+	 * @throws DataAccessException if a database access error appear
+	 */
 	public List<Customer> findAllCustomers() throws DataAccessException {
 		List<Customer> res = new ArrayList<>();
 		try {
@@ -45,7 +59,12 @@ public class CustomerDB implements CustomerDAO {
 		return res;
 	}
 	
-
+	/**
+     * Returns a specific customer by its phoneNo from the database.
+     * @param id is the ID of the customer to return
+     * @return a CustomerByPhone object that matches to the given phoneNo, or null if not found
+     * @throws DataAccessException if a database access error appear
+     */
 	@Override
 	public Customer findCustomerByPhone(String phoneNo) throws DataAccessException {
 		Customer res = null;
@@ -59,6 +78,13 @@ public class CustomerDB implements CustomerDAO {
 		return res;
 	}
 	
+	/**
+	 * Construct a List of customer objects from a ResultSet
+	 * @param rs is the ResultSet containing customer data
+	 * @return a list of customer objects
+	 * @throws DataAccessException if a database access error appear
+	 * @throws SQLException if a database access error appear
+	 */
 	private List<Customer> buildObjects(ResultSet rs) throws DataAccessException, SQLException {
 		ArrayList<Customer> res = new ArrayList<>();
 		Customer c = buildObject(rs);
@@ -69,6 +95,13 @@ public class CustomerDB implements CustomerDAO {
 		return res;
 	}
 	
+	/**
+	 * Construct a Customer object from the ResultSet
+	 * @param rs is the ResultSet containing customer data
+	 * @return The method returns a customer object or null if the ResultSet is empty
+	 * @throws DataAccessException if a database access error appear
+	 * @throws SQLException if a database access error appear
+	 */
 	private Customer buildObject(ResultSet rs) throws DataAccessException, SQLException {
 		Customer c = null;
 		if (rs.next()) {
@@ -82,6 +115,13 @@ public class CustomerDB implements CustomerDAO {
 		return c;
 	}
 	
+	/**
+     * Returns a address by its ID from the database.
+     * @param addressID is the ID of the address to return
+     * @return a addressID object that matches to the given ID, or null if not found
+     * @throws DataAccessException if a database access error appear
+     * @throws SQLException if a database access error appear
+     */
 	private String findAddress(int addressId) throws DataAccessException, SQLException {
         String address = null;
         findCustomerAddressPS.setInt(1, addressId);
@@ -96,6 +136,13 @@ public class CustomerDB implements CustomerDAO {
 		return address;
 	}
 
+	/**
+     * Returns a specific customer by its ID from the database.
+     * @param id is the ID of the customer to return
+     * @return a CustomerByID object that matches to the given ID, or null if not found
+     * @throws DataAccessException if a database access error appear
+     * @throws SQLException if a database access error appear
+     */
 	public Customer findCustomerByID(int id) throws DataAccessException, SQLException {
 		Customer res = null;
 		findCustomerByID.setInt(1, id);
