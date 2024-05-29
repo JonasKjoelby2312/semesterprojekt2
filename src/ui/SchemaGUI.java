@@ -42,6 +42,8 @@ public class SchemaGUI extends JDialog {
 	private SchemaTableModel stm;
 	private DateTimeFormatter dtf;
 	private DetailsGUI dGUI;
+	private LocalDate searchDate;
+	private int searchID;
 
 	/**
 	 * Launch the application.
@@ -222,7 +224,15 @@ public class SchemaGUI extends JDialog {
 	}
 
 	private void searchClicked() throws NumberFormatException, Exception {
-		updateTable();
+		if(txtEmployeeID.getText().equals("") && txtDate.getText().equals("")) {
+			searchDate = null;
+			searchID = -1;
+		} else {
+			searchDate = LocalDate.parse(txtDate.getText(), dtf);
+			searchID = Integer.parseInt(txtEmployeeID.getText());
+		}
+		//updateTable();
+		updateTableThread();
 	}
 
 	private void init() throws Exception {
@@ -239,10 +249,14 @@ public class SchemaGUI extends JDialog {
 	}
 
 	private void updateTable() throws NumberFormatException, Exception {
-		bookings = oc.findAvailableTime(LocalDate.parse(txtDate.getText(), dtf),
-				Integer.parseInt(txtEmployeeID.getText()));
-		stm = new SchemaTableModel(bookings);
-		tblBookings.setModel(stm);
+		if(searchDate != null && searchID > 0) {
+			bookings = oc.findAvailableTime(searchDate, searchID);
+			System.out.println("serched");
+		} else {
+			System.out.println("not serched " + searchDate + " " + searchID);
+			bookings = oc.findAllBookingsOrderByAsc();
+		}
+		stm.setData(bookings);
 	}
 
 	private synchronized void updateTableThread() throws Exception {
@@ -252,7 +266,15 @@ public class SchemaGUI extends JDialog {
 		try {
 			// stm = new SchemaTableModel(oc.findAllBookings());
 			// stm.setData(oc.findAllBookings());
-			stm.setData(oc.findAllBookingsOrderByAsc());
+			
+			if(searchDate != null && searchID > 0) {
+				bookings = oc.findAvailableTime(searchDate, searchID);
+				System.out.println("serched");
+			} else {
+				System.out.println("not serched " + searchDate + " " + searchID);
+				bookings = oc.findAllBookingsOrderByAsc();
+			}
+			stm.setData(bookings);
 		} catch (Exception e) {
 			JOptionPane.showConfirmDialog(null, e.getMessage());
 			e.printStackTrace();
