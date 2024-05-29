@@ -17,6 +17,8 @@ public class DogDB implements DogDAO{
 	private PreparedStatement findDogByPhoneNoAndDogName;
 	private PreparedStatement findDogByIDPS;
 	
+	
+	
 	public DogDB() throws DataAccessException {
 		Connection con = DBConnection.getInstance().getConnection();
 		
@@ -28,6 +30,16 @@ public class DogDB implements DogDAO{
 		}
 	}
 	
+	
+	
+	
+	/**
+	 * This method is used for finding a dog by dogname, and a customer. 
+	 * @param c is a Customer
+	 * @param dogName
+	 * @return a dog object 
+	 * @throws DataAccessException, SQLException
+	 */
 	@Override
 	public Dog findDogByPhoneNoAndDogName(Customer c, String dogName) throws DataAccessException, SQLException {
 		Dog res = null;
@@ -43,9 +55,9 @@ public class DogDB implements DogDAO{
 	
 	/**
 	 * This method is used for creating objects, when the data is retrieved from the database. 
-	 * The method checks if the ResusltSet 
+	 * The method checks if the ResusltSet has more elements, and if it has we get all their values saved in a ResultSet. 
 	 * @param rs
-	 * @return
+	 * @return the built object is returned from the method. 
 	 * @throws DataAccessException
 	 */
 	private Dog buildObject(ResultSet rs) throws DataAccessException {

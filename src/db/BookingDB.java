@@ -71,9 +71,13 @@ public class BookingDB implements BookingDAO{//
 //	}
 	
 	/**
-	 * This method checks 
+	 * This method checks if the current booking could have any conflicts with bookings already in our database. 
+	 * A local variable res is created. 
+	 * A local variable otherBookings is created. 
+	 * bStartTime and bEndTime is created, and gets the start and endtime from our current booking.
+	 *  
 	 * @param b
-	 * @return
+	 * @return true or false, depending on if the booking is conflicting with others. 
 	 * @throws DataAccessException
 	 * @throws SQLException
 	 */
@@ -106,7 +110,17 @@ public class BookingDB implements BookingDAO{//
 	
 	
 	/**
-	 * 
+	 * This method is used for inserting created bookings. 
+	 * A local variable res is created with the type boolean. 
+	 * A method confirmAvailability is called, to check if the date and employeeNO we want to insert, 
+	 * are conflicting with a booking already in the database. 
+	 * The method checks if the customerType is "Dog" or "Person"
+	 * If the customerType is "Dog" the method goes into the first if statement, and the persists the dog cut. 
+	 * If the customerType is "Person", the method goes into the second if statement and persists the booking
+	 *@param booking b
+	 *@returns either true or false, depending on if the inserting has gone through. 
+	 *@throws DataAccesException
+	 *@throws SQLException
 	 */
 	@Override
 	public boolean insertBooking(Booking b) throws DataAccessException, SQLException {
@@ -151,6 +165,15 @@ public class BookingDB implements BookingDAO{//
 		return res;
 	}
 	
+	
+	/**
+	 * This method is used for finding all bookings. 
+	 * A local variable res is created with the type List. 
+	 * The method then calls the buildObjects method
+	 * @return a list of bookings
+	 *@throws DataAccesException
+	 *@throws SQLException
+	 */
 	@Override
 	public List<Booking> findAllBookings() throws DataAccessException, SQLException {
 		List<Booking> res = new ArrayList<>();
@@ -159,6 +182,15 @@ public class BookingDB implements BookingDAO{//
 		return res;
 	}
 	
+	
+	/**
+	 * This method is used to finding all bookings by asc order. 
+	 * A local variable res is created with the type List
+	 * The method calls the buildObjects method. 
+	 * @returns list of bookings
+	 * @throws DataAccesException
+	 * @throws SQLException
+	 */
 	@Override
 	public List<Booking> findAllBookingsOrderByAsc() throws DataAccessException, SQLException {
 		List<Booking> res = new ArrayList<>();
@@ -168,7 +200,16 @@ public class BookingDB implements BookingDAO{//
 	}
 	
 	
-	
+	/**
+	 * This method is used for finding current bookings in the database by date and employeeID. 
+	 * A local variable res is created with the type List. 
+	 * The method calls the build object method. 
+	 *@param date 
+	 *@param employeeID
+	 *@returns list of bookings
+	 *@throws DataAccesException
+	 *@throws SQLException
+	 */
 	public List<Booking> findAvailableTime(LocalDate date, int employeeID) throws DataAccessException, SQLException {
 		List<Booking> res = new ArrayList<>();
 		findBookingByDateAndEmployeeIDPS.setInt(1, employeeID);
@@ -182,7 +223,16 @@ public class BookingDB implements BookingDAO{//
 		
 		return res;
 	}
-
+	
+	/**
+	 * This method is used fir building employee objects. 
+	 * A local variable res is created with the type List. 
+	 * The method continues to add employees to the list of employees until there is no more employees. 
+	 * @param rs
+	 * @return list of bookings. 
+	 * @throws DataAccessException
+	 * @throws SQLException
+	 */
 	private List<Booking> buildObjects(ResultSet rs) throws DataAccessException, SQLException {
 		List<Booking> res = new ArrayList<>();
 		Booking b = buildObject(rs);
@@ -192,6 +242,16 @@ public class BookingDB implements BookingDAO{//
 		}
 		return res;
 	} 
+	
+/**
+ * This method is used for building booking and dogcut objects. 
+ * The method checks the ResultSets customerType, if it is person the method goes into the first if statement,
+ * if it is dog the method goes into the else statement. 
+ * @param rs
+ * @return returns either a booking or a dog cut. 
+ * @throws DataAccessException
+ * @throws SQLException
+ */
  Booking buildObject(ResultSet rs) throws DataAccessException, SQLException {
 		Booking res = null;
 		try {
@@ -234,6 +294,13 @@ public class BookingDB implements BookingDAO{//
 		return res;
 	}
 	
+ 	/**
+ 	 * This method is used fir finding dogCut by bookingID. 
+ 	 * @param bookingID b_id
+ 	 * @return what is found in the database by the querry. 
+ 	 * @throws DataAccessException
+ 	 * @throws SQLException
+ 	 */
 	private ResultSet dogCutInBooking(int b_id) throws DataAccessException, SQLException {
 		findDogCutByIDPS.setInt(1, b_id);
 		return findDogCutByIDPS.executeQuery();
