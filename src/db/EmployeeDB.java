@@ -9,6 +9,10 @@ import java.util.List;
 
 import model.Employee;
 
+/**
+ * Manages database operations related to Employees
+ * Provides methods to find all Employees or to find a specific Employee by ID.
+ */
 public class EmployeeDB implements EmployeeDAO {
 	
 	private static final String FIND_ALL_Q = "select employee_id, name, company_position, salary, barber_type from employee";
@@ -29,10 +33,10 @@ public class EmployeeDB implements EmployeeDAO {
 
 	
 	/**
-	 * This method is used fir finding all of our employees. 
+	 * This method is used for finding all employees in connected database.
 	 * The method calls the buildObjects method.
-	 *@return a list of employee objects
-	 *@throws DataAccesException. 
+	 * @return a list of employee objects
+	 * @throws DataAccesException. 
 	 */
 	@Override
 	public List<Employee> findAllEmployees() throws DataAccessException {
@@ -49,9 +53,9 @@ public class EmployeeDB implements EmployeeDAO {
 	
 	
 	/**
-	 * This method is used for finding employees by employeeID
+	 * This method is used for finding an Employee by matching their ID with parameter.
 	 * The method takes the found data from the database, and calls the buildObject method. 
-	 * @param employee id
+	 * @param id
 	 * @return employee object
 	 * @throws DataAccessException
 	 */

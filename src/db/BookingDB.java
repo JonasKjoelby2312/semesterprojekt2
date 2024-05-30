@@ -18,6 +18,10 @@ import model.Customer;
 import model.DogCut;
 import model.Employee;
 
+/**
+ * Manages database operations related to Bookings
+ * Provides methods to find all Bookings and a specific Bookings by their barber and date.
+ */
 public class BookingDB implements BookingDAO{//
 	private static final String FIND_ALL_Q = "select booking_id, start_time, emp_id, o_id, bt_id, customer_type, date, total, c_id from booking right outer join order_t on o_id = order_id";
 	private static final String INSERT_ORDER_Q = "insert into order_t values(?, ?, ?)";
@@ -108,20 +112,18 @@ public class BookingDB implements BookingDAO{//
 			return res;
 	}
 	
-	
-	
 	/**
-	 * This method is used for inserting created bookings. 
+	 * This method is used for inserting bookings into the connected database.
 	 * A local variable res is created with the type boolean. 
 	 * A method confirmAvailability is called, to check if the date and employeeNO we want to insert, 
 	 * are conflicting with a booking already in the database. 
 	 * The method checks if the customerType is "Dog" or "Person"
 	 * If the customerType is "Dog" the method goes into the first if statement, and the persists the dog cut. 
 	 * If the customerType is "Person", the method goes into the second if statement and persists the booking
-	 *@param booking b
-	 *@returns either true or false, depending on if the inserting has gone through. 
-	 *@throws DataAccesException
-	 *@throws SQLException
+	 * @param booking b
+	 * @returns either true or false, depending on if the insertion is a success or not.
+	 * @throws DataAccesException
+	 * @throws SQLException
 	 */
 	@Override
 	public boolean insertBooking(Booking b) throws DataAccessException, SQLException {
@@ -172,8 +174,8 @@ public class BookingDB implements BookingDAO{//
 	 * A local variable res is created with the type List. 
 	 * The method then calls the buildObjects method
 	 * @return a list of bookings
-	 *@throws DataAccesException
-	 *@throws SQLException
+	 * @throws DataAccesException
+	 * @throws SQLException
 	 */
 	@Override
 	public List<Booking> findAllBookings() throws DataAccessException, SQLException {
@@ -202,14 +204,14 @@ public class BookingDB implements BookingDAO{//
 	
 	
 	/**
-	 * This method is used for finding current bookings in the database by date and employeeID. 
+	 * This method is used for finding bookings containing a matching barber and date, given in parameters.
 	 * A local variable res is created with the type List. 
 	 * The method calls the build object method. 
-	 *@param date 
-	 *@param employeeID
-	 *@returns list of bookings
-	 *@throws DataAccesException
-	 *@throws SQLException
+	 * @param date 
+	 * @param employeeID
+	 * @returns list of bookings
+	 * @throws DataAccesException
+	 * @throws SQLException
 	 */
 	public List<Booking> findAvailableTime(LocalDate date, int employeeID) throws DataAccessException, SQLException {
 		List<Booking> res = new ArrayList<>();

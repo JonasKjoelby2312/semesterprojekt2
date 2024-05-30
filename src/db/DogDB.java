@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import model.Customer;
 import model.Dog;
 
+/**
+ * Manages database operations related to Dogs
+ * Provides methods to find specific Dog either by ID or by customer and its name.
+ */
 public class DogDB implements DogDAO{
 	private static final String FIND_DOG_BY_ID_Q = "select dog_id, name, dog_description, c_id from dog where dog_id = ?";
 	private static final String FIND_DOG_BY_CUSTOMER_AND_DOG_NAME_Q = "select dog_id, name, dog_description, c_id from dog where c_id = ? and name = ?";
@@ -72,9 +76,9 @@ public class DogDB implements DogDAO{
 	}
 	
 	/**
-	 * This method is used for finding an dog for the dog cut. 
+	 * This method is used to find a Dog in the connected database with its ID.
 	 * @param d_id is the id for dog. 
-	 * @return an dog object. 
+	 * @return a dog object. 
 	 * @throws DataAccessException
 	 * @throws SQLException
 	 */
