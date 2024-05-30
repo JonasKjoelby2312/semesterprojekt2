@@ -8,6 +8,10 @@ import db.DogDB;
 import model.Customer;
 import model.Dog;
 
+/*
+ * DogController is for handling the different methods in DogDAO
+ * which is used to return objects from the database.
+ */
 public class DogController {
 	private DogDAO dogDB;
 	

@@ -19,9 +19,9 @@ import model.DogCut;
 import model.Employee;
 
 /*
- * ---
- * It uses the methods from the BookingDAO and DogDAO interface 
- * to return objects from the database.
+ * The OrderController class handles the logic and method calls to search for
+ * date specific bookings, creation of Bookings and DogCuts and the persistence of
+ * said objects in the connected database.
  */
 
 public class OrderController {

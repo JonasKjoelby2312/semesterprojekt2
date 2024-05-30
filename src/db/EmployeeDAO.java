@@ -4,6 +4,10 @@ import java.util.List;
 
 import model.Employee;
 
+/**
+ * An interface for accessing Employee related data in connected database.
+ * Provides methods to get all Employees in database and a method to get a specific Employee by ID 
+ */
 public interface EmployeeDAO {
 
 	/**

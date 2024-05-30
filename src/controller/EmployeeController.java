@@ -6,7 +6,7 @@ import db.EmployeeDB;
 import model.Employee;
 
 /*
- * CustomerController is for handling the different methods in CustomerDAO
+ * EmployeeController is for handling the different methods in EmployeeDAO
  * which is used to return objects from the database.
  */
 
