@@ -46,16 +46,6 @@ public class BookingTypeController {
 	 * the booking type which contains a booking price.
 	 */
 	public BookingPrice findBookingPriceByBookingTypeID(int bookingTypeID) throws Exception {
-		BookingPrice bookingPrice = bookingPriceDB.findBookingPriceByBookingTypeID(bookingTypeID);
-		
-//		BookingPrice res = null;
-//		for(BookingPrice bp : bookingPrices) {
-//			if(res == null) {
-//				res = bp;
-//			} else if(res.getStartDate().compareTo(bp.getStartDate()) < 0) {
-//				res = bp;
-//			}
-//		}
-		return bookingPrice;
+		return bookingPriceDB.findBookingPriceByBookingTypeID(bookingTypeID);
 	}
 }

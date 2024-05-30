@@ -11,6 +11,10 @@ import model.DogCut;
 public class SchemaTableModel extends AbstractTableModel {
 	private List<Booking> data;
 	
+	private static final String[] COL_NAMES = {
+			"Employee Name", "Customer Name", "Phone", "Date", "Start Time", "Booking Type", "Customer Type", "Dog Name", "Total"
+	};
+	
 	public SchemaTableModel(List<Booking> data) {
 		this.data = data;
 		if(this.data == null) {
@@ -44,10 +48,6 @@ public class SchemaTableModel extends AbstractTableModel {
 		
 		return res;
 	}
-	
-	private static final String[] COL_NAMES = {
-			"Employee Name", "Customer Name", "Phone", "Date", "Start Time", "Booking Type", "Customer Type", "Dog Name", "Total"
-	};
 	
 	@Override
 	public String getColumnName(int col) {

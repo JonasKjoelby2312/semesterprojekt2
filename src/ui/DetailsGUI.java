@@ -25,15 +25,15 @@ public class DetailsGUI extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	JTextField textFieldEmployeeName;
-	JTextField textFieldCustomerName;
-	JTextField textFieldPhone;
-	JTextField textFieldDate;
-	JTextField textFieldStartTime;
-	JTextField textFieldBookingType;
-	JTextField textFieldCustomerType;
-	JTextField textFieldDogName;
-	JTextField textFieldTotal;
+	private JTextField textFieldEmployeeName;
+	private JTextField textFieldCustomerName;
+	private JTextField textFieldPhone;
+	private JTextField textFieldDate;
+	private JTextField textFieldStartTime;
+	private JTextField textFieldBookingType;
+	private JTextField textFieldCustomerType;
+	private JTextField textFieldDogName;
+	private JTextField textFieldTotal;
 	private JTextField textFieldDescription;
 	private JTextField textFieldComment;
 
