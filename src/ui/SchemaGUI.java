@@ -59,6 +59,12 @@ public class SchemaGUI extends JDialog {
 		startThread(dialog);
 	}
 
+	/**
+	 * This method is used to create and start a thread with the parameter, used to
+	 * call the 'updateTableThread' method after 5 second intervals.
+	 * @return nothing
+	 * @param s of type SchemaGUI
+	 */
 	public static void startThread(SchemaGUI s) {
 			dialog = s;
 			new Thread(() -> {
@@ -81,7 +87,6 @@ public class SchemaGUI extends JDialog {
 
 	/**
 	 * Create the dialog.
-	 * 
 	 * @throws Exception
 	 */
 	public SchemaGUI() throws Exception {
@@ -175,6 +180,12 @@ public class SchemaGUI extends JDialog {
 		init();
 	}
 
+	/**
+	 * This method is called when the 'details' button is clicked, and calls the
+	 * constructor of DetailsGUI while passing it the selected Booking in
+	 * tblBookings.
+	 * @return nothing
+	 */
 	private synchronized void detailsClicked() {
 		int index = tblBookings.getSelectedRow();
 		if (index >= 0) {
@@ -184,6 +195,14 @@ public class SchemaGUI extends JDialog {
 		}
 	}
 
+	/**
+	 * This method is run when the 'search' button is clicked, and filters the
+	 * displayed Bookings in tblBookings to match the users inputs,
+	 * which are a date and an Employee ID.
+	 * @return nothing
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
 	private void searchClicked() throws NumberFormatException, Exception {
 		if(txtEmployeeID.getText().equals("") && txtDate.getText().equals("")) {
 			searchDate = null;
@@ -195,6 +214,13 @@ public class SchemaGUI extends JDialog {
 		updateTableThread();
 	}
 
+	/**
+	 * This method is run when a window of type SchemaGUI is created, and
+	 * instantiates different fields as well as setting the
+	 * TableModel of tblBookings.
+	 * @return nothing
+	 * @throws Exception
+	 */
 	private void init() throws Exception {
 		oc = new OrderController();
 		dtf = DateTimeFormatter.ofPattern("d/MM/yyyy");
@@ -203,11 +229,20 @@ public class SchemaGUI extends JDialog {
 
 	}
 
+	/**
+	 * This method is run when the 'close' button is clicked, which closes the window.
+	 */
 	private void cancelClicked() {
 		setVisible(false);
 		dispose();
 	}
 
+	/**
+	 * This method is called repeatedly by the thread, created when SchemaGUI is created.
+	 * The method is used to get and display all the Bookings in the connected database.
+	 * @return nothing
+	 * @throws Exception
+	 */
 	private synchronized void updateTableThread() throws Exception {
 		int selectedRow = this.tblBookings.getSelectedRow();
 

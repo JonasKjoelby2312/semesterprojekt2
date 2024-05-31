@@ -313,6 +313,12 @@ public class DetailsGUI extends JDialog {
 		init(sb);
 	}
 
+	/**
+	 * This method is run when a window of type DetailsGUI is created, and shows
+	 * different information based on the parameter.
+	 * @return nothing
+	 * @param sb of type booking
+	 */
 	private void init(Booking sb) {
 		textFieldEmployeeName.setText(sb.getEmployee().getName());
 		textFieldCustomerName.setText(sb.getCustomer().getName());
@@ -332,6 +338,10 @@ public class DetailsGUI extends JDialog {
 		}
 	}
 
+	/**
+	 * This method is run when the 'close' button is clicked, which closes the window.
+	 * @return nothing
+	 */
 	private void closeClicked() {
 		setVisible(false);
 		dispose();

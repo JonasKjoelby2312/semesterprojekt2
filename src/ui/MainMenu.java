@@ -94,11 +94,21 @@ public class MainMenu extends JFrame {
 		
 	}
 
+	/**
+	 * This method creates a new window of type CreateBookingGUI.
+	 * @return nothing
+	 * @throws Exception
+	 */
 	private void createBookingClicked() throws Exception {
 		CreateBookingGUI cbg = new CreateBookingGUI();
 		cbg.setVisible(true);
 	}
 
+	/**
+	 * This method creates a new window of type SchemaGUI.
+	 * @return nothing
+	 * @throws Exception
+	 */
 	private void schemaClicked() throws Exception {
 		SchemaGUI s = new SchemaGUI();
 		s.setVisible(true);

@@ -286,6 +286,12 @@ public class CreateBookingGUI extends JDialog {
 		init();
 	}
 
+	/**
+	 * This method runs when a window of type CreateBookingGUI is created,
+	 * and instantiate different fields.
+	 * @return nothing
+	 * @throws Exception
+	 */
 	private void init() throws Exception {
 		oc = new OrderController();
 		dtfDate = DateTimeFormatter.ofPattern("d/MM/yyyy");
@@ -293,11 +299,21 @@ public class CreateBookingGUI extends JDialog {
 
 	}
 
+	/**
+	 * This method is run when the 'close' button is clicked, which closes the window.
+	 * @return nothing
+	 */
 	private void cancelClicked() {
 		setVisible(false);
 		dispose();
 	}
 
+	/**
+	 * This method is used to take input from the user, and use it to create a Booking or DogCut.
+	 * @return nothing
+	 * @throws NumberFormatException
+	 * @throws Exception
+	 */
 	private void createBookingClicked() throws NumberFormatException, Exception {
 		if (comboBoxDogPerson.getSelectedItem().toString().equals("Person")) {
 			oc.createBookingPerson(

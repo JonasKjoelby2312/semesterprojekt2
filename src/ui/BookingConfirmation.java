@@ -76,6 +76,9 @@ public class BookingConfirmation extends JDialog {
 		}
 	}
 
+	/**
+	 * This method is run when the 'okay' button is clicked, which closes the window.
+	 */
 	private void okayClicked() {
 		setVisible(false);
 		dispose();

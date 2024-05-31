@@ -8,6 +8,10 @@ import javax.swing.table.AbstractTableModel;
 import model.Booking;
 import model.DogCut;
 
+/**
+ * This class extends the Java class AbstractTableModel, and is used to display
+ * Booking objects in JTables.
+ */
 public class SchemaTableModel extends AbstractTableModel {
 	private List<Booking> data;
 	
@@ -22,6 +26,11 @@ public class SchemaTableModel extends AbstractTableModel {
 		}
 	}
 	
+	/**
+	 * This method is used to get the values that are displayed in the JTables
+	 * different columns.
+	 * @return res of type String
+	 */
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Booking b = data.get(rowIndex);
@@ -49,25 +58,49 @@ public class SchemaTableModel extends AbstractTableModel {
 		return res;
 	}
 	
+	/**
+	 * This method is used to get the column name with the equivalent index
+	 * given in the parameter.
+	 * @return the name of the column as a String
+	 * @param col of type Integer
+	 */
 	@Override
 	public String getColumnName(int col) {
 		return COL_NAMES[col];
 	}
 	
+	/**
+	 * This method is used to get the total number of columns in the TableModel.
+	 * @return the number of columns as an Integer
+	 */
 	@Override
 	public int getColumnCount() {
 		return COL_NAMES.length;
 	}
 
+	/**
+	 * This method is used to get the total amount of rows in the TableModel.
+	 * @return the number of rows in the TableModel
+	 */
 	@Override
 	public int getRowCount() {
 		return data.size();
 	}
 	
+	/**
+	 * This method is used to get the Booking object at the index given through the parameter.
+	 * @param rowIndex
+	 * @return Booking object
+	 */
 	public Booking getDataAt(int rowIndex) {
 		return data.get(rowIndex);
 	}
 	
+	/**
+	 * This method is used to set the data of the TableModel after the creation of it.
+	 * @return nothing
+	 * @param data
+	 */
 	public void setData(List<Booking> data) {
 		this.data = data;
 		super.fireTableDataChanged();
