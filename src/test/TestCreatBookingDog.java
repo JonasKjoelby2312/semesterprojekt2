@@ -17,7 +17,7 @@ import controller.EmployeeController;
 import controller.OrderController;
 import model.Booking;
 
-class TestCreatBookingDawg {
+class TestCreatBookingDog {
 	private static OrderController oc;
 	private Booking currBooking;
 	private static CustomerController cc;
@@ -46,13 +46,13 @@ class TestCreatBookingDawg {
 	}
 
 	@Test
-	void testCreateBookingDawgCorrect() throws Exception {
+	void testCreateBookingDogCorrect() throws Exception {
 		boolean currBooking = oc.createBookingDog(2, 2, "51938113", "Fido", "SØD KAT", 
 				LocalDate.of(2024, 5, 26), LocalTime.of(14, 30));
 				assertTrue(currBooking);
 		
 	}
-	void testCreateBookingDawgWrong() throws Exception {
+	void testCreateBookingDogWrong() throws Exception {
 		boolean currBooking = oc.createBookingDog(2, 17, "51938113", "Fido", "SØD KAT", 
 				LocalDate.of(2024, 5, 26), LocalTime.of(14, 30));
 				assertFalse(currBooking);
