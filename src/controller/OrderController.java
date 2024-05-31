@@ -19,9 +19,9 @@ import model.DogCut;
 import model.Employee;
 
 /*
- * ---
- * It uses the methods from the BookingDAO and DogDAO interface 
- * to return objects from the database.
+ * The OrderController class handles the logic and method calls to search for
+ * date specific bookings, creation of Bookings and DogCuts and the persistence of
+ * said objects in the connected database.
  */
 
 public class OrderController {
@@ -29,7 +29,7 @@ public class OrderController {
 	private EmployeeController employeeCtrl;
 	private CustomerController customerCtrl;
 	private BookingDAO bookingDB;
-	private DogDAO dogDB;
+	private DogController dogCtrl;
 	private Booking currBooking;
 	private DogCut currDogCut;
 
@@ -38,29 +38,70 @@ public class OrderController {
 		employeeCtrl = new EmployeeController();
 		customerCtrl = new CustomerController();
 		bookingDB = new BookingDB();
-		dogDB = new DogDB();
+		dogCtrl = new DogController();
 	}
 
+	/**
+	 * This method returns all BookingTypes found in the database.
+	 * 
+	 * @return a list of BookingTypes
+	 * @throws Exception
+	 */
 	public List<BookingType> findAllBookingTypes() throws Exception {
 		return bookingTypeCtrl.findAllBookingTypes();
 	}
 
+	/**
+	 * This method is used to find a BookingType with a specific bookingTypeID.
+	 * 
+	 * @param bookingTypeID
+	 * @return a BookingType object with an id matching the parameter.
+	 * @throws Exception
+	 */
 	public BookingType findBookingTypeByBookingTypeID(int bookingTypeID) throws Exception {
 		return bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
 	}
 
+	/**
+	 * This method is used to find a BookingPrice by matching it with the ID of a BookingType.
+	 * 
+	 * @param bookingTypeID
+	 * @return the latest BookingPrice connected to the BookingType with the ID given in the parameter.
+	 * @throws Exception
+	 */
 	public BookingPrice findBookingPriceByBookingTypeID(int bookingTypeID) throws Exception {
 		return bookingTypeCtrl.findBookingPriceByBookingTypeID(bookingTypeID);
 	}
 
+	/**
+	 * This method is used to find all Bookings performed/going to be performed by an Employee on a given date.
+	 * 
+	 * @param date
+	 * @param employeeID
+	 * @return a list of Booking objects matching with the date and barber given in the parameters.
+	 * @throws Exception
+	 */
 	public List<Booking> findAvailableTime(LocalDate date, int employeeID) throws Exception {
 		return bookingDB.findAvailableTime(date, employeeID);
 	}
 	
+	/**
+	 * This method is used to get all bookings in the database in no particular order.
+	 * 
+	 * @return a list containing all bookings in the database.
+	 * @throws Exception
+	 */
 	public List<Booking> findAllBookings() throws Exception {
 		return bookingDB.findAllBookings();
 	}
 	
+	/**
+	 * This method is used to get all bookings in the database, where all the bookings are sorted latest date last.
+	 * 
+	 * @return a list containing all bookings from the database.
+	 * @throws DataAccessException
+	 * @throws SQLException
+	 */
 	public List<Booking> findAllBookingsOrderByAsc() throws DataAccessException, SQLException {
 		return bookingDB.findAllBookingsOrderByAsc();
 	}
@@ -127,9 +168,9 @@ public class OrderController {
 				== 0 && LocalTime.now().compareTo(startTime) < 0) {
 			Employee e = employeeCtrl.findEmployeeByID(employeeID);
 			if(e.getBarberType().equals("Dog")) {
-				BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
 				Customer c = customerCtrl.findCustomerByPhone(customerPhone);
-				Dog d = dogDB.findDogByCustomerAndDogName(c, dogName);
+				BookingType bt = bookingTypeCtrl.findBookingTypeByBookingTypeID(bookingTypeID);
+				Dog d = dogCtrl.findDogByCustomerAndDogName(c, dogName);
 				if(c != null && e != null && bt != null && d != null) {
 					if(bt.getCustomerType().equals("Dog")) {
 						currDogCut = new DogCut( date, c, startTime, e, bt, "Dog", d, comment);

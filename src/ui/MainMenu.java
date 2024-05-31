@@ -28,10 +28,6 @@ public class MainMenu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private List<Booking> bookings;
-	private OrderController oc;
-	private JTable tblBookings;
-	private SchemaTableModel stm;
 
 
 	/**
@@ -96,11 +92,6 @@ public class MainMenu extends JFrame {
 		btnCreateBooking.setBounds(147, 102, 335, 51);
 		panel.add(btnCreateBooking);
 		
-		init();
-	}
-	
-	private void init() {
-		
 	}
 
 	private void createBookingClicked() throws Exception {
@@ -112,13 +103,5 @@ public class MainMenu extends JFrame {
 		SchemaGUI s = new SchemaGUI();
 		s.setVisible(true);
 		SchemaGUI.startThread(s);
-		//getBookings();
 	}
-	
-//	private void getBookings() throws Exception {
-//		bookings = oc.findAllBooking();
-//		stm = new SchemaTableModel(bookings);
-//		tblBookings.setModel(stm);
-//		
-//	}
 }
