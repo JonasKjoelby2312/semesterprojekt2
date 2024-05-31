@@ -48,13 +48,13 @@ class TestCreatBookingDog {
 	@Test
 	void testCreateBookingDogCorrect() throws Exception {
 		boolean currBooking = oc.createBookingDog(2, 2, "51938113", "Fido", "SØD KAT", 
-				LocalDate.of(2024, 5, 26), LocalTime.of(14, 30));
+				LocalDate.of(2024, 9, 30), LocalTime.of(14, 30));
 				assertTrue(currBooking);
-		
+	
 	}
 	void testCreateBookingDogWrong() throws Exception {
 		boolean currBooking = oc.createBookingDog(2, 17, "51938113", "Fido", "SØD KAT", 
-				LocalDate.of(2024, 5, 26), LocalTime.of(14, 30));
+				LocalDate.of(2024, 5, 15), LocalTime.of(14, 30));
 				assertFalse(currBooking);
 	}
 }

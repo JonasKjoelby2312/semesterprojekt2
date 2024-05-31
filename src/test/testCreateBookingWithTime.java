@@ -38,7 +38,7 @@ class testCreateBookingWithTime {
 	void testCreateBookingPersonWithTimeAndDate() throws Exception {
 		boolean currBooking = oc.createBookingPerson(1, 1, "51938113", 
 		LocalDate.of(2024, 7, 1), LocalTime.of(15, 30));
-		assertNotNull(currBooking);
+		assertTrue(currBooking);
 		boolean res = oc.completeBooking();
 		assertFalse(res);
 		
