@@ -106,7 +106,7 @@ public class CreateBookingGUI extends JDialog {
 			gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 			panel.setLayout(gbl_panel);
 			{
-				JLabel lblBookingType = new JLabel("Booking Type ID: ");
+				JLabel lblBookingType = new JLabel("Booking Type No: ");
 				lblBookingType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 				GridBagConstraints gbc_lblBookingType = new GridBagConstraints();
 				gbc_lblBookingType.insets = new Insets(0, 0, 5, 5);
